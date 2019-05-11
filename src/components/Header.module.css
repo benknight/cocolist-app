@@ -1,0 +1,9 @@
+.container {
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  width: auto;
+  height: 32px;
+}

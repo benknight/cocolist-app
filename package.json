@@ -1,0 +1,50 @@
+{
+  "private": true,
+  "name": "cocolist-app",
+  "dependencies": {
+    "classnames": "^2.2.6",
+    "eslint-config-prettier": "^4.2.0",
+    "eslint-config-react-app": "^4.0.1",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-prettier": "^3.0.1",
+    "eslint-plugin-react-hooks": "^1.6.0",
+    "firebase-tools": "^6.9.1",
+    "gatsby": "^2.4.3",
+    "gatsby-image": "^2.0.41",
+    "gatsby-plugin-i18n": "^1.0.1",
+    "gatsby-plugin-manifest": "^2.1.1",
+    "gatsby-plugin-offline": "^2.1.0",
+    "gatsby-plugin-postcss": "^2.0.7",
+    "gatsby-plugin-react-helmet": "^3.0.12",
+    "gatsby-plugin-robots-txt": "^1.4.0",
+    "gatsby-plugin-sharp": "^2.0.37",
+    "gatsby-plugin-typography": "^2.2.13",
+    "gatsby-source-airtable": "^2.0.8",
+    "gatsby-source-filesystem": "^2.0.33",
+    "gatsby-transformer-sharp": "^2.1.19",
+    "lodash": "^4.17.11",
+    "postcss-custom-media": "^7.0.8",
+    "postcss-normalize": "^7.0.1",
+    "postcss-preset-env": "^6.6.0",
+    "prettier": "^1.17.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-helmet": "^5.2.1",
+    "react-intl": "^2.8.0",
+    "react-typography": "^0.16.19",
+    "typography": "^0.16.19"
+  },
+  "scripts": {
+    "build": "gatsby build",
+    "deploy": "firebase deploy",
+    "format": "prettier --write \"src/**/*.{js,jsx}\"",
+    "start": "gatsby develop",
+    "serve": "gatsby serve",
+    "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\""
+  },
+  "browserslist": [
+    "> 1%",
+    "not IE 11"
+  ]
+}

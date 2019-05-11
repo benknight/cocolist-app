@@ -1,0 +1,28 @@
+/*
+
+  STYLES
+
+  Add custom styles here.
+
+*/
+
+@media (inverted-colors: inverted) {
+  .green {
+    color: var(--green-inverted);
+  }
+
+  .b--green {
+    border-color: var(--green-inverted);
+  }
+
+  .bg-green {
+    background-color: var(--green-inverted);
+  }
+
+  .light-green {
+    color: var(--light-green-inverted);
+  }
+}
+
+@media (inverted-colors: none) {
+}
