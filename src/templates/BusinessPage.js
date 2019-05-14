@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { graphql } from 'gatsby';
+import Img from 'gatsby-image';
 import _get from 'lodash/get';
 import React from 'react';
 import Helmet from 'react-helmet';
@@ -12,18 +13,15 @@ const BusinessPage = props => {
   const {
     airtable: { data: biz },
   } = props.data;
-  const thumbnail = _get(biz, 'Photos[0].thumbnails.large');
+  const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
   return (
     <Page location={props.location}>
       <Helmet title={biz.Name} />
       <Header />
       {thumbnail && (
-        <img
-          alt=""
-          className={cx(styles.thumbnail, 'bb b--light-gray')}
-          src={thumbnail.url}
-          width={thumbnail.width}
-        />
+        <div className={styles.thumbnailWrapper}>
+          <Img alt="logo" className="mw6 center" fluid={thumbnail} objectFit="contain" />
+        </div>
       )}
       <div className="pa3">
         <h1 className="mb2">{biz.Name}</h1>
@@ -63,11 +61,11 @@ export const query = graphql`
           }
         }
         Photos {
-          thumbnails {
-            large {
-              height
-              url
-              width
+          localFiles {
+            childImageSharp {
+              fluid(maxWidth: 400, maxHeight: 250) {
+                ...GatsbyImageSharpFluid_noBase64
+              }
             }
           }
         }

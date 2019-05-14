@@ -6,6 +6,9 @@ module.exports = {
     siteUrl: 'https://cocolist.app',
   },
   plugins: [
+    'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sharp',
+    'gatsby-transformer-sharp',
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
@@ -24,8 +27,6 @@ module.exports = {
         postCssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
       },
     },
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sharp',
     {
       resolve: 'gatsby-plugin-typography',
       options: {
@@ -39,7 +40,13 @@ module.exports = {
         path: `${__dirname}/src/assets`,
       },
     },
-    'gatsby-transformer-sharp',
+    {
+      resolve: 'gatsby-source-filesystem',
+      options: {
+        name: 'pages',
+        path: `${__dirname}/src/pages`,
+      },
+    },
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
@@ -61,6 +68,7 @@ module.exports = {
               Neighborhood: [],
               Category: [],
             },
+            mapping: { Photos: 'fileNode' },
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',
