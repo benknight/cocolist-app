@@ -7,7 +7,7 @@ export default new typography({
   googleFonts: [
     {
       name: 'Montserrat',
-      styles: ['400', '700'],
+      styles: ['400', '500', '700'],
     },
   ],
   headerFontFamily: [],

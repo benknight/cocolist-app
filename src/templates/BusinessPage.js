@@ -1,10 +1,10 @@
-import cx from 'classnames';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import _get from 'lodash/get';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
+import FBSurveyView from '../components/FBSurveyView';
 import Header from '../components/Header';
 import Page from '../components/Page';
 import styles from './BusinessPage.module.css';
@@ -25,7 +25,7 @@ const BusinessPage = props => {
       )}
       <div className="pa3">
         <h1 className="mb2">{biz.Name}</h1>
-        <div>
+        <div className="lh-copy mb4">
           {biz.Category.map(({ data }, index) => (
             <React.Fragment key={index}>
               <FormattedMessage id={data.Name} />
@@ -40,6 +40,11 @@ const BusinessPage = props => {
             </React.Fragment>
           ))}
         </div>
+        {biz.F_B_Survey[0].data ? (
+          <FBSurveyView data={biz.F_B_Survey[0].data} />
+        ) : (
+          'No data' // TODO
+        )}
       </div>
     </Page>
   );
