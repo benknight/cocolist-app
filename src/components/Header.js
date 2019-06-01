@@ -2,12 +2,12 @@ import cx from 'classnames';
 import { Link } from 'gatsby';
 import React from 'react';
 import logo from '../assets/logo.svg';
-import { getLocalizedURL, parseLocaleFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Search from './Search';
 import styles from './Header.module.scss';
 
 const Header = ({ location }) => {
-  const locale = parseLocaleFromURL(location.pathname);
+  const lang = parseLangFromURL(location.pathname);
   return (
     <header
       className={cx(
@@ -21,7 +21,7 @@ const Header = ({ location }) => {
         </div>
       </div>
       <div className="tp-body-3 b">
-        {locale === 'en' ? (
+        {lang === 'en' ? (
           <Link to={getLocalizedURL(location.pathname, 'vi')}>
             <span className="dn m_dib mr2">
               <span

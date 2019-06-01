@@ -18,7 +18,7 @@ import {
   InputIcon,
   Link as TPLink,
 } from '@cocolist/thumbprint-react';
-import { parseLocaleFromURL, getLocalizedURL } from '../lib/i18n';
+import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
 import styles from './Search.module.scss';
 
 const Results = connectStateResults(
@@ -110,7 +110,7 @@ const PoweredBy = () => (
 );
 
 const BusinessHit = ({ hit }) => {
-  const currentLocale = parseLocaleFromURL(window.location.pathname);
+  const currentLocale = parseLangFromURL(window.location.pathname);
   const linkTo = getLocalizedURL(`/${hit.url}`, currentLocale);
   return (
     <Link className="db pa3 bb b-gray-300" to={linkTo}>

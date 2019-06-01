@@ -83,7 +83,7 @@ const BusinessPage = props => {
   };
 
   return (
-    <Page location={props.location}>
+    <Page {...props}>
       <Helmet title={biz.Name} />
 
       <Header location={props.location} />

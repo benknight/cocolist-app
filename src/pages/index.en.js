@@ -3,7 +3,7 @@ import logo from '../assets/logo.svg';
 import Page from '../components/Page';
 
 export default props => (
-  <Page className="pa4 mw7 center" location={props.location}>
+  <Page className="pa4 mw7 center" {...props}>
     <div>
       <img
         alt=""
