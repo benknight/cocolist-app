@@ -1,0 +1,20 @@
+@import '~@cocolist/thumbprint-tokens/dist/scss/_index.scss';
+@import '~@cocolist/thumbprint-scss/mixins';
+
+$breakpoints: (
+  small: $tp-breakpoint__small,
+  medium: $tp-breakpoint__medium,
+  large: $tp-breakpoint__large,
+);
+
+@mixin respond-above($width) {
+  @include tp-respond-above(map-get($breakpoints, $width)) {
+    @content;
+  }
+}
+
+@mixin respond-below($width) {
+  @include tp-respond-below(map-get($breakpoints, $width)) {
+    @content;
+  }
+}

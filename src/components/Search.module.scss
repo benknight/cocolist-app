@@ -1,0 +1,9 @@
+@import "../styles/mixins";
+
+.results {
+  top: 100%;
+  height: calc(100vh - 100%);
+  @include respond-above(medium) {
+    height: auto;
+  }
+}

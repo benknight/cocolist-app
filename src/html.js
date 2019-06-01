@@ -16,6 +16,10 @@ function HTML(props) {
           href="https://cdn.firebase.com/libs/firebaseui/3.6.0/firebaseui.css"
           rel="stylesheet"
         />
+        <link
+          href="//fonts.googleapis.com/css?family=Montserrat:400,500,700"
+          rel="stylesheet"
+        />
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>

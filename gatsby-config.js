@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 module.exports = {
   siteMetadata: {
     author: 'Benjamin Knight',
@@ -7,8 +9,18 @@ module.exports = {
   },
   plugins: [
     'gatsby-plugin-react-helmet',
+    'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
     'gatsby-transformer-sharp',
+    {
+      resolve: 'gatsby-plugin-algolia',
+      options: {
+        appId: process.env.GATSBY_ALGOLIA_APP_ID,
+        apiKey: process.env.ALGOLIA_ADMIN_KEY,
+        queries: require('./algolia-queries'),
+        // chunkSize: 10000, // default: 1000
+      },
+    },
     {
       resolve: 'gatsby-plugin-manifest',
       options: {
@@ -19,18 +31,6 @@ module.exports = {
         theme_color: '#4bbf6b',
         display: 'minimal-ui',
         icon: 'src/assets/icon.png',
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-postcss',
-      options: {
-        postCssPlugins: [require(`postcss-preset-env`)({ stage: 0 })],
-      },
-    },
-    {
-      resolve: 'gatsby-plugin-typography',
-      options: {
-        pathToConfigModule: 'src/lib/typography',
       },
     },
     {
@@ -62,7 +62,10 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Businesses',
-            tableView: process.env.NODE_ENV === 'development' ? 'Dev' : undefined,
+            tableView:
+              process.env.NODE_ENV === 'development' || process.env.BUILD_DEV
+                ? 'Dev'
+                : undefined,
             tableLinks: ['F&B_Survey', 'Neighborhood', 'Category'],
             defaultValues: {
               Neighborhood: [],
@@ -81,10 +84,14 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Food & Beverage Survey',
+            defaultValues: {
+              Food_waste_programs: [],
+              Menu: [],
+            },
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',
-            tableName: 'Strings',
+            tableName: 'Translations',
           },
         ],
       },

@@ -4,10 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
 const path = require('path');
-const dotenv = require('dotenv');
 const _ = require('lodash');
 
-dotenv.config();
+require('dotenv').config();
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;

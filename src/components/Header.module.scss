@@ -1,0 +1,24 @@
+@import '../styles/mixins';
+
+.container {
+  z-index: 1;
+  position: sticky;
+  top: 0;
+}
+
+.logo {
+  width: auto;
+  height: 32px;
+}
+
+.searchWrapper {
+  @include respond-above(medium) {
+    width: 480px;
+  }
+}
+
+.emoji {
+  opacity: 0.6;
+  filter: saturate(2) contrast(2);
+  transform: scale(1.5);
+}

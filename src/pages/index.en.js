@@ -7,12 +7,14 @@ export default props => (
     <div>
       <img
         alt=""
-        className="mt2-l"
+        className="l_mt2"
         src={logo}
         style={{ width: '4rem', height: 'auto' }}
       />
-      <h1 className="f2 f1-l">Cocolist</h1>
-      <h2 className="f3 f2-l mw6">Find eco-conscious businesses in Saigon</h2>
+      <h1 className="tp-title-1 mt4" size={1}>
+        Cocolist
+      </h1>
+      <div className="tp-title-2 mv4">Find eco-conscious businesses in Saigon</div>
       <p>
         Cocolist is currently under development. Read more at{' '}
         <a href="https://cocolist.vn">https://cocolist.vn</a>

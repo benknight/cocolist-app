@@ -1,0 +1,15 @@
+@import '../styles/mixins';
+
+.thumbnailWrapper {
+  width: 100%;
+}
+
+.badgeImage {
+  width: 42px;
+}
+
+@include respond-above(large) {
+  .badgeImage {
+    width: 100px;
+  }
+}
