@@ -1,9 +1,74 @@
+@import '~@cocolist/thumbprint-tokens/dist/scss/_index';
+@import '~@cocolist/thumbprint-scss/mixins/button';
 @import "../styles/mixins";
+
+.hitsWrapper {
+  :global(.ais-InfiniteHits-loadMore) {
+    @include tp-button;
+    @include tp-button--secondary;
+    @include tp-button--small;
+    display: block;
+    margin: $tp-space__2 auto;
+
+    &--disabled {
+      display: none;
+    }
+  }
+}
 
 .results {
   top: 100%;
   height: calc(100vh - 100%);
+  box-shadow: $tp-shadow__card;
+
   @include respond-above(medium) {
-    height: auto;
+    height: 75vh;
+    margin-top: -3px;
+  }
+
+  :global(.ais-RefinementList) {
+    overflow: auto;
+    margin-bottom: $tp-space__2;
+    padding: 0 $tp-space__3 $tp-space__2;
+
+    ul {
+      white-space: nowrap;
+      padding-right: $tp_space__3;
+    }
+
+    &--noRefinement {
+      display: none;
+    }
+  }
+
+  :global(.ais-RefinementList-item) {
+    display: inline-block;
+    padding: $tp-space__1 $tp-space__2;
+    margin-right: $tp-space__2;
+    border: 1px solid $tp-color__gray-300;
+    border-radius: $tp-border-radius__sides;
+
+    &, & > * {
+      cursor: pointer;
+    }
+
+    &--selected {
+      background-color: $tp-color__green;
+      border-color: $tp-color__green;
+      color: $tp-color__white;
+      font-weight: 500;
+    }
+
+    &:last-child {
+      margin-right: $tp-space__3;
+    }
+
+    input {
+      display: none;
+    }
+  }
+
+  :global(.ais-RefinementList-count) {
+    display: none;
   }
 }

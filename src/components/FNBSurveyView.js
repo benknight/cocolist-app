@@ -59,33 +59,31 @@ function parseSections(data) {
       items: [
         [
           'menu_local_ingredients_label',
-          data.Menu.indexOf('Local ingredients') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Local ingredients') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_plant_based_label',
-          data.Menu.indexOf('Plant-based menu') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Plant-based menu') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_vegetarian_label',
-          data.Menu.indexOf('Vegetarian menu') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Vegetarian menu') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_seasonal_label',
-          data.Menu.indexOf('Seasonal menu') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Seasonal menu') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_farm_to_table_label',
-          data.Menu.indexOf('Farm-to-table') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Farm-to-table') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_kitchen_garden_label',
-          data.Menu.indexOf('Kitchen garden') !== -1 ? ['answer_yes'] : ['answer_no'],
+          data.Menu.indexOf('Kitchen garden') !== -1 ? ['Yes'] : ['No'],
         ],
         [
           'menu_sustainable_seafood_label',
-          data.Menu.indexOf('Sustainable seafood') !== -1
-            ? ['answer_yes']
-            : ['answer_no'],
+          data.Menu.indexOf('Sustainable seafood') !== -1 ? ['Yes'] : ['No'],
         ],
       ],
     },

@@ -17,7 +17,7 @@ const Header = ({ location }) => {
       <img alt="logo" className={cx(styles.logo, 'mb1')} src={logo} />
       <div className="mh3 m_mh4 flex-auto l_flex-none">
         <div className={styles.searchWrapper}>
-          <Search />
+          <Search location={location} />
         </div>
       </div>
       <div className="tp-body-3 b">

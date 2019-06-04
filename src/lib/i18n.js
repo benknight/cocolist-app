@@ -1,13 +1,13 @@
-export const langs = ['en', 'vi'];
-export const defaultLang = 'en';
+const langs = ['en', 'vi'];
+const defaultLang = 'en';
 
 // TODO: Write tests
 
-export function isValidLang(string) {
+function isValidLang(string) {
   return langs.indexOf(string) !== -1;
 }
 
-export function parseLangFromURL(url) {
+function parseLangFromURL(url) {
   if (!url.startsWith('/')) {
     throw new Error('Invalid URL.');
   }
@@ -15,7 +15,7 @@ export function parseLangFromURL(url) {
   return isValidLang(firstToken) ? firstToken : defaultLang;
 }
 
-export function getLocalizedURL(url, lang) {
+function getLocalizedURL(url, lang) {
   if (!url.startsWith('/')) {
     throw new Error('Invalid URL.');
   }
@@ -28,3 +28,11 @@ export function getLocalizedURL(url, lang) {
   }
   return `/${lang}${url}`;
 }
+
+module.exports = {
+  langs,
+  defaultLang,
+  isValidLang,
+  parseLangFromURL,
+  getLocalizedURL,
+};

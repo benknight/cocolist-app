@@ -17,7 +17,7 @@ module.exports = {
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        queries: require('./algolia-queries'),
+        queries: require('./src/lib/algolia-queries'),
         // chunkSize: 10000, // default: 1000
       },
     },
@@ -62,10 +62,7 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Businesses',
-            tableView:
-              process.env.NODE_ENV === 'development' || process.env.BUILD_DEV
-                ? 'Dev'
-                : undefined,
+            tableView: process.env.NODE_ENV === 'development' ? 'Dev' : undefined,
             tableLinks: ['F&B_Survey', 'Neighborhood', 'Category'],
             defaultValues: {
               Neighborhood: [],

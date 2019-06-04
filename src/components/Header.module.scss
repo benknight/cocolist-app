@@ -12,8 +12,8 @@
 }
 
 .searchWrapper {
-  @include respond-above(medium) {
-    width: 480px;
+  @include respond-above(large) {
+    width: 800px;
   }
 }
 

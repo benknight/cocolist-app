@@ -16,7 +16,7 @@ import { Button, Link as TPLink, TextButton, Wrap } from '@cocolist/thumbprint-r
 import FNBSurveyView from '../components/FNBSurveyView';
 import Header from '../components/Header';
 import Page from '../components/Page';
-import badges from '../lib/badges';
+import { getBadgesFromSurvey } from '../lib/badges';
 import styles from './BusinessPage.module.scss';
 
 const BusinessPage = props => {
@@ -36,33 +36,7 @@ const BusinessPage = props => {
     .map(cat => cat.data.Name)
     .slice(0, 3);
 
-  const bizBadges = [];
-
-  if (_get(fbSurvey, 'No_plastic_straws')) {
-    bizBadges.push(badges.noPlasticStraws);
-  }
-  if (_get(fbSurvey, 'No_plastic_bags')) {
-    bizBadges.push(badges.noPlasticBags);
-  }
-  if (
-    ['Always', 'Available on request'].indexOf(
-      _get(fbSurvey, 'Plastic_free_delivery'),
-    ) !== -1
-  ) {
-    bizBadges.push(badges.plasticFreeDelivery);
-  }
-  if (_get(fbSurvey, 'BYO_container_discount')) {
-    bizBadges.push(badges.BYOC);
-  }
-  if (_get(fbSurvey, 'Refill_my_bottle')) {
-    bizBadges.push(badges.refill);
-  }
-  if (_get(fbSurvey, 'Food_waste_programs', []).length > 0) {
-    bizBadges.push(badges.foodWaste);
-  }
-  if (_get(fbSurvey, 'Kitchen_points', 0) > 3) {
-    bizBadges.push(badges.kitchen);
-  }
+  const bizBadges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
 
   const links = [];
 
@@ -161,8 +135,16 @@ const BusinessPage = props => {
                       styles.badgeImage,
                       'self-start flex-shrink-0 mr3 l_mb3',
                     )}>
-                    <img alt="" className="dib l_dn w-100" src={badge.imageSmall} />
-                    <img alt="" className="dn l_dib w-100" src={badge.imageLarge} />
+                    <img
+                      alt=""
+                      className="dib l_dn w-100"
+                      src={require(`../assets/badges/${badge.imageSmall}`)}
+                    />
+                    <img
+                      alt=""
+                      className="dn l_dib w-100"
+                      src={require(`../assets/badges/${badge.imageLarge}`)}
+                    />
                   </div>
                   <div>
                     <div className="tp-title-5 l_mb1" size={5}>

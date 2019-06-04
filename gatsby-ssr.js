@@ -3,6 +3,9 @@
  *
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
+import React from 'react';
+import PageWrap from './src/components/PageWrap';
 
-// You can delete this file if you're not using it
-export { default as wrapPageElement } from './src/lib/wrapPageElement';
+export const wrapPageElement = ({ element, props }) => (
+  <PageWrap {...props}>{element}</PageWrap>
+);

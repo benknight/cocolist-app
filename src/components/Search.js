@@ -5,8 +5,9 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   InstantSearch,
   Index,
+  InfiniteHits,
   Highlight,
-  Hits,
+  RefinementList,
   connectStateResults,
   connectSearchBox,
 } from 'react-instantsearch-dom';
@@ -20,6 +21,8 @@ import {
 } from '@cocolist/thumbprint-react';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
 import styles from './Search.module.scss';
+
+const indexName = 'Businesses';
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
@@ -80,9 +83,9 @@ let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
         }
         onChange={value => {
           setValue(value);
-          if (value.length === 0 || value.length > 2) {
-            refine(value);
-          }
+          // if (value.length === 0 || value.length > 2) {
+          refine(value);
+          // }
         }}
         size="small"
         value={value}
@@ -110,67 +113,67 @@ const PoweredBy = () => (
 );
 
 const BusinessHit = ({ hit }) => {
-  const currentLocale = parseLangFromURL(window.location.pathname);
-  const linkTo = getLocalizedURL(`/${hit.url}`, currentLocale);
+  const lang = parseLangFromURL(window.location.pathname);
+  const linkTo = getLocalizedURL(`/${hit.slug}`, lang);
   return (
-    <Link className="db pa3 bb b-gray-300" to={linkTo}>
+    <Link className="db ph3 pv2 m_pv3 bb b-gray-300" to={linkTo}>
       <div className="tp-title-6 black">
         <Highlight attribute="name" hit={hit} tagName="mark" />
       </div>
-      <div className="tp-body-2 black-300">
-        <Highlight attribute="category" hit={hit} tagName="mark" />
+      <div className="tp-body-3 black-300">
+        <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
         <span className="mh2">/</span>
-        <Highlight attribute="neighborhood" hit={hit} tagName="mark" />
+        <Highlight attribute={`neighborhood_${lang}`} hit={hit} tagName="mark" />
       </div>
     </Link>
   );
 };
 
-const indexName =
-  process.env.NODE_ENV === 'development' ? 'DEV_Businesses' : 'PROD_Businesses';
-
-function Search({ collapse }) {
+function Search({ collapse, location }) {
   const ref = createRef();
-  const [query, setQuery] = useState(``);
+  const lang = parseLangFromURL(location.pathname);
   const [focus, setFocus] = useState(false);
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
     process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   );
-  const showResults = query.length > 0 && focus;
+  const showResults = focus;
   useClickOutside(ref, () => setFocus(false));
-  useEffect(() => {
-    document.body.style.overflow = showResults ? 'hidden' : '';
-  });
   return (
     <InstantSearch
       searchClient={searchClient}
       indexName={indexName}
-      onSearchStateChange={({ query }) => setQuery(query)}
       root={{ Root, props: { ref } }}>
       <div className="m_relative">
-        <SearchInput onFocus={() => setFocus(true)} />
+        <div className="relative z-1">
+          <SearchInput onFocus={() => setFocus(true)} />
+        </div>
         <div
           className={cx(
             styles.results,
             { dn: !showResults },
-            'absolute left-0 bg-white m_ba b-gray-300 w-100',
+            'absolute left-0 bg-white w-100 br2 br-bottom overflow-hidden',
           )}>
           <div className="flex flex-column w-100 h-100">
+            <div className="tp-body-3 pt3 bb b-gray-300 bg-gray-200">
+              <RefinementList attribute={`badges_${lang}`} />
+              <RefinementList attribute={`neighborhood_${lang}`} />
+              <RefinementList attribute={`category_${lang}`} />
+            </div>
+            <div className={cx(styles.hitsWrapper, 'flex-auto overflow-auto')}>
+              <Index indexName={indexName}>
+                <Results>
+                  <InfiniteHits hitComponent={BusinessHit} />
+                </Results>
+              </Index>
+            </div>
             <div
               className={cx(
-                'tp-body-3 b-gray-300 ph3 pv1 bb',
+                'tp-body-3 black-300 b-gray-300 ph3 pv1 bt',
                 'flex items-center justify-between',
               )}>
               <Stats />
               <PoweredBy />
-            </div>
-            <div className="flex-auto overflow-auto">
-              <Index indexName={indexName}>
-                <Results>
-                  <Hits hitComponent={BusinessHit} />
-                </Results>
-              </Index>
             </div>
           </div>
         </div>
