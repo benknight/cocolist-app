@@ -6,14 +6,15 @@ import React from 'react';
 import PageWrap from './src/components/PageWrap';
 import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/i18n';
 
-// TODO: Store user lang preference in localStorage
 export const onClientEntry = () => {
-  const { location, navigator } = window;
+  const { location, localStorage, navigator } = window;
   const clientLang = navigator.language.split('-')[0];
-  if (isValidLang(clientLang)) {
+  const langSelection = localStorage.getItem('langSelection');
+  const targetLang = langSelection || clientLang;
+  if (isValidLang(targetLang)) {
     const lang = parseLangFromURL(location.pathname);
-    if (lang !== clientLang) {
-      location.replace(getLocalizedURL(location.pathname, clientLang));
+    if (lang !== targetLang) {
+      location.replace(getLocalizedURL(location.pathname, targetLang));
     }
   }
 };

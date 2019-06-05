@@ -21,8 +21,29 @@
   }
 }
 
-.emoji {
+.langEmoji {
   opacity: 0.6;
   filter: saturate(2) contrast(2);
   transform: scale(1.5);
+}
+
+.langLong {
+  @include respond-below(medium) {
+    display: none;
+  }
+}
+
+.langShort {
+  @include respond-above(medium) {
+    display: none;
+  }
+}
+
+.noSearch {
+  .langLong {
+    display: block;
+  }
+  .langShort {
+    display: none;
+  }
 }

@@ -2,7 +2,6 @@ import cx from 'classnames';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Wrap } from '@cocolist/thumbprint-react';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Search from './Search';
@@ -27,10 +26,12 @@ const Header = ({ location, showSearch }) => {
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   });
+  const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
   return (
     <header
       className={cx(styles.container, 'z-2 pb2 pt3 bg-white', {
         [styles.hasShadow]: isScrolled,
+        [styles.noSearch]: !showSearch,
       })}>
       <div className="flex items-center ph3">
         <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
@@ -43,25 +44,28 @@ const Header = ({ location, showSearch }) => {
             </div>
           )}
         </div>
-        <div className="tp-body-3 b nowrap">
+        <div className={cx(styles.lang, 'tp-body-3 b nowrap')}>
           {lang === 'en' ? (
-            <Link to={getLocalizedURL(location.pathname, 'vi')}>
-              <span className="dn m_dib mr2">
+            <Link
+              onClick={() => cacheLangPreference('vi')}
+              to={getLocalizedURL(location.pathname, 'vi')}>
+              <span className={styles.langLong}>
                 <span
-                  className={cx(styles.emoji, 'dib mr1')}
+                  className={cx(styles.langEmoji, 'dib mr1')}
                   role="img"
                   aria-label="Vietnam">
                   🇻🇳
                 </span>
                 tiếng Việt
               </span>
-              <span className="dib m_dn mr1">VN</span>
+              <span className={styles.langShort}>VN</span>
             </Link>
           ) : (
-            <Link to={getLocalizedURL(location.pathname, 'en')}>
-              <span className="dn l_dib mr2">Switch to English</span>
-              <span className="dn m_dib l_dn mr2">English</span>
-              <span className="dib m_dn mr1">EN</span>
+            <Link
+              onClick={() => cacheLangPreference('en')}
+              to={getLocalizedURL(location.pathname, 'en')}>
+              <span className={styles.langLong}>Switch to English</span>
+              <span className={styles.langShort}>EN</span>
             </Link>
           )}
         </div>
