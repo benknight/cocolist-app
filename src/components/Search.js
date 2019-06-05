@@ -133,6 +133,7 @@ const BusinessHit = ({ hit }) => {
 function Search({ className, location }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
+  const [query, setQuery] = useState('');
   const [focus, setFocus] = useState(false);
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
@@ -144,6 +145,7 @@ function Search({ className, location }) {
     <InstantSearch
       searchClient={searchClient}
       indexName={indexName}
+      onSearchStateChange={({ query }) => setQuery(query)}
       root={{ Root, props: { ref } }}>
       <div className={className}>
         <div className="relative z-1">
@@ -153,15 +155,17 @@ function Search({ className, location }) {
           className={cx(
             styles.results,
             { dn: !showResults },
-            'bg-gray-200 br2 br-bottom overflow-hidden',
+            'bg-gray-200 m_br3 overflow-hidden',
           )}>
           <div className="flex flex-column w-100 h-100">
             <div className="tp-body-3 pt3 bb b-gray-300">
               <RefinementList attribute={`badges_${lang}`} />
               <RefinementList attribute={`neighborhood_${lang}`} />
-              <RefinementList attribute={`category_${lang}`} />
+              {/* <RefinementList attribute={`category_${lang}`} /> */}
             </div>
-            <div className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}>
+            <div
+              className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}
+              style={{ '-webkit-overflow-scrolling': 'touch' }}>
               <Index indexName={indexName}>
                 <Results>
                   <InfiniteHits hitComponent={BusinessHit} />
@@ -170,10 +174,10 @@ function Search({ className, location }) {
             </div>
             <div
               className={cx(
-                'tp-body-3 black-300 b-gray-300 ph3 pv1 bt',
-                'flex items-center justify-between',
+                'tp-body-3 black-300 b-gray-300 ph3 pv2 bt',
+                'flex items-center',
               )}>
-              <Stats />
+              <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>
               <PoweredBy />
             </div>
           </div>

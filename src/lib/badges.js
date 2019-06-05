@@ -3,21 +3,27 @@ const _get = require('lodash/get');
 // Order determines display order
 const badges = [
   {
-    key: 'plasticFreeDelivery',
-    imageSmall: 'plastic-free-delivery-small.svg',
-    imageLarge: 'plastic-free-delivery-alt.svg',
-    title: 'plastic_free_delivery_label',
-    description: 'plastic_free_delivery_description',
-    test: survey =>
-      ['Always', 'Available on request'].indexOf(survey.Plastic_free_delivery) !== -1,
-  },
-  {
     key: 'noPlasticStraws',
     imageSmall: 'no-plastic-straws-small.svg',
     imageLarge: 'no-plastic-straws-alt.svg',
     title: 'no_plastic_straws_label',
     description: 'no_plastic_straws_description',
     test: survey => !!survey.No_plastic_straws,
+  },
+  {
+    key: 'plasticFreeDelivery',
+    imageSmall: 'plastic-free-delivery-small.svg',
+    imageLarge: 'plastic-free-delivery-alt.svg',
+    title: 'plastic_free_delivery_label',
+    description: 'plastic_free_delivery_description',
+    test: (survey, isStrict = false) => {
+      const always = survey.Plastic_free_delivery === 'Always';
+      const onRequest = survey.Plastic_free_delivery === 'Available on request';
+      if (isStrict) {
+        return always;
+      }
+      return always || onRequest;
+    },
   },
   {
     key: 'noPlasticBags',

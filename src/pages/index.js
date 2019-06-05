@@ -19,8 +19,8 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <title>Cocolist Saigon</title>
       </Helmet>
       <Header location={location} showSearch={false} />
-      <div className="pv7 ph3 m_mv5 m_ph7 mw9">
-        <div className="l_w-66">
+      <div className="pv6 mv2 ph3 m_mv5 m_ph6 m_pv7 l_ph7 mw9">
+        <div className="s_pr6 m_pr0 mw7">
           <h1 className="tp-title-1 mb3">
             <FormattedMessage
               id="headline_find_businesses"
@@ -31,13 +31,15 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <Search className="relative z-1" location={location} />
       </div>
       {badges.map(badge => (
-        <div className="flex flex-column l_flex-row items-center mb6" key={badge.key}>
-          <div className="m_flex items-center mv4 m_mv6 ph4 m_ph6 tc m_tl">
+        <div
+          className="flex flex-column l_flex-row items-center m_items-start mb4 m_mb6"
+          key={badge.key}>
+          <div className="m_flex items-center m_mv5 ph4 m_pl6 l_pl7 l_pr6 tc m_tl">
             <img
               alt={formatMessage({ id: badge.title })}
               src={require(`../assets/badges/${badge.imageLarge}`)}
             />
-            <div className="m_ml3 mw7">
+            <div className="m_ml3 m_pr7 l_pr0 mw7">
               <h2 className="tp-title-4">
                 <FormattedMessage id={badge.title} />
               </h2>
@@ -49,17 +51,26 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
               </div>
             </div>
           </div>
-          <div className="flex flex-nowrap overflow-auto w-100 ph3 m_ph0">
+          <div
+            className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
+            style={{ '-webkit-overflow-scrolling': 'touch' }}>
             {_shuffle(
               data.surveys.edges
                 .map(({ node: { data: survey } }) => survey)
-                .filter(survey => badge.test(survey)),
-            ).map(survey => {
+                .filter(survey => badge.test(survey, true))
+                .filter(survey => {
+                  return !!_get(
+                    survey,
+                    'Business_Record_Match[0].data.Photos.localFiles[0].childImageSharp.fluid',
+                  );
+                }),
+            ).map((survey, index) => {
               const biz = survey.Business_Record_Match[0].data;
               const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
               return (
                 <Link
-                  className="db pr1 w6 flex-shrink-0"
+                  className="db pr1 pv4 w6 flex-shrink-0"
+                  key={index}
                   to={getLocalizedURL(`/${biz.URL_Key}`, lang)}>
                   {thumbnail && (
                     <Img
@@ -69,8 +80,8 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                       objectFit="contain"
                     />
                   )}
-                  <div className="tp-body-2 b black mt1 mb3">
-                    {survey.Business_Record_Match[0].data.Name}
+                  <div className="tp-body-2 black mt1">
+                    <div className="b">{biz.Name}</div>
                   </div>
                 </Link>
               );

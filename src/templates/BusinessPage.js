@@ -129,7 +129,7 @@ const BusinessPage = props => {
               {bizBadges.map(badge => (
                 <div
                   key={badge.key}
-                  className="pa3 flex items-center l_flex-column l_w-25 l_pr5 l_pv0">
+                  className="flex items-center l_flex-column l_w-25 l_mb4 pa3 l_pr5 l_pv0">
                   <div
                     className={cx(
                       styles.badgeImage,

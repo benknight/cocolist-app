@@ -88,14 +88,14 @@ function parseSections(data) {
       ],
     },
   ];
-  sections.forEach(section => {
-    section.items = section.items.sort((a, b) => {
-      if (!b[1] || b[1].indexOf('Not used') !== -1) {
-        return -1;
-      }
-      return 0;
-    });
-  });
+  // sections.forEach(section => {
+  //   section.items = section.items.sort((a, b) => {
+  //     if (!b[1] || b[1].indexOf('Not used') !== -1) {
+  //       return -1;
+  //     }
+  //     return 0;
+  //   });
+  // });
   return sections;
 }
 

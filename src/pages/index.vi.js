@@ -1,5 +1,8 @@
 import { graphql } from 'gatsby';
-export { default } from './index';
+import React from 'react';
+import Index from './index';
+
+export default props => <Index {...props} />;
 
 export const query = graphql`
   query {

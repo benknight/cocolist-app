@@ -49,15 +49,7 @@ const Header = ({ location, showSearch }) => {
             <Link
               onClick={() => cacheLangPreference('vi')}
               to={getLocalizedURL(location.pathname, 'vi')}>
-              <span className={styles.langLong}>
-                <span
-                  className={cx(styles.langEmoji, 'dib mr1')}
-                  role="img"
-                  aria-label="Vietnam">
-                  🇻🇳
-                </span>
-                tiếng Việt
-              </span>
+              <span className={styles.langLong}>tiếng Việt</span>
               <span className={styles.langShort}>VN</span>
             </Link>
           ) : (
