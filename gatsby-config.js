@@ -81,6 +81,7 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Food & Beverage Survey',
+            tableLinks: ['Business_Record_Match'],
             defaultValues: {
               Food_waste_programs: [],
               Menu: [],

@@ -1,9 +1,13 @@
+@import '~@cocolist/thumbprint-tokens/dist/scss/_index';
 @import '../styles/mixins';
 
 .container {
-  z-index: 1;
   position: sticky;
   top: 0;
+}
+
+.container.hasShadow {
+  box-shadow: $tp-shadow__card;
 }
 
 .logo {
@@ -13,7 +17,7 @@
 
 .searchWrapper {
   @include respond-above(large) {
-    width: 800px;
+    width: 600px;
   }
 }
 

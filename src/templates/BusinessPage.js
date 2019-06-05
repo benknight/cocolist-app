@@ -63,7 +63,7 @@ const BusinessPage = props => {
       <Header location={props.location} />
 
       <Wrap bleedBelow="medium">
-        <div className="m_pv4 l_pv5">
+        <div className="m_pv4 l_pv6">
           <div className="m_flex items-end mb5">
             <div className="m_w-33 order-1">
               {thumbnail && (
@@ -128,7 +128,7 @@ const BusinessPage = props => {
             <div className="mv4 b-gray-300 m_mt0 m_mb5 m_pb5 m_bb l_flex flex-wrap">
               {bizBadges.map(badge => (
                 <div
-                  key={badge.title}
+                  key={badge.key}
                   className="pa3 flex items-center l_flex-column l_w-25 l_pr5 l_pv0">
                   <div
                     className={cx(

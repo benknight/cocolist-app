@@ -1,5 +1,6 @@
 import cx from 'classnames';
 import { Link } from 'gatsby';
+import PropTypes from 'prop-types';
 import React, { useState, useEffect, createRef } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
@@ -129,7 +130,7 @@ const BusinessHit = ({ hit }) => {
   );
 };
 
-function Search({ collapse, location }) {
+function Search({ className, location }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [focus, setFocus] = useState(false);
@@ -144,7 +145,7 @@ function Search({ collapse, location }) {
       searchClient={searchClient}
       indexName={indexName}
       root={{ Root, props: { ref } }}>
-      <div className="m_relative">
+      <div className={className}>
         <div className="relative z-1">
           <SearchInput onFocus={() => setFocus(true)} />
         </div>
@@ -152,15 +153,15 @@ function Search({ collapse, location }) {
           className={cx(
             styles.results,
             { dn: !showResults },
-            'absolute left-0 bg-white w-100 br2 br-bottom overflow-hidden',
+            'bg-gray-200 br2 br-bottom overflow-hidden',
           )}>
           <div className="flex flex-column w-100 h-100">
-            <div className="tp-body-3 pt3 bb b-gray-300 bg-gray-200">
+            <div className="tp-body-3 pt3 bb b-gray-300">
               <RefinementList attribute={`badges_${lang}`} />
               <RefinementList attribute={`neighborhood_${lang}`} />
               <RefinementList attribute={`category_${lang}`} />
             </div>
-            <div className={cx(styles.hitsWrapper, 'flex-auto overflow-auto')}>
+            <div className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}>
               <Index indexName={indexName}>
                 <Results>
                   <InfiniteHits hitComponent={BusinessHit} />
@@ -181,5 +182,10 @@ function Search({ collapse, location }) {
     </InstantSearch>
   );
 }
+
+Search.propTypes = {
+  className: PropTypes.string,
+  location: PropTypes.object.isRequired,
+};
 
 export default Search;

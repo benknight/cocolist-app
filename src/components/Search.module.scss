@@ -17,19 +17,26 @@
 }
 
 .results {
-  top: 100%;
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  left: -6px;
   height: calc(100vh - 100%);
+  padding-top: 45px;
   box-shadow: $tp-shadow__card;
 
   @include respond-above(medium) {
     height: 75vh;
-    margin-top: -3px;
+  }
+
+  @include respond-above(large) {
+    min-width: $tp-wrap__max-width;
   }
 
   :global(.ais-RefinementList) {
     overflow: auto;
     margin-bottom: $tp-space__2;
-    padding: 0 $tp-space__3 $tp-space__2;
+    padding: 0 $tp-space__2 $tp-space__1;
 
     ul {
       white-space: nowrap;
