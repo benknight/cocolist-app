@@ -165,7 +165,7 @@ function Search({ className, location }) {
             </div>
             <div
               className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}
-              style={{ '-webkit-overflow-scrolling': 'touch' }}>
+              style={{ WebkitOverflowScrolling: 'touch' }}>
               <Index indexName={indexName}>
                 <Results>
                   <InfiniteHits hitComponent={BusinessHit} />

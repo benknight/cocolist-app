@@ -53,7 +53,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
           </div>
           <div
             className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
-            style={{ '-webkit-overflow-scrolling': 'touch' }}>
+            style={{ WebkitOverflowScrolling: 'touch' }}>
             {_shuffle(
               data.surveys.edges
                 .map(({ node: { data: survey } }) => survey)
