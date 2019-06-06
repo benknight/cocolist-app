@@ -44,6 +44,7 @@
   "scripts": {
     "build": "gatsby build",
     "deploy": "firebase deploy",
+    "deploy-functions": "firebase deploy --only functions",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "start": "gatsby develop -H 0.0.0.0 -p 8000",
     "serve": "gatsby serve",
