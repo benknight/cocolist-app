@@ -14,7 +14,7 @@ import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 const Index = ({ data, intl: { formatMessage }, location }) => {
   const lang = parseLangFromURL(location.pathname);
   return (
-    <Page location={location}>
+    <Page location={location} isPrivate>
       <Helmet>
         <title>Cocolist Saigon</title>
       </Helmet>

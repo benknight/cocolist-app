@@ -20,6 +20,7 @@ function HTML(props) {
           href="//fonts.googleapis.com/css?family=Montserrat:400,500,700"
           rel="stylesheet"
         />
+        <title>Cocolist</title>
         {props.headComponents}
       </head>
       <body {...props.bodyAttributes}>
@@ -36,7 +37,7 @@ function HTML(props) {
             __html: `
             // Your web app's Firebase configuration
             var firebaseConfig = {
-              apiKey: '${process.env.FIREBASE_API_KEY}',
+              apiKey: '${process.env.GATSBY_FIREBASE_API_KEY}',
               authDomain: 'cocolist-app.firebaseapp.com',
               databaseURL: 'https://cocolist-app.firebaseio.com',
               projectId: 'cocolist-app',

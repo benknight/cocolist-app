@@ -20,19 +20,25 @@ class Page extends React.PureComponent {
     firebase.auth().onAuthStateChanged(user => {
       if ((isPrivate && user === null) || firebaseauthui.isPendingRedirect()) {
         firebaseauthui.start('#firebaseui-auth-container', {
+          callbacks: {
+            signInSuccessWithAuthResult: authResult => {
+              return false;
+            },
+          },
           signInOptions: [
             {
               provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
-              requireDisplayName: true,
               signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
             },
           ],
         });
       }
-      if (user) {
+      if (user && !user.disabled) {
         this.setState({
           user: _pick(user, ['accessToken', 'displayName', 'email', 'uid']),
         });
+      } else {
+        this.setState({ user: null });
       }
     });
   }
@@ -40,19 +46,21 @@ class Page extends React.PureComponent {
   render() {
     const { className, children, isPrivate } = this.props;
 
-    let content;
+    let content = null;
 
     if (isPrivate && !this.state.user) {
-      content = (
-        <div className="tc mv4">
-          <img
-            alt=""
-            className="ma0"
-            src={logo}
-            style={{ width: '4rem', height: 'auto' }}
-          />
-        </div>
-      );
+      if (this.state.user === null) {
+        content = (
+          <div className="tc mv4 s_mt7">
+            <img
+              alt=""
+              className="ma0"
+              src={logo}
+              style={{ width: '4rem', height: 'auto' }}
+            />
+          </div>
+        );
+      }
     } else {
       content = (
         <UserContext.Provider value={this.state.user}>
