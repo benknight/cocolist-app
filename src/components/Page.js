@@ -33,7 +33,7 @@ class Page extends React.PureComponent {
           ],
         });
       }
-      if (user && !user.disabled) {
+      if (user && !user.disabled && !firebaseauthui.isPendingRedirect()) {
         this.setState({
           user: _pick(user, ['accessToken', 'displayName', 'email', 'uid']),
         });
