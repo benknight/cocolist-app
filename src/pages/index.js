@@ -4,7 +4,7 @@ import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { ThemedLink, Wrap } from '@cocolist/thumbprint-react';
+import { ThemedLink } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Header from '../components/Header';
 import Page from '../components/Page';
