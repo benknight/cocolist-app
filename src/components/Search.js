@@ -158,9 +158,15 @@ function Search({ className, location }) {
             'bg-gray-200 m_br3 overflow-hidden',
           )}>
           <div className="flex flex-column w-100 h-100">
-            <div className="tp-body-3 pt3 bb b-gray-300">
-              <RefinementList attribute={`badges_${lang}`} />
-              <RefinementList attribute={`neighborhood_${lang}`} />
+            <div className="tp-body-3 bb b-gray-300">
+              <RefinementList
+                attribute={`badges_${lang}`}
+                transformItems={items => items.sort((a, b) => b.count - a.count)}
+              />
+              <RefinementList
+                attribute={`neighborhood_${lang}`}
+                transformItems={items => items.sort((a, b) => b.count - a.count)}
+              />
               {/* <RefinementList attribute={`category_${lang}`} /> */}
             </div>
             <div

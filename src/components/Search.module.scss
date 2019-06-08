@@ -38,7 +38,7 @@
 
   :global(.ais-RefinementList) {
     overflow: auto;
-    margin-bottom: $tp-space__2;
+    margin: $tp-space__3 0 $tp-space__2;
     padding: 0 $tp-space__2 $tp-space__1;
 
     ul {
@@ -57,6 +57,7 @@
     margin-right: $tp-space__2;
     border: 1px solid $tp-color__gray;
     border-radius: $tp-border-radius__sides;
+    font-weight: 500;
 
     &, & > * {
       cursor: pointer;
@@ -66,7 +67,6 @@
       background-color: $tp-color__green;
       border-color: $tp-color__green;
       color: $tp-color__white;
-      font-weight: 500;
     }
 
     &:last-child {
