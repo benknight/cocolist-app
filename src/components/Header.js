@@ -33,11 +33,11 @@ const Header = ({ location, showSearch }) => {
         [styles.hasShadow]: isScrolled,
         [styles.noSearch]: !showSearch,
       })}>
-      <div className="flex items-center ph3">
-        <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
+      <div className="flex items-center pl3 m_pr3">
+        <Link className="inline-flex mb1 mr3 m_mr4" to={getLocalizedURL('/', lang)}>
           <img alt="logo" className={styles.logo} src={logo} />
         </Link>
-        <div className="mh3 m_mh4 flex-auto">
+        <div className="flex-auto">
           {showSearch && (
             <div className={styles.searchWrapper}>
               <Search className="m_relative" location={location} />
@@ -49,15 +49,15 @@ const Header = ({ location, showSearch }) => {
             <Link
               onClick={() => cacheLangPreference('vi')}
               to={getLocalizedURL(location.pathname, 'vi')}>
-              <span className={styles.langLong}>tiếng Việt</span>
-              <span className={styles.langShort}>VN</span>
+              <span className={cx(styles.langLong, 'mr2 pr1')}>tiếng Việt</span>
+              <span className={cx(styles.langShort, 'pa3')}>VN</span>
             </Link>
           ) : (
             <Link
               onClick={() => cacheLangPreference('en')}
               to={getLocalizedURL(location.pathname, 'en')}>
-              <span className={styles.langLong}>Switch to English</span>
-              <span className={styles.langShort}>EN</span>
+              <span className={cx(styles.langLong, 'mr2 pr1')}>Switch to English</span>
+              <span className={cx(styles.langShort, 'pa3')}>EN</span>
             </Link>
           )}
         </div>
