@@ -4,6 +4,7 @@ import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
+import { ThemedLink, Wrap } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Header from '../components/Header';
 import Page from '../components/Page';
@@ -23,7 +24,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <div className="s_pr6 m_pr0 mw7">
           <h1 className="tp-title-1 mb3">
             <FormattedMessage
-              id="headline_find_businesses"
+              id="find_businesses_headline"
               values={{ city: formatMessage({ id: 'Saigon' }) }}
             />
           </h1>
@@ -89,6 +90,14 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
           </div>
         </div>
       ))}
+      <div className="bg-gray-300 ph4 tc pv6">
+        <div className="tp-title-2 mb5">
+          <FormattedMessage id="add_business_headline" />
+        </div>
+        <ThemedLink to="https://airtable.com/shrw4zfDcry512acj" shouldOpenInNewTab>
+          <FormattedMessage id="add_business_button_label" />
+        </ThemedLink>
+      </div>
     </Page>
   );
 };
