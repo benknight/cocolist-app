@@ -104,7 +104,7 @@ const BusinessPage = props => {
                   <div>
                     {links.map(([link, url], index) => (
                       <div key={link} className="dib mr1">
-                        <TPLink to={url} shouldOpenInNewTab>
+                        <TPLink to={url} theme="inherit" shouldOpenInNewTab>
                           <FormattedMessage id={link.toLowerCase()} />
                         </TPLink>
                         {index !== links.length - 1 && ', '}
