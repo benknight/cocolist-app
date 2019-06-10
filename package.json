@@ -6,7 +6,7 @@
     "@cocolist/thumbprint-global-css": "^0.1.9-0",
     "@cocolist/thumbprint-react": "^3.1.0-0",
     "@cocolist/thumbprint-scss": "^1.0.5",
-    "@cocolist/thumbprint-tokens": "^8.0.2",
+    "@cocolist/thumbprint-tokens": "^8.0.2-0",
     "@thumbtack/thumbprint-icons": "^2.12.1",
     "algoliasearch": "^3.33.0",
     "classnames": "^2.2.6",
