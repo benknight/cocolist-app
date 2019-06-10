@@ -31,6 +31,8 @@ const businessQuery = `
                 Plastic_free_delivery
                 Refill_my_bottle
                 Status
+                Kitchen_points
+                Food_waste_programs
               }
             }
           }
