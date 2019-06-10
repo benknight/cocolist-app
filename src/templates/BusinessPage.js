@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 import _get from 'lodash/get';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   ContentActionsEditSmall,
   ContentActionsFlagSmall,
@@ -13,16 +13,21 @@ import {
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { Button, Link as TPLink, TextButton, Wrap } from '@cocolist/thumbprint-react';
+import fresh from '../assets/fresh.svg';
 import FNBSurveyView from '../components/FNBSurveyView';
 import Header from '../components/Header';
 import Page from '../components/Page';
+import Rating from '../components/Rating';
 import { getBadgesFromSurvey } from '../lib/badges';
 import styles from './BusinessPage.module.scss';
 
 const BusinessPage = props => {
   const {
-    airtable: { data: biz },
-  } = props.data;
+    data: {
+      airtable: { data: biz },
+    },
+    intl: { formatMessage },
+  } = props;
 
   const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
 
@@ -58,13 +63,21 @@ const BusinessPage = props => {
 
   return (
     <Page {...props}>
-      <Helmet title={biz.Name} />
+      <Helmet>
+        <title>
+          {biz.Name} &ndash;{' '}
+          {formatMessage({
+            id: 'eco_friendly_biz_in_vn',
+            city: formatMessage({ id: 'Saigon' }),
+          })}
+        </title>
+      </Helmet>
 
       <Header location={props.location} />
 
       <Wrap bleedBelow="medium">
         <div className="m_pv4 l_pv6">
-          <div className="m_flex items-end mb5">
+          <div className="m_flex justify-between mb5">
             <div className="m_w-33 order-1">
               {thumbnail && (
                 <div className={cx(styles.thumbnailWrapper, 'l_ph4')}>
@@ -72,10 +85,30 @@ const BusinessPage = props => {
                 </div>
               )}
             </div>
-            <div className="ph3 m_pv0 order-0 flex-auto">
-              <h1 className="tp-title-1 mb2 mt3 l_mt0">{biz.Name}</h1>
-              <div className="tp-body-1">
-                <div className="flex items-center">
+            <div className="ph3 m_pv0 order-0 self-end">
+              <h1 className="tp-title-1 mb2 mt3 l_mt0">
+                {bizBadges.length > 3 ? (
+                  <>
+                    <img
+                      alt="Fresh"
+                      className={cx(styles.fresh, 'l_ml4 h4')}
+                      src={fresh}
+                    />
+                    {biz.Name}
+                  </>
+                ) : (
+                  <>
+                    {biz.Name}{' '}
+                    <Rating
+                      badgeCount={bizBadges.length}
+                      points={biz.Coco_Points}
+                      size="large"
+                    />
+                  </>
+                )}
+              </h1>
+              <div className="tp-body-2">
+                <div className="flex items-start">
                   <ContentModifierListSmall className="w1 mr2" />
                   <div>
                     {cats.map((cat, index) => (
@@ -273,4 +306,4 @@ export const query = graphql`
   }
 `;
 
-export default BusinessPage;
+export default injectIntl(BusinessPage);

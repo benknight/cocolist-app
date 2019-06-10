@@ -8,6 +8,10 @@
   width: 60px;
 }
 
+.fresh {
+  float: right;
+}
+
 @include respond-above(large) {
   .badgeImage {
     width: 100px;

@@ -21,6 +21,7 @@ import {
   Link as TPLink,
 } from '@cocolist/thumbprint-react';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
+import Rating from './Rating';
 import styles from './Search.module.scss';
 
 const indexName = 'Businesses';
@@ -119,7 +120,8 @@ const BusinessHit = ({ hit }) => {
   return (
     <Link className="db ph3 pv2 m_pv3 bb b-gray-300" to={linkTo}>
       <div className="tp-title-6 black">
-        <Highlight attribute="name" hit={hit} tagName="mark" />
+        <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
+        <Rating badgeCount={hit.badges_en.length} points={hit.coco_points} />
       </div>
       <div className="tp-body-3 black-300">
         <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
