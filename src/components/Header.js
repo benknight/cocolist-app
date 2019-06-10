@@ -29,9 +29,11 @@ const Header = ({ location, showSearch }) => {
   const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
   return (
     <header
-      className={cx(styles.container, 'z-2 pb2 pt3 bg-white', {
+      className={cx(styles.container, 'z-2 pb2 bg-white', {
         [styles.hasShadow]: isScrolled,
         [styles.noSearch]: !showSearch,
+        pt2: showSearch,
+        pt3: !showSearch,
       })}>
       <div className="flex items-center pl3 m_pr3">
         <Link className="inline-flex mb1 mr3 m_mr4" to={getLocalizedURL('/', lang)}>

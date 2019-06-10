@@ -29,7 +29,7 @@
     right: -1 * $tp-space__1;
     left: -1 * $tp-space__1;
     height: 75vh;
-    padding-top: 45px;
+    padding-top: 60px;
   }
 
   // @include respond-above(large) {
@@ -38,7 +38,7 @@
 
   :global(.ais-RefinementList) {
     overflow: auto;
-    margin: $tp-space__3 0 $tp-space__2;
+    margin: $tp-space__2 0;
     padding: 0 $tp-space__2 $tp-space__1;
 
     ul {

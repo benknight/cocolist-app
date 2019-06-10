@@ -13,7 +13,7 @@ import {
   connectSearchBox,
 } from 'react-instantsearch-dom';
 import algoliasearch from 'algoliasearch/lite';
-import { NavigationSearchSmall } from '@thumbtack/thumbprint-icons';
+import { NavigationSearchMedium } from '@thumbtack/thumbprint-icons';
 import {
   Input,
   InputClearButton,
@@ -69,7 +69,7 @@ let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
         aria-label={formatMessage({ id: 'search_placeholder' })}
         innerLeft={
           <InputIcon>
-            <NavigationSearchSmall />
+            <NavigationSearchMedium />
           </InputIcon>
         }
         innerRight={
@@ -88,7 +88,7 @@ let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
           refine(value);
           // }
         }}
-        size="small"
+        size="large"
         value={value}
         {...props}
       />
@@ -180,7 +180,7 @@ function Search({ className, location }) {
             </div>
             <div
               className={cx(
-                'tp-body-3 black-300 b-gray-300 ph3 pv2 bt',
+                'tp-body-3 black-300 b-gray-300 ph3 pv2 bt bg-white',
                 'flex items-center',
               )}>
               <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>

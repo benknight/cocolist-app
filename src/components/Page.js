@@ -28,6 +28,7 @@ class Page extends React.PureComponent {
           signInOptions: [
             {
               provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+              requireDisplayName: true,
               signInMethod: firebase.auth.EmailAuthProvider.EMAIL_LINK_SIGN_IN_METHOD,
             },
           ],

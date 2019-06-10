@@ -90,7 +90,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
           </div>
         </div>
       ))}
-      <div className="bg-gray-300 ph4 tc pv6">
+      <div className="ph4 tc pv6">
         <div className="tp-title-2 mb5">
           <FormattedMessage id="add_business_headline" />
         </div>

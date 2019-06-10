@@ -11,6 +11,14 @@ const badges = [
     test: survey => !!survey.No_plastic_straws,
   },
   {
+    key: 'noPlasticBags',
+    imageSmall: 'no-plastic-bags-small.svg',
+    imageLarge: 'no-plastic-bags-alt.svg',
+    title: 'no_plastic_bags_label',
+    description: 'no_plastic_bags_description',
+    test: survey => !!survey.No_plastic_bags,
+  },
+  {
     key: 'plasticFreeDelivery',
     imageSmall: 'plastic-free-delivery-small.svg',
     imageLarge: 'plastic-free-delivery-alt.svg',
@@ -24,14 +32,6 @@ const badges = [
       }
       return always || onRequest;
     },
-  },
-  {
-    key: 'noPlasticBags',
-    imageSmall: 'no-plastic-bags-small.svg',
-    imageLarge: 'no-plastic-bags-alt.svg',
-    title: 'no_plastic_bags_label',
-    description: 'no_plastic_bags_description',
-    test: survey => !!survey.No_plastic_bags,
   },
   {
     key: 'byoc',
