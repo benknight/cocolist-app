@@ -6,7 +6,7 @@ import React from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { TextButton } from '@cocolist/thumbprint-react';
 import { ContentActionsEditSmall } from '@thumbtack/thumbprint-icons';
-import styles from './FNBSurveyView.module.scss';
+import styles from './SurveyView.module.scss';
 
 function parseSections(data) {
   const sections = [
@@ -108,7 +108,7 @@ function getBusinessEditLink(businessName, sectionName, key, values) {
   return `https://airtable.com/shrLDJ9fpWFhReI0S?${queryString.stringify(prefill)}`;
 }
 
-const FNBSurveyView = ({ businessName, data, intl: { formatMessage } }) => {
+const SurveyView = ({ businessName, data, intl: { formatMessage } }) => {
   const sections = parseSections(data).filter(section => !_isEmpty(section.items));
   const columns = [
     sections.slice(0, Math.ceil(sections.length / 2)),
@@ -174,9 +174,9 @@ const FNBSurveyView = ({ businessName, data, intl: { formatMessage } }) => {
   );
 };
 
-FNBSurveyView.propTypes = {
+SurveyView.propTypes = {
   businessName: PropTypes.string.isRequired,
   data: PropTypes.object.isRequired,
 };
 
-export default injectIntl(FNBSurveyView);
+export default injectIntl(SurveyView);

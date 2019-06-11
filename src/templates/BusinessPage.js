@@ -14,7 +14,7 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import { Button, Link as TPLink, TextButton, Wrap } from '@cocolist/thumbprint-react';
 import fresh from '../assets/fresh.svg';
-import FNBSurveyView from '../components/FNBSurveyView';
+import SurveyView from '../components/SurveyView';
 import Header from '../components/Header';
 import Page from '../components/Page';
 import Rating from '../components/Rating';
@@ -199,7 +199,7 @@ const BusinessPage = props => {
 
           {fbSurvey ? (
             <div className="ph3">
-              <FNBSurveyView businessName={biz.Name} data={fbSurvey} />
+              <SurveyView businessName={biz.Name} data={fbSurvey} />
             </div>
           ) : (
             <div className="lh-copy bg-gray-200 pa4 tc mt4 flex flex-column items-center">
