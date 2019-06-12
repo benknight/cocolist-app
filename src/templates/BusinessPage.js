@@ -6,18 +6,18 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
-  ContentActionsEditSmall,
   ContentActionsFlagSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
-import { Button, Link as TPLink, TextButton, Wrap } from '@cocolist/thumbprint-react';
+import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
 import fresh from '../assets/fresh.svg';
-import SurveyView from '../components/SurveyView';
+import EditBusinessButton from '../components/EditBusinessButton';
 import Header from '../components/Header';
 import Page from '../components/Page';
 import Rating from '../components/Rating';
+import SurveyView from '../components/SurveyView';
 import { getBadgesFromSurvey } from '../lib/badges';
 import styles from './BusinessPage.module.scss';
 
@@ -31,7 +31,7 @@ const BusinessPage = props => {
 
   const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
 
-  const fbSurvey = (biz.F_B_Survey || [])
+  const survey = (biz.F_B_Survey || [])
     .map(({ data }) => data)
     .find(({ Status }) => Status === 'Published');
 
@@ -41,7 +41,7 @@ const BusinessPage = props => {
     .map(cat => cat.data.Name)
     .slice(0, 3);
 
-  const bizBadges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
+  const bizBadges = survey ? getBadgesFromSurvey(survey) : [];
 
   const links = [];
 
@@ -51,61 +51,49 @@ const BusinessPage = props => {
     }
   });
 
-  const onEditBusiness = () => {
-    window.open(
-      `https://airtable.com/shrw4zfDcry512acj?${_get(
-        fbSurvey,
-        'Survey_Prefill_Query_String',
-        '',
-      )}`,
-    );
-  };
-
   return (
     <Page {...props}>
       <Helmet>
         <title>
           {biz.Name} &ndash;{' '}
-          {formatMessage({
-            id: 'eco_friendly_biz_in_vn',
-            city: formatMessage({ id: 'Saigon' }),
-          })}
+          {formatMessage(
+            {
+              id: 'eco_friendly_biz_in_vn',
+            },
+            { city: formatMessage({ id: 'Saigon' }) },
+          )}
         </title>
       </Helmet>
 
       <Header location={props.location} />
 
-      <Wrap bleedBelow="medium">
-        <div className="m_pv4 l_pv6">
-          <div className="m_flex justify-between mb5">
-            <div className="m_w-33 order-1">
+      <div className="m_pv4 l_pv6">
+        <Wrap bleedBelow="medium">
+          <div className="m_flex justify-between items-center mb5">
+            <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
               {thumbnail && (
-                <div className={cx(styles.thumbnailWrapper, 'l_ph4')}>
+                <div className={styles.thumbnailWrapper}>
                   <Img alt="logo" fluid={thumbnail} objectFit="contain" />
                 </div>
               )}
             </div>
-            <div className="ph3 m_pv0 order-0 self-end">
+            <div className="ph3 s_ph5 m_ph0 order-0">
               <h1 className="tp-title-1 mb2 mt3 l_mt0">
-                {bizBadges.length > 3 ? (
-                  <>
+                <>
+                  {bizBadges.length > 3 && (
                     <img
                       alt="Fresh"
-                      className={cx(styles.fresh, 'l_ml4 h4')}
+                      className={cx(styles.fresh, 'm_mh4 l_mr6 h4')}
                       src={fresh}
                     />
-                    {biz.Name}
-                  </>
-                ) : (
-                  <>
-                    {biz.Name}{' '}
-                    <Rating
-                      badgeCount={bizBadges.length}
-                      points={biz.Coco_Points}
-                      size="large"
-                    />
-                  </>
-                )}
+                  )}
+                  {biz.Name}{' '}
+                  <Rating
+                    badgeCount={bizBadges.length}
+                    points={survey && survey.Coco_Points}
+                    size="large"
+                  />
+                </>
               </h1>
               <div className="tp-body-2">
                 <div className="flex items-start">
@@ -147,61 +135,14 @@ const BusinessPage = props => {
                 </div>
               )}
               <div className="tp-body-2 mv1">
-                <TextButton
-                  onClick={onEditBusiness}
-                  iconLeft={<ContentActionsEditSmall className="w1" />}
-                  theme="inherit">
-                  <FormattedMessage id="edit_business_action_label" />
-                </TextButton>
+                <EditBusinessButton survey={survey} />
               </div>
             </div>
           </div>
+        </Wrap>
 
-          {bizBadges.length > 0 && (
-            <div className="mv4 b-gray-300 m_mt0 m_mb5 m_pb5 m_bb l_flex flex-wrap">
-              {bizBadges.map(badge => (
-                <div
-                  key={badge.key}
-                  className="flex items-center l_flex-column l_w-25 l_mb4 pa3 l_pr5 l_pv0">
-                  <div
-                    className={cx(
-                      styles.badgeImage,
-                      'self-start flex-shrink-0 mr3 l_mb3',
-                    )}>
-                    <img
-                      alt=""
-                      className="dib l_dn w-100"
-                      src={require(`../assets/badges/${badge.imageSmall}`)}
-                    />
-                    <img
-                      alt=""
-                      className="dn l_dib w-100"
-                      src={require(`../assets/badges/${badge.imageLarge}`)}
-                    />
-                  </div>
-                  <div>
-                    <div className="tp-title-5 l_mb1" size={5}>
-                      <FormattedMessage id={badge.title} />
-                    </div>
-                    {badge.description && (
-                      <div className="tp-body-2 mw7">
-                        <FormattedMessage
-                          id={badge.description}
-                          values={{ business: biz.Name }}
-                        />
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {fbSurvey ? (
-            <div className="ph3">
-              <SurveyView businessName={biz.Name} data={fbSurvey} />
-            </div>
-          ) : (
+        {!survey && (
+          <Wrap bleedBelow="medium">
             <div className="lh-copy bg-gray-200 pa4 tc mt4 flex flex-column items-center">
               <NotificationAlertsWarningMedium />
               <h3 className="tp-title-4 mt3 mb2">
@@ -213,18 +154,76 @@ const BusinessPage = props => {
                   values={{ business: biz.Name }}
                 />
               </p>
-              <Button
-                icon={<ContentActionsEditSmall />}
-                onClick={onEditBusiness}
-                size="small"
-                theme="secondary"
-                to="https://cocolist.app/survey/fnb">
-                <FormattedMessage id="edit_business_action_label" />
-              </Button>
+              <EditBusinessButton survey={survey} theme="button" />
             </div>
+          </Wrap>
+        )}
+
+        <Wrap>
+          {bizBadges.length > 0 ? (
+            // Some badges
+            <div className="m_flex">
+              <div className="flex-auto m_pr6">
+                <div className="mv4 m_mt0 m_mb5 m_pb5 l_flex flex-wrap">
+                  {bizBadges.map(badge => (
+                    <div
+                      key={badge.key}
+                      className="flex items-center pv3 l_w-50 l_flex-column l_items-start">
+                      <div
+                        className={cx(
+                          styles.badgeImage,
+                          'self-start flex-shrink-0 mr3 l_mb3',
+                        )}>
+                        <img
+                          alt=""
+                          className="dib l_dn w-100"
+                          src={require(`../assets/badges/${badge.imageSmall}`)}
+                        />
+                        <img
+                          alt=""
+                          className="dn l_dib w-100"
+                          src={require(`../assets/badges/${badge.imageLarge}`)}
+                        />
+                      </div>
+                      <div>
+                        <div className="tp-title-5 l_mb1" size={5}>
+                          <FormattedMessage id={badge.title} />
+                        </div>
+                        {badge.description && (
+                          <div className="tp-body-2 measure l_pr6">
+                            <FormattedMessage
+                              id={badge.description}
+                              values={{ business: biz.Name }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+                {biz.From_the_Business && (
+                  <div className="mb5">
+                    <div className="tp-title-4 mb3">
+                      <FormattedMessage id="from_the_business_heading" />
+                    </div>
+                    <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                      {biz.From_the_Business}
+                    </div>
+                  </div>
+                )}
+              </div>
+              <div className={cx(styles.sidebar, 'flex-shrink-0')}>
+                <SurveyView businessName={biz.Name} survey={survey} />
+              </div>
+            </div>
+          ) : (
+            survey && (
+              // No badges
+              <SurveyView columns={2} businessName={biz.Name} survey={survey} />
+            )
           )}
-        </div>
-      </Wrap>
+        </Wrap>
+      </div>
     </Page>
   );
 };
@@ -233,13 +232,17 @@ export const query = graphql`
   query($slug: String!) {
     airtable(table: { eq: "Businesses" }, data: { URL_Key: { eq: $slug } }) {
       data {
+        Name
+        Facebook_Link
+        From_the_Business
+        Google_Maps_Link
+        VNMM_Link
         Category {
           data {
             Name
             Businesses
           }
         }
-        Name
         Neighborhood {
           data {
             Name
@@ -254,9 +257,6 @@ export const query = graphql`
             }
           }
         }
-        Facebook_Link
-        Google_Maps_Link
-        VNMM_Link
         F_B_Survey {
           data {
             Coco_Points

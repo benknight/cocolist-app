@@ -5,7 +5,6 @@ import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { ThemedLink } from '@cocolist/thumbprint-react';
-import { ContentActionsAddSmall } from '@thumbtack/thumbprint-icons';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import Header from '../components/Header';
 import Page from '../components/Page';
@@ -19,7 +18,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
     <Page location={location} isPrivate>
       <Helmet>
         <title>
-          Cocolist &ndash;{' '}
+          Cocolist {formatMessage({ id: 'Saigon' })} &ndash;{' '}
           {formatMessage(
             {
               id: 'find_businesses_headline',
@@ -38,7 +37,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
             />
           </h1>
         </div>
-        <Search className="relative z-1" location={location} />
+        <Search className="relative z-1" location={location} size="large" />
       </div>
       {badges.map(badge => (
         <div
@@ -103,10 +102,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <div className="tp-title-2 mb5">
           <FormattedMessage id="add_business_headline" />
         </div>
-        <ThemedLink
-          icon={<ContentActionsAddSmall />}
-          to="https://airtable.com/shrw4zfDcry512acj"
-          shouldOpenInNewTab>
+        <ThemedLink to="https://airtable.com/shrw4zfDcry512acj" shouldOpenInNewTab>
           <FormattedMessage id="add_business_button_label" />
         </ThemedLink>
       </div>

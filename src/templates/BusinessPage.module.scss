@@ -1,3 +1,4 @@
+@import '~@cocolist/thumbprint-tokens/dist/scss/_index';
 @import '../styles/mixins';
 
 .thumbnailWrapper {
@@ -12,8 +13,18 @@
   float: right;
 }
 
+@include respond-above(medium) {
+  .sidebar {
+    width: 240px;
+  }
+}
+
 @include respond-above(large) {
   .badgeImage {
     width: 100px;
+  }
+
+  .sidebar {
+    width: 320px;
   }
 }

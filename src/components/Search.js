@@ -13,7 +13,10 @@ import {
   connectSearchBox,
 } from 'react-instantsearch-dom';
 import algoliasearch from 'algoliasearch/lite';
-import { NavigationSearchMedium } from '@thumbtack/thumbprint-icons';
+import {
+  NavigationSearchMedium,
+  NavigationSearchSmall,
+} from '@thumbtack/thumbprint-icons';
 import {
   Input,
   InputClearButton,
@@ -70,7 +73,11 @@ let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
         aria-label={formatMessage({ id: 'search_placeholder' })}
         innerLeft={
           <InputIcon>
-            <NavigationSearchMedium />
+            {props.size === 'large' ? (
+              <NavigationSearchMedium />
+            ) : (
+              <NavigationSearchSmall />
+            )}
           </InputIcon>
         }
         innerRight={
@@ -89,7 +96,7 @@ let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
           refine(value);
           // }
         }}
-        size="large"
+        size={props.size}
         value={value}
         {...props}
       />
@@ -132,7 +139,7 @@ const BusinessHit = ({ hit }) => {
   );
 };
 
-function Search({ className, location }) {
+function Search({ className, location, size }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
@@ -151,7 +158,7 @@ function Search({ className, location }) {
       root={{ Root, props: { ref } }}>
       <div className={className}>
         <div className="relative z-1">
-          <SearchInput onFocus={() => setFocus(true)} />
+          <SearchInput onFocus={() => setFocus(true)} size={size} />
         </div>
         <div
           className={cx(
@@ -198,6 +205,7 @@ function Search({ className, location }) {
 Search.propTypes = {
   className: PropTypes.string,
   location: PropTypes.object.isRequired,
+  size: PropTypes.oneOf(['small', 'large']).isRequired,
 };
 
 export default Search;
