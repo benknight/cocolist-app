@@ -62,7 +62,7 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Businesses',
-            tableView: process.env.NODE_ENV === 'development' ? 'Dev' : undefined,
+            tableView: 'Published',
             tableLinks: ['F&B_Survey', 'Neighborhood', 'Category'],
             defaultValues: {
               Neighborhood: [],
