@@ -85,6 +85,7 @@ module.exports = {
             defaultValues: {
               Food_waste_programs: [],
               Menu: [],
+              Kitchen_waste_management: [],
             },
           },
           {
