@@ -1,0 +1,14 @@
+@import '../styles/mixins';
+
+.trash {
+  // @include respond-above(large) {
+  //   float: right;
+  // }
+}
+
+.hero {
+  height: 300px;
+  @include respond-above(small) {
+    height: 50vh;
+  }
+}

@@ -2,6 +2,7 @@ import cx from 'classnames';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { FormattedMessage } from 'react-intl';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Search from './Search';
@@ -44,22 +45,30 @@ const Header = ({ location, showSearch }) => {
             </div>
           )}
         </div>
-        <div className={cx(styles.lang, 'tp-body-3 b nowrap')}>
-          {lang === 'en' ? (
-            <Link
-              onClick={() => cacheLangPreference('vi')}
-              to={getLocalizedURL(location.pathname, 'vi')}>
-              <span className={cx(styles.langLong, 'mh2 ph1')}>tiếng Việt</span>
-              <span className={cx(styles.langShort, 'pa3')}>VN</span>
-            </Link>
-          ) : (
-            <Link
-              onClick={() => cacheLangPreference('en')}
-              to={getLocalizedURL(location.pathname, 'en')}>
-              <span className={cx(styles.langLong, 'mh2 ph1')}>Switch to English</span>
-              <span className={cx(styles.langShort, 'pa3')}>EN</span>
-            </Link>
-          )}
+        <div className="flex items-baseline tp-body-2 b nowrap">
+          <Link
+            activeClassName="tp-link--inherit"
+            className="tp-link dn m_db mh4"
+            to={getLocalizedURL('/about', lang)}>
+            <FormattedMessage id="header_link_about" />
+          </Link>
+          <div className={styles.lang}>
+            {lang === 'en' ? (
+              <Link
+                onClick={() => cacheLangPreference('vi')}
+                to={getLocalizedURL(location.pathname, 'vi')}>
+                <span className={cx(styles.langLong, 'mh2 ph1')}>Tiếng Việt</span>
+                <span className={cx(styles.langShort, 'pa3')}>VN</span>
+              </Link>
+            ) : (
+              <Link
+                onClick={() => cacheLangPreference('en')}
+                to={getLocalizedURL(location.pathname, 'en')}>
+                <span className={cx(styles.langLong, 'mh2 ph1')}>Switch to English</span>
+                <span className={cx(styles.langShort, 'pa3')}>EN</span>
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </header>
