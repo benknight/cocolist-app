@@ -155,7 +155,7 @@ const Section = injectIntl(
                   <div className="mr1">
                     {values &&
                       values.map((value, index) => (
-                        <React.Fragment key={value}>
+                        <React.Fragment key={`${key}-${index}`}>
                           <div className={styles.itemValue}>
                             <FormattedMessage id={value} />
                           </div>
@@ -204,7 +204,7 @@ const SurveyView = ({ businessName, columns, survey }) => {
       {_chunk(sections, columns).map((sections, index) => (
         <div key={`column-${index}`} className={cx(styles.column, 'flex-auto')}>
           {sections.map(section => (
-            <Section {...{ businessName, section, survey }} />
+            <Section {...{ businessName, key: section.title, section, survey }} />
           ))}
         </div>
       ))}
