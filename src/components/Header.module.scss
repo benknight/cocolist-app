@@ -4,6 +4,7 @@
 .container {
   position: sticky;
   top: 0;
+  font-size: $tp-font__body__2__size;
 }
 
 .container.hasShadow {
@@ -12,12 +13,12 @@
 
 .logo {
   width: auto;
-  height: 32px;
+  height: 38px;
 }
 
 .searchWrapper {
   @include respond-above(large) {
-    width: 700px;
+    width: 580px;
   }
 }
 
@@ -27,15 +28,22 @@
   transform: scale(1.5);
 }
 
-.langLong {
-  @include respond-below(medium) {
-    display: none;
-  }
+.langShort {
+  display: none;
 }
 
-.langShort {
-  @include respond-above(medium) {
-    display: none;
+.lang.truncate {
+  .langLong {
+    @include respond-below(medium) {
+      display: none;
+    }
+  }
+
+  .langShort {
+    display: block;
+    @include respond-above(medium) {
+      display: none;
+    }
   }
 }
 
@@ -45,5 +53,18 @@
   }
   .langShort {
     display: none;
+  }
+}
+
+.nav {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  box-shadow: 0 0 0 9999px white;
+
+  a {
+    display: block;
+    margin-bottom: $tp-space__2;
   }
 }
