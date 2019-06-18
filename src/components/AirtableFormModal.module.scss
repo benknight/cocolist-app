@@ -1,0 +1,7 @@
+@import '../styles/mixins.scss';
+
+.iframeContainer {
+  @include respond-above(small) {
+    height: 85vh;
+  }
+}

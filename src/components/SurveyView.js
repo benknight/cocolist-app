@@ -3,7 +3,6 @@ import _chunk from 'lodash/chunk';
 import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
-import queryString from 'query-string';
 import React, { useState } from 'react';
 import { injectIntl, FormattedMessage } from 'react-intl';
 import { TextButton } from '@cocolist/thumbprint-react';
@@ -11,7 +10,6 @@ import {
   ContentActionsEditSmall,
   NavigationCaretDownTiny,
 } from '@thumbtack/thumbprint-icons';
-import EditBusinessButton from './EditBusinessButton';
 import styles from './SurveyView.module.scss';
 
 function parseSections(survey) {
@@ -116,17 +114,8 @@ function parseSections(survey) {
   return sections;
 }
 
-function getBusinessEditLink(businessName, sectionName, key, values) {
-  const prefill = {
-    prefill_Business: businessName,
-    prefill_Field: `${key} (${sectionName})`,
-    'prefill_New Value': values,
-  };
-  return `https://airtable.com/shrLDJ9fpWFhReI0S?${queryString.stringify(prefill)}`;
-}
-
 const Section = injectIntl(
-  ({ businessName, intl: { formatMessage }, onClickEdit, section, survey }) => {
+  ({ intl: { formatMessage }, onClickEdit, section, survey }) => {
     const [isExpanded, setExpanded] = useState(false);
     const hasEmptyItems = section.items.find(
       ([key, values]) => _get(values, 'length', 0) === 0,
@@ -136,7 +125,12 @@ const Section = injectIntl(
         <div className="tp-title-4 mt0 mb4 flex items-baseline">
           <FormattedMessage id={section.title} />
           <div className="ml2">
-            <EditBusinessButton iconOnly survey={survey} />
+            <TextButton
+              accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
+              onClick={onClickEdit}
+              iconLeft={<ContentActionsEditSmall className="w1" />}
+              theme="inherit"
+            />
           </div>
         </div>
         <ul className="tp-body-3 ph0">
@@ -166,16 +160,7 @@ const Section = injectIntl(
                     <TextButton
                       accessibilityLabel="Edit this"
                       iconLeft={<ContentActionsEditSmall className="h1 o-70" />}
-                      onClick={() => {
-                        window.open(
-                          getBusinessEditLink(
-                            businessName,
-                            formatMessage({ id: section.title }),
-                            formatMessage({ id: key }),
-                            values,
-                          ),
-                        );
-                      }}
+                      onClick={onClickEdit}
                     />
                   </div>
                 </div>
@@ -197,14 +182,14 @@ const Section = injectIntl(
   },
 );
 
-const SurveyView = ({ businessName, columns, survey }) => {
+const SurveyView = ({ columns, onClickEdit, survey }) => {
   const sections = parseSections(survey).filter(section => !_isEmpty(section.items));
   return (
     <div className={cx(styles.container, 'm_flex flex-wrap')}>
       {_chunk(sections, columns).map((sections, index) => (
         <div key={`column-${index}`} className={cx(styles.column, 'flex-auto')}>
           {sections.map(section => (
-            <Section {...{ businessName, key: section.title, section, survey }} />
+            <Section {...{ key: section.title, onClickEdit, section, survey }} />
           ))}
         </div>
       ))}
@@ -213,8 +198,8 @@ const SurveyView = ({ businessName, columns, survey }) => {
 };
 
 SurveyView.propTypes = {
-  businessName: PropTypes.string.isRequired,
   columns: PropTypes.number,
+  onClickEdit: PropTypes.func.isRequired,
   survey: PropTypes.object.isRequired,
 };
 

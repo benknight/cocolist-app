@@ -2,10 +2,11 @@ import _get from 'lodash/get';
 import _shuffle from 'lodash/shuffle';
 import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
-import { ThemedLink } from '@cocolist/thumbprint-react';
+import { Button } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Page from '../components/Page';
 import Search from '../components/Search';
@@ -13,6 +14,7 @@ import { badges } from '../lib/badges';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 
 const Index = ({ data, intl: { formatMessage }, location }) => {
+  const [showAddBusinessModal, toggleAddBusinessModal] = useState(false);
   const lang = parseLangFromURL(location.pathname);
   return (
     <Page location={location} isPrivate>
@@ -102,10 +104,15 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <div className="tp-title-2 mb5">
           <FormattedMessage id="add_business_headline" />
         </div>
-        <ThemedLink to="https://airtable.com/shrw4zfDcry512acj" shouldOpenInNewTab>
+        <Button onClick={() => toggleAddBusinessModal(true)}>
           <FormattedMessage id="add_business_button_label" />
-        </ThemedLink>
+        </Button>
       </div>
+      <AirtableFormModal
+        formId="shrw4zfDcry512acj"
+        isOpen={showAddBusinessModal}
+        onCloseClick={() => toggleAddBusinessModal(false)}
+      />
     </Page>
   );
 };

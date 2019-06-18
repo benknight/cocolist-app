@@ -2,18 +2,19 @@ import cx from 'classnames';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import _get from 'lodash/get';
-import React from 'react';
+import React, { useState } from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
+  ContentActionsEditSmall,
   ContentActionsFlagSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
-import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
+import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-react';
 import fresh from '../assets/fresh.svg';
-import EditBusinessButton from '../components/EditBusinessButton';
+import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Page from '../components/Page';
 import Rating from '../components/Rating';
@@ -50,6 +51,8 @@ const BusinessPage = props => {
       links.push([link, biz[link].split(',')[0].trim()]);
     }
   });
+
+  const [showEditModal, toggleEditModal] = useState(false);
 
   return (
     <Page {...props}>
@@ -135,7 +138,13 @@ const BusinessPage = props => {
                 </div>
               )}
               <div className="tp-body-2 mv1">
-                <EditBusinessButton survey={survey} />
+                <TextButton
+                  accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
+                  onClick={() => toggleEditModal(true)}
+                  iconLeft={<ContentActionsEditSmall className="w1" />}
+                  theme="inherit">
+                  <FormattedMessage id="edit_business_action_label" />
+                </TextButton>
               </div>
             </div>
           </div>
@@ -154,7 +163,13 @@ const BusinessPage = props => {
                   values={{ business: biz.Name }}
                 />
               </p>
-              <EditBusinessButton survey={survey} theme="button" />
+              <Button
+                icon={<ContentActionsEditSmall />}
+                onClick={() => toggleEditModal(true)}
+                size="small"
+                theme="tertiary">
+                <FormattedMessage id="edit_business_action_label" />
+              </Button>
             </div>
           </Wrap>
         )}
@@ -213,7 +228,7 @@ const BusinessPage = props => {
                 )}
               </div>
               <div className={cx(styles.sidebar, 'flex-shrink-0')}>
-                <SurveyView businessName={biz.Name} survey={survey} />
+                <SurveyView survey={survey} onClickEdit={() => toggleEditModal(true)} />
               </div>
             </div>
           ) : (
@@ -224,6 +239,12 @@ const BusinessPage = props => {
           )}
         </Wrap>
       </div>
+      <AirtableFormModal
+        formId="shrw4zfDcry512acj"
+        isOpen={showEditModal}
+        onCloseClick={() => toggleEditModal(false)}
+        prefill={_get(survey, 'Survey_Prefill_Query_String', '')}
+      />
     </Page>
   );
 };

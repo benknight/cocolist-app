@@ -261,7 +261,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
             </li>
             <li>
               [4]{' '}
-              <TPLink to={urls.dineGreen}>
+              <TPLink to={urls.dineGreen} shouldOpenInNewTab>
                 “Green Restaurant Certification Standards”
               </TPLink>
               . Green Restaurant Association
