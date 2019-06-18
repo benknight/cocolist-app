@@ -5,12 +5,13 @@ module.exports = {
     author: 'Benjamin Knight',
     description: 'Find eco-conscious businesses in Saigon',
     title: 'Cocolist',
-    siteUrl: 'https://cocolist.app',
+    siteUrl: 'https://cocolist.vn',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-plugin-sass',
     'gatsby-plugin-sharp',
+    'gatsby-plugin-sitemap',
     'gatsby-transformer-sharp',
     {
       resolve: 'gatsby-plugin-algolia',
@@ -50,7 +51,7 @@ module.exports = {
     {
       resolve: 'gatsby-plugin-robots-txt',
       options: {
-        policy: [{ userAgent: '*', disallow: '/' }],
+        policy: [{ userAgent: '*', allow: '/' }],
         sitemap: null,
       },
     },
