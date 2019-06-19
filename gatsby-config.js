@@ -63,7 +63,7 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Businesses',
-            tableView: 'Published',
+            tableView: process.env.DEV_DATA === 'true' ? 'Dev' : 'Published',
             tableLinks: ['F&B_Survey', 'Neighborhood', 'Category'],
             defaultValues: {
               Neighborhood: [],
