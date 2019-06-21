@@ -22,7 +22,6 @@
   left: 0;
   right: 0;
   height: calc(100vh - 100%);
-  box-shadow: $tp-shadow__card;
 
   @include respond-above(medium) {
     top: -1 * $tp-space__1;

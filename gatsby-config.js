@@ -73,7 +73,12 @@ module.exports = {
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',
+            tableName: 'Cities',
+          },
+          {
+            baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Neighborhoods',
+            tableLinks: ['City'],
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',

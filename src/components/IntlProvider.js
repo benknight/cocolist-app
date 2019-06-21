@@ -1,14 +1,14 @@
 import { graphql, StaticQuery } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { IntlProvider, addLocaleData } from 'react-intl';
+import { IntlProvider as ReactIntlProvider, addLocaleData } from 'react-intl';
 import en from 'react-intl/locale-data/en';
 import vi from 'react-intl/locale-data/vi';
 import { parseLangFromURL } from '../lib/i18n';
 
 addLocaleData([...en, ...vi]);
 
-const PageWrap = props => (
+const IntlProvider = props => (
   <StaticQuery
     query={graphql`
       {
@@ -35,15 +35,15 @@ const PageWrap = props => (
         return values;
       }, {});
       return (
-        <IntlProvider locale={lang} messages={messages}>
+        <ReactIntlProvider locale={lang} messages={messages}>
           <>
             <Helmet htmlAttributes={{ lang }} />
             {props.children}
           </>
-        </IntlProvider>
+        </ReactIntlProvider>
       );
     }}
   />
 );
 
-export default PageWrap;
+export default IntlProvider;

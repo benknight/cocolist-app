@@ -164,7 +164,7 @@ function Search({ className, location, size }) {
           className={cx(
             styles.results,
             { dn: !showResults },
-            'bg-gray-200 m_br3 overflow-hidden',
+            'bg-gray-200 m_br3 overflow-hidden shadow-1',
           )}>
           <div className="flex flex-column w-100 h-100">
             <div className="tp-body-3 bb b-gray-300">

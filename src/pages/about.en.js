@@ -2,11 +2,11 @@ import cx from 'classnames';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import React from 'react';
+import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
-import Page from '../components/Page';
 import Rating from '../components/Rating';
 import { badges } from '../lib/badges';
 import styles from './about.module.scss';
@@ -35,7 +35,15 @@ const Text = props => (
 );
 
 const About = ({ data, intl: { formatMessage }, location }) => (
-  <Page location={location}>
+  <>
+    <Helmet>
+      <title>
+        Cocolist {formatMessage({ id: 'Saigon' })} &ndash;{' '}
+        {formatMessage({
+          id: 'header_link_about',
+        })}
+      </title>
+    </Helmet>
     <Header location={location} />
     <Img
       alt="Trash-covered beach in Cam Ranh, Vietnam"
@@ -280,7 +288,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
         </section>
       </article>
     </Wrap>
-  </Page>
+  </>
 );
 
 export const query = graphql`

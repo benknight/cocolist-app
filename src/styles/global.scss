@@ -1,3 +1,4 @@
+@import url('//fonts.googleapis.com/css?family=Montserrat:400,500,700');
 @import '~@cocolist/thumbprint-tokens/dist/scss/_index.scss';
 
 mark {
@@ -21,6 +22,10 @@ mark {
 // Measure is limited to ~45 characters
 .measure-narrow {
   max-width: 20em;
+}
+
+.shadow-1 {
+  box-shadow: $tp-shadow__card;
 }
 
 sup {

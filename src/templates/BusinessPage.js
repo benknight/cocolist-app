@@ -16,7 +16,6 @@ import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-r
 import fresh from '../assets/fresh.svg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
-import Page from '../components/Page';
 import Rating from '../components/Rating';
 import SurveyView from '../components/SurveyView';
 import { getBadgesFromSurvey } from '../lib/badges';
@@ -55,7 +54,7 @@ const BusinessPage = props => {
   const [showEditModal, toggleEditModal] = useState(false);
 
   return (
-    <Page {...props}>
+    <>
       <Helmet>
         <title>
           {biz.Name} &ndash;{' '}
@@ -245,7 +244,7 @@ const BusinessPage = props => {
         onCloseClick={() => toggleEditModal(false)}
         prefill={_get(survey, 'Survey_Prefill_Query_String', '')}
       />
-    </Page>
+    </>
   );
 };
 

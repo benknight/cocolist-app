@@ -4,8 +4,8 @@
  * See: https://www.gatsbyjs.org/docs/ssr-apis/
  */
 import React from 'react';
-import PageWrap from './src/components/PageWrap';
+import IntlProvider from './src/components/IntlProvider';
 
 export const wrapPageElement = ({ element, props }) => (
-  <PageWrap {...props}>{element}</PageWrap>
+  <IntlProvider {...props}>{element}</IntlProvider>
 );

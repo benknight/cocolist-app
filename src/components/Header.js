@@ -1,7 +1,7 @@
 import cx from 'classnames';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { TextButton } from '@cocolist/thumbprint-react';
 import {
@@ -10,6 +10,7 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { AuthContext } from './AuthProvider';
 import Search from './Search';
 import styles from './Header.module.scss';
 
@@ -39,6 +40,7 @@ const Header = ({ location, showSearch }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
@@ -86,7 +88,7 @@ const Header = ({ location, showSearch }) => {
           </div>
         )}
         <div className="flex-auto">
-          {showSearch && (
+          {showSearch && user && (
             <div className={styles.searchWrapper}>
               <Search className="m_relative" location={location} size="small" />
             </div>

@@ -1,0 +1,8 @@
+@import '~@cocolist/thumbprint-tokens/dist/scss/_index';
+@import '../styles/mixins.scss';
+
+.panel {
+  @include respond-above(medium) {
+    box-shadow: $tp-shadow__card;
+  }
+}
