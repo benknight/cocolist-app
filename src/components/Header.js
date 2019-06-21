@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState, useContext } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { TextButton } from '@cocolist/thumbprint-react';
+import { TextButton, Link as TPLink } from '@cocolist/thumbprint-react';
 import {
   NavigationCaretDownTiny,
   NavigationCaretUpTiny,
@@ -65,6 +65,11 @@ const Header = ({ location, showSearch }) => {
       <FormattedMessage id="header_link_about" />
     </Link>
   );
+  const feedbackLink = (
+    <TPLink to="mailto:feedback@cocolist.vn?subject=Beta%20feedback">
+      <FormattedMessage id="header_link_feedback" />
+    </TPLink>
+  );
   return (
     <header
       className={cx(styles.container, 'z-2 bg-white', {
@@ -76,7 +81,7 @@ const Header = ({ location, showSearch }) => {
           <img alt="logo" className={styles.logo} src={logo} />
         </Link>
         {showSearch && (
-          <div className="mr3 m_dn">
+          <div className="mr3 l_dn">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
@@ -95,15 +100,17 @@ const Header = ({ location, showSearch }) => {
           )}
         </div>
         <div className="flex items-baseline b nowrap">
-          <div className={cx('mh2 m_ml4 l_mr4', { 'dn m_db': showSearch })}>
-            {aboutLink}
+          <div className={cx({ 'dn l_flex': showSearch })}>
+            {user && <div className="mh2">{feedbackLink}</div>}
+            <div className="mh2">{aboutLink}</div>
           </div>
-          <div className="mh2 m_mr3 ph1">
+          <div className="mh3 l_mh2">
             <LangSwitch {...{ lang, location }} truncate={showSearch} />
           </div>
         </div>
       </div>
       <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
+        {user && feedbackLink}
         {aboutLink}
         <LangSwitch {...{ lang, location }} />
       </div>
