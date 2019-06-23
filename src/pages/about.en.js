@@ -44,7 +44,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
         })}
       </title>
     </Helmet>
-    <Header location={location} />
+    <Header location={location} showLangSwitch={false} />
     <Img
       alt="Trash-covered beach in Cam Ranh, Vietnam"
       className={styles.hero}

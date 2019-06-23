@@ -83,11 +83,12 @@ const BusinessPage = props => {
               <h1 className="tp-title-1 mb2 mt3 l_mt0">
                 <>
                   {bizBadges.length > 3 && (
-                    <img
-                      alt="Fresh"
-                      className={cx(styles.fresh, 'm_mh4 l_mr6 h4')}
-                      src={fresh}
-                    />
+                    <div />
+                    // <img
+                    //   alt="Fresh"
+                    //   className={cx(styles.fresh, 'm_mh4 l_mr6 h4')}
+                    //   src={fresh}
+                    // />
                   )}
                   {biz.Name}{' '}
                   <Rating

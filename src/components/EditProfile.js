@@ -123,7 +123,9 @@ function EditProfile({ intl: { formatMessage } }) {
               value={formData.district}>
               <option></option>
               {edges.map(({ node: { data: { Name } } }) => (
-                <option key={Name}>{formatMessage({ id: Name })}</option>
+                <option key={Name} value={Name}>
+                  {formatMessage({ id: Name })}
+                </option>
               ))}
             </Select>
           </div>

@@ -167,7 +167,7 @@ class Login extends React.PureComponent {
       );
     }
 
-    return content;
+    return <div className="tp-body-1">{content}</div>;
   }
 }
 

@@ -36,7 +36,7 @@ const LangSwitch = props => (
   </div>
 );
 
-const Header = ({ location, showSearch }) => {
+const Header = ({ location, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
@@ -57,62 +57,72 @@ const Header = ({ location, showSearch }) => {
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   });
-  const aboutLink = (
-    <Link
-      activeClassName="tp-link--inherit"
-      className="tp-link"
-      to={getLocalizedURL('/about', lang)}>
-      <FormattedMessage id="header_link_about" />
-    </Link>
-  );
   const feedbackLink = (
     <TPLink to="mailto:feedback@cocolist.vn?subject=Beta%20feedback">
       <FormattedMessage id="header_link_feedback" />
     </TPLink>
   );
+  const showSearch = props.showSearch && user;
   return (
     <header
       className={cx(styles.container, 'z-2 bg-white', {
         [styles.hasShadow]: isScrolled,
         [styles.noSearch]: !showSearch,
       })}>
-      <div className="relative z-1 flex items-center pb2 pt3 pl3 l_pr3">
+      <div className="relative z-1 flex items-center pb2 pt3 ph3">
         <Link className="inline-flex mb1 mr3 m_mr4" to={getLocalizedURL('/', lang)}>
           <img alt="logo" className={styles.logo} src={logo} />
         </Link>
-        {showSearch && (
-          <div className="mr3 l_dn">
-            <TextButton
-              accessibilityLabel="Open Cocolist navigation"
-              iconLeft={
-                isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
-              }
-              onClick={() => setNavExpanded(!isNavExpanded)}
-              theme="inherit"
-            />
-          </div>
-        )}
+        <div className="mr3 m_dn">
+          <TextButton
+            accessibilityLabel="Open Cocolist navigation"
+            iconLeft={
+              isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
+            }
+            onClick={() => setNavExpanded(!isNavExpanded)}
+            theme="inherit"
+          />
+        </div>
         <div className="flex-auto">
-          {showSearch && user && (
+          {showSearch && (
             <div className={styles.searchWrapper}>
               <Search className="m_relative" location={location} size="small" />
             </div>
           )}
         </div>
         <div className="flex items-baseline b nowrap">
-          <div className={cx({ 'dn l_flex': showSearch })}>
-            {user && <div className="mh2">{feedbackLink}</div>}
-            <div className="mh2">{aboutLink}</div>
+          {user && <div className="dn m_db ml5">{feedbackLink}</div>}
+          <div className="dn m_db">
+            <Link
+              activeClassName="tp-link--inherit"
+              className="tp-link ml5"
+              to={getLocalizedURL('/about', lang)}>
+              <FormattedMessage id="header_link_about" />
+            </Link>
           </div>
-          <div className="mh3 l_mh2">
-            <LangSwitch {...{ lang, location }} truncate={showSearch} />
-          </div>
+          {!user && (
+            <Link
+              activeClassName="dn"
+              className="tp-link ml5"
+              to={getLocalizedURL('/', lang)}>
+              Try the beta version
+            </Link>
+          )}
+          {props.showLangSwitch && (
+            <div className="ml5">
+              <LangSwitch {...{ lang, location }} truncate={showSearch} />
+            </div>
+          )}
         </div>
       </div>
       <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
+        <Link
+          activeClassName="tp-link--inherit"
+          className="tp-link"
+          to={getLocalizedURL('/about', lang)}>
+          <FormattedMessage id="header_link_about" />
+        </Link>
         {user && feedbackLink}
-        {aboutLink}
-        <LangSwitch {...{ lang, location }} />
       </div>
     </header>
   );
@@ -121,10 +131,12 @@ const Header = ({ location, showSearch }) => {
 Header.propTypes = {
   location: PropTypes.object.isRequired,
   showSearch: PropTypes.bool,
+  showLangSwitch: PropTypes.bool,
 };
 
 Header.defaultProps = {
   showSearch: true,
+  showLangSwitch: true,
 };
 
 export default Header;
