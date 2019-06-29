@@ -13,7 +13,7 @@ import {
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-react';
-import fresh from '../assets/fresh.svg';
+// import fresh from '../assets/fresh.svg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Rating from '../components/Rating';
@@ -80,7 +80,7 @@ const BusinessPage = props => {
               )}
             </div>
             <div className="ph3 s_ph5 m_ph0 order-0">
-              <h1 className="tp-title-1 mb2 mt3 l_mt0">
+              <h1 className="tp-title-1 mb2 mt3 l_mt0 l_mr6">
                 <>
                   {bizBadges.length > 3 && (
                     <div />
