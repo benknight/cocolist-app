@@ -9,6 +9,7 @@ import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
 import Rating from '../components/Rating';
 import { badges } from '../lib/badges';
+import { parseLangFromURL } from '../lib/i18n';
 import styles from './about.module.scss';
 
 const urls = {
@@ -44,7 +45,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
         })}
       </title>
     </Helmet>
-    <Header location={location} showLangSwitch={false} />
+    <Header location={location} />
     <Img
       alt="Trash-covered beach in Cam Ranh, Vietnam"
       className={styles.hero}
@@ -52,6 +53,15 @@ const About = ({ data, intl: { formatMessage }, location }) => (
       objectFit="cover"
       title="Flotsam & jetsam washed up on a Vietnamese beach: much of it is single-use plastic"
     />
+    {parseLangFromURL(location.pathname) === 'vi' && (
+      <div className="tp-alert tp-alert--banner tp-alert--warning">
+        <div className="tp-alert__text">
+          Xin lỗi trang này chỉ có sẵn bằng tiếng Anh. Nếu bạn muốn giúp chúng tôi dịch
+          nó, hãy gửi email cho chúng tôi theo{' '}
+          <a href="mailto:translations@cocolist.vn">translations@cocolist.vn</a> 🙂
+        </div>
+      </div>
+    )}
     <Wrap>
       <article className="pb6">
         <header>

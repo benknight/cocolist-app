@@ -9,14 +9,14 @@ import Login from './Login';
 import styles from './AuthGate.module.scss';
 
 function AuthGate(props) {
-  const { children, isPrivate } = props;
+  const { children } = props;
   const { invalidLink, user } = useContext(AuthContext);
 
   let content = null;
 
   if (user && !_get(user, 'displayName')) {
     content = <EditProfile />;
-  } else if (isPrivate && !user) {
+  } else if (!user) {
     if (user !== null) {
       return null;
     } else {
@@ -35,7 +35,6 @@ function AuthGate(props) {
 
 AuthGate.propTypes = {
   children: PropTypes.node.isRequired,
-  isPrivate: PropTypes.bool,
 };
 
 export default AuthGate;

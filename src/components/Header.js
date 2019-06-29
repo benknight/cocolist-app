@@ -36,7 +36,7 @@ const LangSwitch = props => (
   </div>
 );
 
-const Header = ({ location, ...props }) => {
+const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
@@ -62,7 +62,6 @@ const Header = ({ location, ...props }) => {
       <FormattedMessage id="header_link_feedback" />
     </TPLink>
   );
-  const showSearch = props.showSearch && user;
   return (
     <header
       className={cx(styles.container, 'z-2 bg-white', {
@@ -92,6 +91,14 @@ const Header = ({ location, ...props }) => {
         </div>
         <div className="flex items-baseline b nowrap">
           {user && <div className="dn m_db ml5">{feedbackLink}</div>}
+          {!user && (
+            <Link
+              activeClassName="tp-link--inherit"
+              className="tp-link ml5"
+              to={getLocalizedURL('/signup', lang)}>
+              <FormattedMessage id="header_link_beta" />
+            </Link>
+          )}
           <div className="dn m_db">
             <Link
               activeClassName="tp-link--inherit"
@@ -100,16 +107,8 @@ const Header = ({ location, ...props }) => {
               <FormattedMessage id="header_link_about" />
             </Link>
           </div>
-          {!user && (
-            <Link
-              activeClassName="dn"
-              className="tp-link ml5"
-              to={getLocalizedURL('/', lang)}>
-              Try the beta version
-            </Link>
-          )}
           {props.showLangSwitch && (
-            <div className="ml5">
+            <div className="ml3 m_ml5">
               <LangSwitch {...{ lang, location }} truncate={showSearch} />
             </div>
           )}

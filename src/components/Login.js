@@ -2,7 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Machine, interpret } from 'xstate';
-import { Button, ButtonRow, Input, Label, TextButton } from '@cocolist/thumbprint-react';
+import {
+  Button,
+  ButtonRow,
+  Input,
+  Label,
+  Link as TPLink,
+  TextButton,
+} from '@cocolist/thumbprint-react';
+import { MetaCategoryEventsMedium } from '@thumbtack/thumbprint-icons';
 
 export const loginMachine = Machine({
   id: 'login',
@@ -84,6 +92,21 @@ class Login extends React.PureComponent {
               event.preventDefault();
               this.onSubmit(email);
             }}>
+            <div className="tp-alert tp-alert--good-news mb4">
+              <MetaCategoryEventsMedium className="tp-alert__icon" />
+              <div className="tp-alert__text">
+                <FormattedMessage
+                  id="beta_signup_intro"
+                  values={{
+                    link: (
+                      <TPLink to="mailto:feedback@cocolist.vn?subject=Beta%20feedback">
+                        feedback@cocolist.vn
+                      </TPLink>
+                    ),
+                  }}
+                />
+              </div>
+            </div>
             {this.props.invalidLink && (
               <div className="red mb2">
                 <FormattedMessage id="signin_invalid_link" />
