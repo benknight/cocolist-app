@@ -116,7 +116,7 @@ function parseSections(survey) {
 
 const Section = injectIntl(
   ({ intl: { formatMessage }, onClickEdit, section, survey }) => {
-    const [isExpanded, setExpanded] = useState(false);
+    const [isExpanded, setExpanded] = useState(true);
     const hasEmptyItems = section.items.find(
       ([key, values]) => _get(values, 'length', 0) === 0,
     );
