@@ -8,6 +8,7 @@ const businessQuery = `
       edges {
         node {
           data {
+            Record_ID
             Name
             Type
             URL_Key
@@ -63,6 +64,7 @@ const flatten = data => {
       .find(({ Status }) => Status === 'Published');
     const badges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
     return {
+      objectID: data.Record_ID,
       name: data.Name,
       type: _get(data, 'Type[0]'),
       coco_points: _get(fbSurvey, 'Coco_Points') || 0,
