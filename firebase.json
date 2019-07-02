@@ -9,10 +9,6 @@
     ],
     "rewrites": [
       {
-        "source": "/docs/**",
-        "dynamicLinks": true
-      },
-      {
         "source": "/survey/**",
         "dynamicLinks": true
       }
