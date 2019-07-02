@@ -23,7 +23,7 @@ function AuthGate(props) {
       content = <Login invalidLink={invalidLink} onSubmit={data => auth.login(data)} />;
     }
   } else {
-    return children;
+    return children || null;
   }
 
   return (

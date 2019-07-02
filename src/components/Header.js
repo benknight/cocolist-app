@@ -62,6 +62,14 @@ const Header = ({ location, showSearch, ...props }) => {
       <FormattedMessage id="header_link_feedback" />
     </TPLink>
   );
+  const betaLink = (
+    <Link
+      activeClassName="tp-link--inherit"
+      className="tp-link"
+      to={getLocalizedURL('/signup', lang)}>
+      <FormattedMessage id="header_link_beta" />
+    </Link>
+  );
   return (
     <header
       className={cx(styles.container, 'z-2 bg-white', {
@@ -91,22 +99,13 @@ const Header = ({ location, showSearch, ...props }) => {
         </div>
         <div className="flex items-baseline b nowrap">
           {user && <div className="dn m_db ml5">{feedbackLink}</div>}
-          {!user && (
-            <Link
-              activeClassName="tp-link--inherit"
-              className="tp-link ml5"
-              to={getLocalizedURL('/signup', lang)}>
-              <FormattedMessage id="header_link_beta" />
-            </Link>
-          )}
-          <div className="dn m_db">
-            <Link
-              activeClassName="tp-link--inherit"
-              className="tp-link ml5"
-              to={getLocalizedURL('/about', lang)}>
-              <FormattedMessage id="header_link_about" />
-            </Link>
-          </div>
+          {!user && <div className="dn m_db ml5">{betaLink}</div>}
+          <Link
+            activeClassName="tp-link--inherit"
+            className={cx('tp-link ml5', { 'dn m_db': showSearch })}
+            to={getLocalizedURL('/about', lang)}>
+            <FormattedMessage id="header_link_about" />
+          </Link>
           {props.showLangSwitch && (
             <div className="ml3 m_ml5">
               <LangSwitch {...{ lang, location }} truncate={showSearch} />
@@ -121,7 +120,7 @@ const Header = ({ location, showSearch, ...props }) => {
           to={getLocalizedURL('/about', lang)}>
           <FormattedMessage id="header_link_about" />
         </Link>
-        {user && feedbackLink}
+        {user ? feedbackLink : betaLink}
       </div>
     </header>
   );
