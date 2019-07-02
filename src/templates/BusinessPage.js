@@ -13,10 +13,8 @@ import {
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-react';
-// import fresh from '../assets/fresh.svg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
-import Rating from '../components/Rating';
 import SurveyView from '../components/SurveyView';
 import { getBadgesFromSurvey } from '../lib/badges';
 import styles from './BusinessPage.module.scss';
@@ -80,24 +78,9 @@ const BusinessPage = props => {
               )}
             </div>
             <div className="ph3 s_ph5 m_ph0 order-0">
-              <h1 className="tp-title-1 mb2 mt3 l_mt0 l_mr6">
-                <>
-                  {bizBadges.length > 3 && (
-                    <div />
-                    // <img
-                    //   alt="Fresh"
-                    //   className={cx(styles.fresh, 'm_mh4 l_mr6 h4')}
-                    //   src={fresh}
-                    // />
-                  )}
-                  {biz.Name}{' '}
-                  <Rating
-                    badgeCount={bizBadges.length}
-                    points={survey && survey.Coco_Points}
-                    size="large"
-                  />
-                </>
-              </h1>
+              <div className="flex flex-wrap items-baseline mb2 mt3 l_mt0 l_mr6">
+                <h1 className="tp-title-1">{biz.Name}</h1>
+              </div>
               <div className="tp-body-2">
                 <div className="flex items-start">
                   <ContentModifierListSmall className="w1 mr2" />
@@ -179,16 +162,11 @@ const BusinessPage = props => {
             // Some badges
             <div className="m_flex">
               <div className="flex-auto m_pr6">
-                <div className="mv4 m_mt0 m_mb5 m_pb5 l_flex flex-wrap">
+                <div className="mv4 m_mt0 m_mb5 m_pb5">
                   {bizBadges.map(badge => (
-                    <div
-                      key={badge.key}
-                      className="flex items-center pv3 l_w-50 l_flex-column l_items-start">
+                    <div key={badge.key} className="flex items-center pv3">
                       <div
-                        className={cx(
-                          styles.badgeImage,
-                          'self-start flex-shrink-0 mr3 l_mb3',
-                        )}>
+                        className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
                         <img
                           alt=""
                           className="dib l_dn w-100"

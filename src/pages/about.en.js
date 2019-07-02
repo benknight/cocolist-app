@@ -204,6 +204,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
             ))}
           </div>
 
+          {/*
           <h3 className="tp-title-4 mt5 mb3" id="ratings">
             Ratings
           </h3>
@@ -252,6 +253,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
               </tr>
             </tbody>
           </table>
+        */}
         </section>
 
         <section className="tp-body-3" id="footnotes">

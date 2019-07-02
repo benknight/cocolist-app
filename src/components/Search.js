@@ -24,7 +24,6 @@ import {
   Link as TPLink,
 } from '@cocolist/thumbprint-react';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
-import Rating from './Rating';
 import styles from './Search.module.scss';
 
 const indexName = 'Businesses';
@@ -128,7 +127,6 @@ const BusinessHit = ({ hit }) => {
     <Link className="db ph3 pv2 m_pv3 bb b-gray-300" to={linkTo}>
       <div className="tp-title-6 black">
         <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
-        <Rating badgeCount={hit.badges_en.length} points={hit.coco_points} />
       </div>
       <div className="tp-body-3 black-300">
         <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
@@ -156,7 +154,7 @@ function Search({ className, location, size }) {
       indexName={indexName}
       onSearchStateChange={({ query }) => setQuery(query)}
       root={{ Root, props: { ref } }}>
-      <div className={className}>
+      <div className={cx(className, { [styles.large]: size === 'large' })}>
         <div className="relative z-1">
           <SearchInput onFocus={() => setFocus(true)} size={size} />
         </div>
@@ -168,6 +166,10 @@ function Search({ className, location, size }) {
           )}>
           <div className="flex flex-column w-100 h-100">
             <div className="tp-body-3 bb b-gray-300">
+              <div className="black-300 ph3 flex items-center">
+                <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>
+                <PoweredBy />
+              </div>
               <RefinementList
                 attribute={`badges_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
@@ -186,14 +188,6 @@ function Search({ className, location, size }) {
                   <InfiniteHits hitComponent={BusinessHit} />
                 </Results>
               </Index>
-            </div>
-            <div
-              className={cx(
-                'tp-body-3 black-300 b-gray-300 ph3 pv2 bt bg-white',
-                'flex items-center',
-              )}>
-              <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>
-              <PoweredBy />
             </div>
           </div>
         </div>
