@@ -186,7 +186,12 @@ const BusinessPage = props => {
                           <div className="tp-body-2 measure l_pr6">
                             <FormattedMessage
                               id={badge.description}
-                              values={{ business: biz.Name }}
+                              values={{
+                                business: biz.Name,
+                                byoc_percent: survey.BYOC_discount_amount
+                                  ? `${survey.BYOC_discount_amount * 100}%`
+                                  : 'blah',
+                              }}
                             />
                           </div>
                         )}
@@ -212,7 +217,12 @@ const BusinessPage = props => {
           ) : (
             survey && (
               // No badges
-              <SurveyView columns={2} businessName={biz.Name} survey={survey} />
+              <SurveyView
+                businessName={biz.Name}
+                columns={2}
+                onClickEdit={() => toggleEditModal(true)}
+                survey={survey}
+              />
             )
           )}
         </Wrap>
@@ -266,6 +276,7 @@ export const query = graphql`
             No_plastic_straws
             No_plastic_bags
             BYO_container_discount
+            BYOC_discount_amount
             Refill_my_bottle
             Dine_in_straws
             Dine_in_utensils

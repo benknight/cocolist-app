@@ -56,7 +56,10 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
               <div className="tp-body-1">
                 <FormattedMessage
                   id={badge.description}
-                  values={{ business: formatMessage({ id: 'generic_business_name' }) }}
+                  values={{
+                    business: formatMessage({ id: 'generic_business_name' }),
+                    byoc_percent: '',
+                  }}
                 />
               </div>
             </div>
