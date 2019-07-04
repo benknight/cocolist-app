@@ -11,8 +11,8 @@ const businessQuery = `
             Record_ID
             Name
             Type
-            URL_Key
-            VNMM_Rating_Count
+            URL_key
+            VNMM_rating_count
             Category {
               data {
                 Name
@@ -23,9 +23,9 @@ const businessQuery = `
                 Name
               }
             }
-            F_B_Survey {
+            F_B_survey {
               data {
-                Coco_Points
+                Coco_points
                 BYO_container_discount
                 No_plastic_bags
                 No_plastic_straws
@@ -59,7 +59,7 @@ const settings = {}; // { attributesToSnippet: [`excerpt:20`] }
 const flatten = data => {
   const tx = _keyBy(data.translations.edges.map(({ node: { data } }) => data), 'Key');
   return data.businesses.edges.map(({ node: { data } }) => {
-    const fbSurvey = (data.F_B_Survey || [])
+    const fbSurvey = (data.F_B_survey || [])
       .map(({ data }) => data)
       .find(({ Status }) => Status === 'Published');
     const badges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
@@ -67,15 +67,15 @@ const flatten = data => {
       objectID: data.Record_ID,
       name: data.Name,
       type: _get(data, 'Type[0]'),
-      coco_points: _get(fbSurvey, 'Coco_Points') || 0,
-      vnmm_rating_count: data.VNMM_Rating_Count || 0,
+      coco_points: _get(fbSurvey, 'Coco_points') || 0,
+      vnmm_rating_count: data.VNMM_rating_count || 0,
       badges_en: badges.map(badge => tx[badge.title].en),
       badges_vi: badges.map(badge => tx[badge.title].vi),
       category_en: data.Category.map(cat => tx[cat.data.Name].en),
       category_vi: data.Category.map(cat => tx[cat.data.Name].vi),
       neighborhood_en: data.Neighborhood.map(hood => tx[hood.data.Name].en),
       neighborhood_vi: data.Neighborhood.map(hood => tx[hood.data.Name].vi),
-      slug: data.URL_Key,
+      slug: data.URL_key,
     };
   });
 };

@@ -29,7 +29,7 @@ const BusinessPage = props => {
 
   const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
 
-  const survey = (biz.F_B_Survey || [])
+  const survey = (biz.F_B_survey || [])
     .map(({ data }) => data)
     .find(({ Status }) => Status === 'Published');
 
@@ -43,7 +43,7 @@ const BusinessPage = props => {
 
   const links = [];
 
-  ['Google_Maps_Link', 'Facebook_Link', 'VNMM_Link'].forEach(link => {
+  ['Google_Maps_link', 'Facebook_link', 'VNMM_link'].forEach(link => {
     if (biz[link] && biz[link].length > 0) {
       links.push([link, biz[link].split(',')[0].trim()]);
     }
@@ -199,13 +199,13 @@ const BusinessPage = props => {
                     </div>
                   ))}
                 </div>
-                {biz.From_the_Business && (
+                {biz.From_the_business && (
                   <div className="mb5">
                     <div className="tp-title-4 mb3">
                       <FormattedMessage id="from_the_business_heading" />
                     </div>
                     <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                      {biz.From_the_Business}
+                      {biz.From_the_business}
                     </div>
                   </div>
                 )}
@@ -231,7 +231,7 @@ const BusinessPage = props => {
         formId="shrw4zfDcry512acj"
         isOpen={showEditModal}
         onCloseClick={() => toggleEditModal(false)}
-        prefill={_get(survey, 'Survey_Prefill_Query_String', '')}
+        prefill={_get(survey, 'Survey_prefill_query_string', '')}
       />
     </>
   );
@@ -239,13 +239,13 @@ const BusinessPage = props => {
 
 export const query = graphql`
   query($slug: String!) {
-    airtable(table: { eq: "Businesses" }, data: { URL_Key: { eq: $slug } }) {
+    airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
       data {
         Name
-        Facebook_Link
-        From_the_Business
-        Google_Maps_Link
-        VNMM_Link
+        Facebook_link
+        From_the_business
+        Google_Maps_link
+        VNMM_link
         Category {
           data {
             Name
@@ -266,9 +266,9 @@ export const query = graphql`
             }
           }
         }
-        F_B_Survey {
+        F_B_survey {
           data {
-            Coco_Points
+            Coco_points
             Dine_in_points
             Take_out_points
             Kitchen_points
@@ -278,6 +278,8 @@ export const query = graphql`
             BYO_container_discount
             BYOC_discount_amount
             Refill_my_bottle
+            Plastic_free_delivery
+            Delivery_only
             Dine_in_straws
             Dine_in_utensils
             Dine_in_napkins
@@ -297,7 +299,6 @@ export const query = graphql`
             Take_out_cup_carriers
             Take_out_cup_sleeves
             Take_out_food_wrapping
-            Plastic_free_delivery
             Kitchen_piping_bags
             Kitchen_pan_liners
             Kitchen_food_wrapping
@@ -308,7 +309,7 @@ export const query = graphql`
             Menu
             Miscellaneous
             Status
-            Survey_Prefill_Query_String
+            Survey_prefill_query_string
           }
         }
       }

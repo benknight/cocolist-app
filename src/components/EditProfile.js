@@ -60,7 +60,7 @@ function EditProfile({ intl: { formatMessage } }) {
               table: { eq: "Neighborhoods" }
               data: { City: { elemMatch: { data: { Name: { eq: "Saigon" } } } } }
             }
-            sort: { fields: data___Business_Count, order: DESC }
+            sort: { fields: data___Business_count, order: DESC }
           ) {
             edges {
               node {

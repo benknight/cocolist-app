@@ -64,7 +64,7 @@ module.exports = {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Businesses',
             tableView: process.env.DEV_DATA === 'true' ? 'Dev' : 'Published',
-            tableLinks: ['F&B_Survey', 'Neighborhood', 'Category'],
+            tableLinks: ['F&B_survey', 'Neighborhood', 'Category'],
             defaultValues: {
               Neighborhood: [],
               Category: [],
@@ -87,7 +87,7 @@ module.exports = {
           {
             baseId: 'appYMPFmCnV9M4Szq',
             tableName: 'Food & Beverage Survey',
-            tableLinks: ['Business_Record_Match'],
+            tableLinks: ['Business_record_match'],
             defaultValues: {
               Food_waste_programs: [],
               Menu: [],

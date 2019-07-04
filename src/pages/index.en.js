@@ -74,17 +74,17 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                 .filter(survey => {
                   return !!_get(
                     survey,
-                    'Business_Record_Match[0].data.Photos.localFiles[0].childImageSharp.fluid',
+                    'Business_record_match[0].data.Photos.localFiles[0].childImageSharp.fluid',
                   );
                 }),
             ).map((survey, index) => {
-              const biz = survey.Business_Record_Match[0].data;
+              const biz = survey.Business_record_match[0].data;
               const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
               return (
                 <Link
                   className="db pr1 pv4 w6 flex-shrink-0"
                   key={index}
-                  to={getLocalizedURL(`/${biz.URL_Key}`, lang)}>
+                  to={getLocalizedURL(`/${biz.URL_key}`, lang)}>
                   {thumbnail && (
                     <Img
                       alt="business logo"
@@ -123,7 +123,7 @@ export const query = graphql`
   fragment HomepageSurveyFragment on AirtableEdge {
     node {
       data {
-        Coco_Points
+        Coco_points
         Plastic_free_delivery
         No_plastic_straws
         No_plastic_bags
@@ -131,11 +131,11 @@ export const query = graphql`
         Refill_my_bottle
         Food_waste_programs
         Kitchen_points
-        Business_Record_Match {
+        Business_record_match {
           data {
             Name
-            VNMM_Rating_Count
-            URL_Key
+            VNMM_rating_count
+            URL_key
             Photos {
               localFiles {
                 childImageSharp {
@@ -155,13 +155,13 @@ export const query = graphql`
       filter: {
         table: { eq: "Food & Beverage Survey" }
         data: {
-          Business_Record_Match: { elemMatch: { data: { Record_ID: { ne: null } } } }
+          Business_record_match: { elemMatch: { data: { Record_ID: { ne: null } } } }
         }
       }
       sort: {
         fields: [
-          data___Coco_Points
-          data___Business_Record_Match___data___VNMM_Rating_Count
+          data___Coco_points
+          data___Business_record_match___data___VNMM_rating_count
         ]
         order: DESC
       }

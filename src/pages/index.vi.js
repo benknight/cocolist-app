@@ -10,13 +10,13 @@ export const query = graphql`
       filter: {
         table: { eq: "Food & Beverage Survey" }
         data: {
-          Business_Record_Match: { elemMatch: { data: { Record_ID: { ne: null } } } }
+          Business_record_match: { elemMatch: { data: { Record_ID: { ne: null } } } }
         }
       }
       sort: {
         fields: [
-          data___Coco_Points
-          data___Business_Record_Match___data___VNMM_Rating_Count
+          data___Coco_points
+          data___Business_record_match___data___VNMM_rating_count
         ]
         order: DESC
       }

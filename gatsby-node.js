@@ -17,7 +17,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             data {
-              URL_Key
+              URL_key
             }
           }
         }
@@ -26,17 +26,17 @@ exports.createPages = async ({ graphql, actions }) => {
   `);
 
   const filtered = result.data.allAirtable.edges.filter(
-    edge => !!_.get(edge, 'node.data.URL_Key'),
+    edge => !!_.get(edge, 'node.data.URL_key'),
   );
 
-  const grouped = _.groupBy(filtered, 'node.data.URL_Key');
+  const grouped = _.groupBy(filtered, 'node.data.URL_key');
 
   let hasDuplicates = false;
 
   Object.keys(grouped).forEach(key => {
     if (grouped[key].length > 1) {
       hasDuplicates = true;
-      console.error(`Duplicate URL_Key fields found for string "${key}"`);
+      console.error(`Duplicate URL_key fields found for string "${key}"`);
     }
   });
 
@@ -47,18 +47,18 @@ exports.createPages = async ({ graphql, actions }) => {
   filtered.forEach(({ node }) => {
     // English
     createPage({
-      path: node.data.URL_Key,
+      path: node.data.URL_key,
       component: path.resolve('./src/templates/BusinessPage.js'),
       context: {
-        slug: node.data.URL_Key,
+        slug: node.data.URL_key,
       },
     });
     // Vietnamese
     createPage({
-      path: `vi/${node.data.URL_Key}`,
+      path: `vi/${node.data.URL_key}`,
       component: path.resolve('./src/templates/BusinessPage.js'),
       context: {
-        slug: node.data.URL_Key,
+        slug: node.data.URL_key,
       },
     });
   });

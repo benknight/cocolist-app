@@ -33,7 +33,9 @@ function parseSections(survey) {
         ['take_out_food_wrapping_label', survey.Take_out_food_wrapping],
       ],
     },
-    {
+  ];
+  if (!survey.Delivery_only) {
+    sections.push({
       title: 'dine_in_section_title',
       items: [
         ['dine_in_straws_label', survey.Dine_in_straws],
@@ -45,7 +47,9 @@ function parseSections(survey) {
         ['dine_in_linens_label', survey.Dine_in_linens__table_or_placemats_],
         ['dine_in_dishes_label', survey.Dine_in_dishes],
       ],
-    },
+    });
+  }
+  sections.push(
     {
       title: 'menu_section_title',
       items: [
@@ -102,7 +106,7 @@ function parseSections(survey) {
         ['food_waste_program_label', survey.Food_waste_programs],
       ],
     },
-  ];
+  );
   // sections.forEach(section => {
   //   section.items = section.items.sort((a, b) => {
   //     if (!b[1] || b[1].indexOf('Not used') !== -1) {
