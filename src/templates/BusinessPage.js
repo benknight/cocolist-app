@@ -17,6 +17,7 @@ import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import SurveyView from '../components/SurveyView';
 import { getBadgesFromSurvey } from '../lib/badges';
+import { getLocalizedVNMMURL, parseLangFromURL } from '../lib/i18n';
 import styles from './BusinessPage.module.scss';
 
 const BusinessPage = props => {
@@ -26,6 +27,8 @@ const BusinessPage = props => {
     },
     intl: { formatMessage },
   } = props;
+
+  const lang = parseLangFromURL(props.location.pathname);
 
   const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
 
@@ -43,9 +46,13 @@ const BusinessPage = props => {
 
   const links = [];
 
-  ['Google_Maps_link', 'Facebook_link', 'VNMM_link'].forEach(link => {
-    if (biz[link] && biz[link].length > 0) {
-      links.push([link, biz[link].split(',')[0].trim()]);
+  ['Google_Maps_link', 'Facebook_link', 'VNMM_link'].forEach(linkName => {
+    if (biz[linkName] && biz[linkName].length > 0) {
+      let url = biz[linkName].split(',')[0].trim();
+      if (linkName === 'VNMM_link') {
+        url = getLocalizedVNMMURL(url, lang);
+      }
+      links.push([linkName, url]);
     }
   });
 
