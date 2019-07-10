@@ -69,7 +69,7 @@ module.exports = {
               Neighborhood: [],
               Category: [],
             },
-            mapping: { Photos: 'fileNode' },
+            mapping: { Profile_photo: 'fileNode' },
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',

@@ -30,7 +30,7 @@ const BusinessPage = props => {
 
   const lang = parseLangFromURL(props.location.pathname);
 
-  const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
+  const thumbnail = _get(biz, 'Profile_photo.localFiles[0].childImageSharp.fluid');
 
   const survey = (biz.F_B_survey || [])
     .map(({ data }) => data)
@@ -264,7 +264,7 @@ export const query = graphql`
             Name
           }
         }
-        Photos {
+        Profile_photo {
           localFiles {
             childImageSharp {
               fluid(maxWidth: 400, maxHeight: 250) {

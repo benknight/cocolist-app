@@ -74,12 +74,12 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                 .filter(survey => {
                   return !!_get(
                     survey,
-                    'Business_record_match[0].data.Photos.localFiles[0].childImageSharp.fluid',
+                    'Business_record_match[0].data.Profile_photo.localFiles[0].childImageSharp.fluid',
                   );
                 }),
             ).map((survey, index) => {
               const biz = survey.Business_record_match[0].data;
-              const thumbnail = _get(biz, 'Photos.localFiles[0].childImageSharp.fluid');
+              const thumbnail = _get(biz, 'Profile_photo.localFiles[0].childImageSharp.fluid');
               return (
                 <Link
                   className="db pr1 pv4 w6 flex-shrink-0"
@@ -136,7 +136,7 @@ export const query = graphql`
             Name
             VNMM_rating_count
             URL_key
-            Photos {
+            Profile_photo {
               localFiles {
                 childImageSharp {
                   fluid(maxWidth: 400, maxHeight: 250) {
