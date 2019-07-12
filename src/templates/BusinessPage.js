@@ -290,7 +290,7 @@ export const query = graphql`
             Dine_in_straws
             Dine_in_utensils
             Dine_in_napkins
-            Dine_in_water
+            Dine_in_drinks
             Dine_in_cups
             Dine_in_drink_stirrers
             Dine_in_linens__table_or_placemats_
@@ -298,8 +298,7 @@ export const query = graphql`
             Restroom_hand_towels
             Take_out_bags
             Take_out_containers
-            Take_out_cold_cups
-            Take_out_hot_cups
+            Take_out_cups
             Take_out_container_lids
             Take_out_cup_lids
             Take_out_straws
