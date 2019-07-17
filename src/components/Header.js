@@ -21,14 +21,16 @@ const LangSwitch = props => (
     {props.lang === 'en' ? (
       <Link
         onClick={() => cacheLangPreference('vi')}
+        title="Tiếng Việt"
         to={getLocalizedURL(props.location.pathname, 'vi')}>
         <span className={cx(styles.langLong)}>Tiếng Việt</span>
-        <span className={cx(styles.langShort, 'pa2')}>VN</span>
+        <span className={cx(styles.langShort, 'pa2')}>VI</span>
       </Link>
     ) : (
       <Link
         onClick={() => cacheLangPreference('en')}
-        to={getLocalizedURL(props.location.pathname, 'en')}>
+        to={getLocalizedURL(props.location.pathname, 'en')}
+        title="English">
         <span className={cx(styles.langLong)}>Switch to English</span>
         <span className={cx(styles.langShort, 'pa2')}>EN</span>
       </Link>
