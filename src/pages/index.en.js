@@ -1,9 +1,9 @@
 import _get from 'lodash/get';
-import _shuffle from 'lodash/shuffle';
 import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import React, { useState } from 'react';
 import Helmet from 'react-helmet';
+import { shuffle } from 'shuffle-seed';
 import { Button } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import AirtableFormModal from '../components/AirtableFormModal';
@@ -67,7 +67,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
           <div
             className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
             style={{ WebkitOverflowScrolling: 'touch' }}>
-            {_shuffle(
+            {shuffle(
               data.surveys.edges
                 .map(({ node: { data: survey } }) => survey)
                 .filter(survey => badge.test(survey))
@@ -77,6 +77,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                     'Business_record_match[0].data.Profile_photo.localFiles[0].childImageSharp.fluid',
                   );
                 }),
+              process.env.GATSBY_BUILD_TIMESTAMP || Date.now(),
             ).map((survey, index) => {
               const biz = survey.Business_record_match[0].data;
               const thumbnail = _get(

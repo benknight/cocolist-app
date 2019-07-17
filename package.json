@@ -50,11 +50,12 @@
     "react-instantsearch-dom": "^5.7.0",
     "react-intl": "^2.9.0",
     "react-test-renderer": "^16.8.6",
+    "shuffle-seed": "^1.1.6",
     "url-parse": "^1.4.7",
     "xstate": "^4.6.4"
   },
   "scripts": {
-    "build": "gatsby build",
+    "build": "GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
     "deploy": "firebase deploy",
     "deploy-functions": "firebase deploy --only functions",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
