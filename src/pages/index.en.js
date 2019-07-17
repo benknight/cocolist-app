@@ -47,7 +47,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
           <div className="m_flex items-center m_mv5 ph4 m_pl6 l_pl7 l_pr6 tc m_tl">
             <img
               alt={formatMessage({ id: badge.title })}
-              src={require(`../assets/badges/${badge.imageLarge}`)}
+              src={require(`../assets/badges/${badge.imageLargeAlt}`)}
             />
             <div className="m_ml3 m_pr7 l_pr0 mw7">
               <h2 className="tp-title-4">
@@ -70,7 +70,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
             {_shuffle(
               data.surveys.edges
                 .map(({ node: { data: survey } }) => survey)
-                .filter(survey => badge.test(survey, true))
+                .filter(survey => badge.test(survey))
                 .filter(survey => {
                   return !!_get(
                     survey,
@@ -79,7 +79,10 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                 }),
             ).map((survey, index) => {
               const biz = survey.Business_record_match[0].data;
-              const thumbnail = _get(biz, 'Profile_photo.localFiles[0].childImageSharp.fluid');
+              const thumbnail = _get(
+                biz,
+                'Profile_photo.localFiles[0].childImageSharp.fluid',
+              );
               return (
                 <Link
                   className="db pr1 pv4 w6 flex-shrink-0"

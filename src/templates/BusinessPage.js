@@ -165,54 +165,71 @@ const BusinessPage = props => {
         )}
 
         <Wrap>
-          {bizBadges.length > 0 ? (
+          {bizBadges.length > 0 ||
+          _get(survey, 'From_the_business') ||
+          _get(survey, 'From_the_editor') ? (
             // Some badges
             <div className="m_flex">
               <div className="flex-auto m_pr6">
-                <div className="mv4 m_mt0 m_mb5 m_pb5">
-                  {bizBadges.map(badge => (
-                    <div key={badge.key} className="flex items-center pv3">
-                      <div
-                        className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
-                        <img
-                          alt=""
-                          className="dib l_dn w-100"
-                          src={require(`../assets/badges/${badge.imageSmall}`)}
-                        />
-                        <img
-                          alt=""
-                          className="dn l_dib w-100"
-                          src={require(`../assets/badges/${badge.imageLarge}`)}
-                        />
-                      </div>
-                      <div>
-                        <div className="tp-title-5 l_mb1" size={5}>
-                          <FormattedMessage id={badge.title} />
+                {bizBadges.length > 0 && (
+                  <div className="mv4 m_mt0 m_mb5 m_pb5">
+                    {bizBadges.map(badge => (
+                      <div key={badge.key} className="flex items-center pv3">
+                        <div
+                          className={cx(
+                            styles.badgeImage,
+                            'self-start flex-shrink-0 mr3',
+                          )}>
+                          <img
+                            alt=""
+                            className="dib l_dn w-100"
+                            src={require(`../assets/badges/${badge.imageSmall}`)}
+                          />
+                          <img
+                            alt=""
+                            className="dn l_dib w-100"
+                            src={require(`../assets/badges/${badge.imageLarge}`)}
+                          />
                         </div>
-                        {badge.description && (
-                          <div className="tp-body-2 measure l_pr6">
-                            <FormattedMessage
-                              id={badge.description}
-                              values={{
-                                business: biz.Name,
-                                byoc_percent: survey.BYOC_discount_amount
-                                  ? `${survey.BYOC_discount_amount * 100}%`
-                                  : 'blah',
-                              }}
-                            />
+                        <div>
+                          <div className="tp-title-5 l_mb1" size={5}>
+                            <FormattedMessage id={badge.title} />
                           </div>
-                        )}
+                          {badge.description && (
+                            <div className="tp-body-2 measure l_pr6">
+                              <FormattedMessage
+                                id={badge.description}
+                                values={{
+                                  business: biz.Name,
+                                  byoc_percent: survey.BYOC_discount_amount
+                                    ? `${survey.BYOC_discount_amount * 100}%`
+                                    : '',
+                                }}
+                              />
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  ))}
-                </div>
-                {biz.From_the_business && (
+                    ))}
+                  </div>
+                )}
+                {survey.From_the_business && (
                   <div className="mb5">
                     <div className="tp-title-4 mb3">
                       <FormattedMessage id="from_the_business_heading" />
                     </div>
                     <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                      {biz.From_the_business}
+                      {survey.From_the_business}
+                    </div>
+                  </div>
+                )}
+                {survey.From_the_editor && (
+                  <div className="mb5">
+                    <div className="tp-title-4 mb3">
+                      <FormattedMessage id="from_the_editor_heading" />
+                    </div>
+                    <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                      {survey.From_the_editor}
                     </div>
                   </div>
                 )}
@@ -225,7 +242,6 @@ const BusinessPage = props => {
             survey && (
               // No badges
               <SurveyView
-                businessName={biz.Name}
                 columns={2}
                 onClickEdit={() => toggleEditModal(true)}
                 survey={survey}
@@ -250,7 +266,6 @@ export const query = graphql`
       data {
         Name
         Facebook_link
-        From_the_business
         Google_Maps_link
         VNMM_link
         Category {
@@ -275,6 +290,8 @@ export const query = graphql`
         }
         F_B_survey {
           data {
+            From_the_business
+            From_the_editor
             Coco_points
             Dine_in_points
             Take_out_points

@@ -7,7 +7,6 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
-import Rating from '../components/Rating';
 import { badges } from '../lib/badges';
 import { parseLangFromURL } from '../lib/i18n';
 import styles from './about.module.scss';
@@ -307,7 +306,7 @@ export const query = graphql`
   query {
     file(relativePath: { eq: "trash-in-vietnam.jpg" }) {
       childImageSharp {
-        fluid(quality: 90, maxWidth: 4000) {
+        fluid(quality: 90, maxWidth: 1200) {
           ...GatsbyImageSharpFluid_noBase64
         }
       }

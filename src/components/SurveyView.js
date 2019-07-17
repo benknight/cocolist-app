@@ -24,7 +24,7 @@ function parseSections(survey) {
         ['take_out_bags_label', survey.Take_out_bags],
         ['take_out_containers_label', survey.Take_out_containers],
         ['take_out_container_lids_label', survey.Take_out_container_lids],
-        ['take_out_cold_cups_label', survey.Take_out_cups],
+        ['take_out_cups_label', survey.Take_out_cups],
         ['take_out_cup_lids_label', survey.Take_out_cup_lids],
         ['take_out_straws_label', survey.Take_out_straws],
         ['take_out_cup_carriers_label', survey.Take_out_cup_carriers],
