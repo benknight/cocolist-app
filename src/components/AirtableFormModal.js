@@ -12,7 +12,9 @@ const AirtableFormModal = ({ formId, isOpen, onCloseClick, prefill }) => (
         className={cx(curtainClassName, 'flex flex-column items-center justify-center')}
         onClick={curtainOnClick}
         style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)' }}>
-        <div className="relative bg-white mw7 w-100 h-100 s_h-auto center flex s_db flex-column s_br2 s_overflow-hidden">
+        <div
+          className="relative bg-white w-100 h-100 s_h-auto center flex s_db flex-column s_br2 s_overflow-hidden"
+          style={{ maxWidth: '600px' }}>
           <div className="s_absolute flex items-center justify-end top0 right0 bg-white pa3 bb b-gray-300 s_bn">
             <TextButton
               accessibilityLabel="Close modal"
