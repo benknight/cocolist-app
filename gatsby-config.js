@@ -66,10 +66,13 @@ module.exports = {
             tableView: process.env.DEV_DATA === 'true' ? 'Dev' : 'Published',
             tableLinks: ['F&B_survey', 'Neighborhood', 'Category'],
             defaultValues: {
-              Neighborhood: [],
               Category: [],
+              Neighborhood: [],
             },
-            mapping: { Profile_photo: 'fileNode' },
+            mapping: {
+              Business_photos: 'fileNode',
+              Profile_photo: 'fileNode',
+            },
           },
           {
             baseId: 'appYMPFmCnV9M4Szq',

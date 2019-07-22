@@ -80,7 +80,12 @@ const BusinessPage = props => {
             <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
               {thumbnail && (
                 <div className={styles.thumbnailWrapper}>
-                  <Img alt="logo" fluid={thumbnail} objectFit="contain" />
+                  <Img
+                    alt="logo"
+                    className="m_br2"
+                    fluid={thumbnail}
+                    objectFit="contain"
+                  />
                 </div>
               )}
             </div>
@@ -166,6 +171,7 @@ const BusinessPage = props => {
 
         <Wrap>
           {bizBadges.length > 0 ||
+          _get(biz, 'Business_photos.localFiles.length') ||
           _get(survey, 'From_the_business') ||
           _get(survey, 'From_the_editor') ? (
             // Some badges
@@ -211,6 +217,29 @@ const BusinessPage = props => {
                         </div>
                       </div>
                     ))}
+                  </div>
+                )}
+                {biz.Business_photos && (
+                  <div className="mb5">
+                    <div className="tp-title-4 mb3">
+                      <FormattedMessage id="business_photos_heading" />
+                    </div>
+                    {biz.Business_photos.localFiles.map((photo, index) => {
+                      const raw = biz.Business_photos.raw[index];
+                      return (
+                        <a
+                          className="dib ml1 ml0-m mt1 mr1"
+                          href={raw.thumbnails.large.url}
+                          rel="noopener noreferrer"
+                          target="_blank">
+                          <Img
+                            alt={raw.filename}
+                            className="br1"
+                            fixed={photo.childImageSharp.fixed}
+                          />
+                        </a>
+                      );
+                    })}
                   </div>
                 )}
                 {survey.From_the_business && (
@@ -284,6 +313,24 @@ export const query = graphql`
             childImageSharp {
               fluid(maxWidth: 400, maxHeight: 250) {
                 ...GatsbyImageSharpFluid_noBase64
+              }
+            }
+          }
+        }
+        Business_photos {
+          localFiles {
+            childImageSharp {
+              fixed(width: 100, height: 100) {
+                ...GatsbyImageSharpFixed_noBase64
+              }
+            }
+          }
+          raw {
+            filename
+            url
+            thumbnails {
+              large {
+                url
               }
             }
           }
