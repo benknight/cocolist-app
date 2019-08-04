@@ -14,6 +14,7 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
+import Categories from '../components/Categories';
 import Header from '../components/Header';
 import SurveyView from '../components/SurveyView';
 import { getBadgesFromSurvey } from '../lib/badges';
@@ -35,12 +36,6 @@ const BusinessPage = props => {
   const survey = (biz.F_B_survey || [])
     .map(({ data }) => data)
     .find(({ Status }) => Status === 'Published');
-
-  const cats = biz.Category.sort((a, b) => {
-    return a.data.Businesses.length - b.data.Businesses.length;
-  })
-    .map(cat => cat.data.Name)
-    .slice(0, 3);
 
   const bizBadges = survey ? getBadgesFromSurvey(survey) : [];
 
@@ -97,12 +92,7 @@ const BusinessPage = props => {
                 <div className="flex items-start">
                   <ContentModifierListSmall className="w1 mr2" />
                   <div>
-                    {cats.map((cat, index) => (
-                      <React.Fragment key={index}>
-                        <FormattedMessage id={cat} />
-                        {index === cats.length - 1 ? '' : ', '}
-                      </React.Fragment>
-                    ))}
+                    <Categories biz={biz} />
                   </div>
                 </div>
                 <div className="flex items-center mv1">
