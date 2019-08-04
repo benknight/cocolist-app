@@ -11,7 +11,7 @@ require('dotenv').config();
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const result = await graphql(`
+  const businessPageQuery = await graphql(`
     {
       allAirtable(filter: { table: { eq: "Businesses" } }) {
         edges {
@@ -25,7 +25,7 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
-  const filtered = result.data.allAirtable.edges.filter(
+  const filtered = businessPageQuery.data.allAirtable.edges.filter(
     edge => !!_.get(edge, 'node.data.URL_key'),
   );
 
