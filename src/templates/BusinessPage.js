@@ -220,6 +220,7 @@ const BusinessPage = props => {
                         <a
                           className="dib ml1 ml0-m mt1 mr1"
                           href={raw.thumbnails.large.url}
+                          key={index}
                           rel="noopener noreferrer"
                           target="_blank">
                           <Img
@@ -280,98 +281,104 @@ const BusinessPage = props => {
 };
 
 export const query = graphql`
+  fragment fullBizData on AirtableData {
+    Record_ID
+    Name
+    Facebook_link
+    Google_Maps_link
+    VNMM_link
+    URL_key
+    Category {
+      data {
+        Name
+        Businesses
+      }
+    }
+    Neighborhood {
+      data {
+        Name
+      }
+    }
+    Profile_photo {
+      localFiles {
+        childImageSharp {
+          fluid(maxWidth: 400, maxHeight: 250) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
+      }
+    }
+    Business_photos {
+      localFiles {
+        childImageSharp {
+          fixed(width: 100, height: 100) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
+        }
+      }
+      raw {
+        filename
+        url
+        thumbnails {
+          large {
+            url
+          }
+        }
+      }
+    }
+    F_B_survey {
+      data {
+        From_the_business
+        From_the_editor
+        Coco_points
+        Dine_in_points
+        Take_out_points
+        Kitchen_points
+        Menu_points
+        No_plastic_straws
+        No_plastic_bags
+        BYO_container_discount
+        BYOC_discount_amount
+        Refill_my_bottle
+        Plastic_free_delivery
+        Delivery_only
+        Dine_in_straws
+        Dine_in_utensils
+        Dine_in_napkins
+        Dine_in_drinks
+        Dine_in_cups
+        Dine_in_drink_stirrers
+        Dine_in_linens__table_or_placemats_
+        Dine_in_dishes
+        Restroom_hand_towels
+        Take_out_bags
+        Take_out_containers
+        Take_out_cups
+        Take_out_container_lids
+        Take_out_cup_lids
+        Take_out_straws
+        Take_out_cup_carriers
+        Take_out_cup_sleeves
+        Take_out_food_wrapping
+        Kitchen_piping_bags
+        Kitchen_pan_liners
+        Kitchen_food_wrapping
+        Kitchen_gloves
+        Kitchen_food_freeze_packaging
+        Kitchen_waste_management
+        Food_waste_programs
+        Menu
+        Miscellaneous
+        Status
+        Survey_prefill_query_string
+      }
+    }
+  }
+
   query($slug: String!) {
     airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
       data {
-        Name
-        Facebook_link
-        Google_Maps_link
-        VNMM_link
-        Category {
-          data {
-            Name
-            Businesses
-          }
-        }
-        Neighborhood {
-          data {
-            Name
-          }
-        }
-        Profile_photo {
-          localFiles {
-            childImageSharp {
-              fluid(maxWidth: 400, maxHeight: 250) {
-                ...GatsbyImageSharpFluid_noBase64
-              }
-            }
-          }
-        }
-        Business_photos {
-          localFiles {
-            childImageSharp {
-              fixed(width: 100, height: 100) {
-                ...GatsbyImageSharpFixed_noBase64
-              }
-            }
-          }
-          raw {
-            filename
-            url
-            thumbnails {
-              large {
-                url
-              }
-            }
-          }
-        }
-        F_B_survey {
-          data {
-            From_the_business
-            From_the_editor
-            Coco_points
-            Dine_in_points
-            Take_out_points
-            Kitchen_points
-            Menu_points
-            No_plastic_straws
-            No_plastic_bags
-            BYO_container_discount
-            BYOC_discount_amount
-            Refill_my_bottle
-            Plastic_free_delivery
-            Delivery_only
-            Dine_in_straws
-            Dine_in_utensils
-            Dine_in_napkins
-            Dine_in_drinks
-            Dine_in_cups
-            Dine_in_drink_stirrers
-            Dine_in_linens__table_or_placemats_
-            Dine_in_dishes
-            Restroom_hand_towels
-            Take_out_bags
-            Take_out_containers
-            Take_out_cups
-            Take_out_container_lids
-            Take_out_cup_lids
-            Take_out_straws
-            Take_out_cup_carriers
-            Take_out_cup_sleeves
-            Take_out_food_wrapping
-            Kitchen_piping_bags
-            Kitchen_pan_liners
-            Kitchen_food_wrapping
-            Kitchen_gloves
-            Kitchen_food_freeze_packaging
-            Kitchen_waste_management
-            Food_waste_programs
-            Menu
-            Miscellaneous
-            Status
-            Survey_prefill_query_string
-          }
-        }
+        ...fullBizData
       }
     }
   }
