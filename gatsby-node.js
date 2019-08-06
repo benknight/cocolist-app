@@ -44,22 +44,49 @@ exports.createPages = async ({ graphql, actions }) => {
     process.exit(1);
   }
 
+  const BusinessPage = path.resolve('./src/templates/BusinessPage.js');
+
   filtered.forEach(({ node }) => {
     // English
     createPage({
       path: node.data.URL_key,
-      component: path.resolve('./src/templates/BusinessPage.js'),
+      component: BusinessPage,
       context: {
+        langKey: 'en',
         slug: node.data.URL_key,
       },
     });
     // Vietnamese
     createPage({
-      path: `vi/${node.data.URL_key}`,
-      component: path.resolve('./src/templates/BusinessPage.js'),
+      path: `/vi/${node.data.URL_key}`,
+      component: BusinessPage,
       context: {
+        langKey: 'vi',
         slug: node.data.URL_key,
       },
     });
   });
+};
+
+exports.onCreatePage = ({ page, actions }) => {
+  const { createPage, deletePage } = actions;
+  deletePage(page);
+  const enPage = {
+    ...page,
+    context: {
+      ...page.context,
+      langKey: 'en',
+    },
+  };
+  const viPage = {
+    ...page,
+    path: `/vi${page.path}`,
+    context: {
+      ...page.context,
+      langKey: 'vi',
+    },
+  };
+  // console.log(enPage, viPage);
+  createPage(enPage);
+  createPage(viPage);
 };

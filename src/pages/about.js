@@ -1,15 +1,13 @@
 import cx from 'classnames';
 import { graphql } from 'gatsby';
-import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
+import Hero from '../components/Hero';
 import { badges } from '../lib/badges';
-import { parseLangFromURL } from '../lib/i18n';
-import styles from './about.module.scss';
 
 const urls = {
   dineGreen: 'http://www.dinegreen.com/certification-standards',
@@ -34,7 +32,7 @@ const Text = props => (
   <p className={cx(props.className, 'measure-wide mb3')}>{props.children}</p>
 );
 
-const About = ({ data, intl: { formatMessage }, location }) => (
+const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => (
   <>
     <Helmet>
       <title>
@@ -45,14 +43,13 @@ const About = ({ data, intl: { formatMessage }, location }) => (
       </title>
     </Helmet>
     <Header location={location} />
-    <Img
+    <Hero
       alt="Trash-covered beach in Cam Ranh, Vietnam"
-      className={styles.hero}
       fluid={data.file.childImageSharp.fluid}
       objectFit="cover"
       title="Flotsam & jetsam washed up on a Vietnamese beach: much of it is single-use plastic"
     />
-    {parseLangFromURL(location.pathname) === 'vi' && (
+    {langKey === 'vi' && (
       <div className="tp-alert tp-alert--banner tp-alert--warning">
         <div className="tp-alert__text">
           Xin lỗi trang này chỉ có sẵn bằng tiếng Anh. Nếu bạn muốn giúp chúng tôi dịch
@@ -69,7 +66,7 @@ const About = ({ data, intl: { formatMessage }, location }) => (
             <nobr>eco-conscious</nobr> businesses in Vietnam.
           </h1>
         </header>
-        <div className={cx(styles.trash, 'w-100 m_w-33 mt4 ml3')}></div>
+        <div className="w-100 m_w-33 mt4 ml3"></div>
         <section className="tp-body-1" id="introduction">
           <Text className="mt5">
             Xin chào! I’m Ben, and I live in Saigon, a vibrant city but with an
