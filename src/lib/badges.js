@@ -7,13 +7,14 @@ const badges = [
     imageSmall: 'plastic-free-delivery-small.svg',
     imageLarge: 'plastic-free-delivery.svg',
     imageLargeAlt: 'plastic-free-delivery-alt.svg',
-    title: 'plastic_free_delivery_label',
-    description: 'plastic_free_delivery_description',
+    title: 'green_delivery_label',
+    description: 'green_delivery_description',
     test: survey => {
       const always = survey.Plastic_free_delivery === 'Always';
       const onRequest = survey.Plastic_free_delivery === 'Available on request';
       return always || onRequest;
     },
+    linkTarget: '/green-delivery',
   },
   {
     key: 'byoc',
@@ -23,6 +24,7 @@ const badges = [
     title: 'byoc_discount_label',
     description: 'byoc_discount_description',
     test: survey => !!survey.BYO_container_discount,
+    linkTarget: '/byoc',
   },
   {
     key: 'refill',
@@ -32,6 +34,7 @@ const badges = [
     title: 'refill_my_bottle_label',
     description: 'refill_my_bottle_description',
     test: survey => !!survey.Refill_my_bottle,
+    linkTarget: '/refill-my-bottle',
   },
   {
     key: 'foodWaste',
@@ -41,6 +44,7 @@ const badges = [
     title: 'food_waste_program_label',
     description: 'food_waste_program_description',
     test: survey => _get(survey, 'Food_waste_programs', []).length > 0,
+    linkTarget: '/food-waste',
   },
   {
     key: 'kitchen',
@@ -50,6 +54,7 @@ const badges = [
     title: 'green_kitchen_label',
     description: 'green_kitchen_description',
     test: survey => _get(survey, 'Kitchen_points', 0) > 3,
+    linkTarget: '/green-kitchen',
   },
   {
     key: 'noPlasticStraws',
@@ -59,6 +64,7 @@ const badges = [
     title: 'no_plastic_straws_label',
     description: 'no_plastic_straws_description',
     test: survey => !!survey.No_plastic_straws,
+    linkTarget: '/no-plastic-straws',
   },
   {
     key: 'noPlasticBags',
@@ -68,6 +74,7 @@ const badges = [
     title: 'no_plastic_bags_label',
     description: 'no_plastic_bags_description',
     test: survey => !!survey.No_plastic_bags,
+    linkTarget: '/no-plastic-bags',
   },
 ];
 

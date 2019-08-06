@@ -9,10 +9,10 @@ import Categories from './Categories';
 const BusinessList = ({ businesses, location, title }) => (
   <>
     <Wrap>
-      <h1 className="tp-title-1 mv5 l_mv6 l_w-66 pt4">{title}</h1>
+      <h1 className="tp-title-1 mv5 l_mv6 w-80 l_w-75 pt4">{title}</h1>
     </Wrap>
     <Wrap bleedBelow="medium">
-      <div className="grid grid-wide">
+      <div className="grid grid-wide l_mb6">
         {businesses.map((biz, index) => (
           <Link
             to={getLocalizedURL(`/${biz.URL_key}`, parseLangFromURL(location.pathname))}

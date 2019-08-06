@@ -1,35 +1,43 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
+import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
 
-const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
+const NoPlasticBags = ({ data, intl: { formatMessage }, location }) => {
   const businesses = data.allAirtable.edges.map(
     edge => edge.node.data.Business_record_match[0].data,
+  );
+  const title = (
+    <FormattedMessage
+      id="business_list_heading"
+      values={{
+        city: formatMessage({ id: 'Saigon' }),
+        thing: (
+          <span className="green">
+            {formatMessage({ id: 'no_plastic_bags_label' }).toLowerCase()}
+          </span>
+        ),
+      }}
+    />
   );
   return (
     <>
       <Helmet>
         <title>
           {formatMessage(
-            { id: 'top_ten_businesses_heading' },
-            { city: formatMessage({ id: 'Saigon' }) },
+            { id: 'business_list_heading' },
+            {
+              city: formatMessage({ id: 'Saigon' }),
+              thing: formatMessage({ id: 'no_plastic_bags_label' }).toLowerCase(),
+            },
           )}
         </title>
       </Helmet>
       <Header location={location} />
-      <BusinessList
-        businesses={businesses}
-        location={location}
-        title={formatMessage(
-          {
-            id: 'top_ten_businesses_heading',
-          },
-          { city: formatMessage({ id: 'Saigon' }) },
-        )}
-      />
+      <BusinessList businesses={businesses} location={location} title={title} />
     </>
   );
 };
@@ -39,10 +47,9 @@ export const query = graphql`
     allAirtable(
       filter: {
         table: { eq: "Food & Beverage Survey" }
-        data: { Status: { eq: "Published" } }
+        data: { Status: { eq: "Published" }, No_plastic_bags: { eq: true } }
       }
       sort: { fields: data___Coco_points, order: DESC }
-      limit: 10
     ) {
       edges {
         node {
@@ -59,4 +66,4 @@ export const query = graphql`
   }
 `;
 
-export default injectIntl(TopTen);
+export default injectIntl(NoPlasticBags);

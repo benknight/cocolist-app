@@ -280,7 +280,53 @@ const BusinessPage = props => {
 };
 
 export const query = graphql`
-  fragment fullBizData on AirtableData {
+  fragment SurveyDataFragment on AirtableData {
+    From_the_business
+    From_the_editor
+    Coco_points
+    Dine_in_points
+    Take_out_points
+    Kitchen_points
+    Menu_points
+    No_plastic_straws
+    No_plastic_bags
+    BYO_container_discount
+    BYOC_discount_amount
+    Refill_my_bottle
+    Plastic_free_delivery
+    Delivery_only
+    Dine_in_straws
+    Dine_in_utensils
+    Dine_in_napkins
+    Dine_in_drinks
+    Dine_in_cups
+    Dine_in_drink_stirrers
+    Dine_in_linens__table_or_placemats_
+    Dine_in_dishes
+    Restroom_hand_towels
+    Take_out_bags
+    Take_out_containers
+    Take_out_cups
+    Take_out_container_lids
+    Take_out_cup_lids
+    Take_out_straws
+    Take_out_cup_carriers
+    Take_out_cup_sleeves
+    Take_out_food_wrapping
+    Kitchen_piping_bags
+    Kitchen_pan_liners
+    Kitchen_food_wrapping
+    Kitchen_gloves
+    Kitchen_food_freeze_packaging
+    Kitchen_waste_management
+    Food_waste_programs
+    Menu
+    Miscellaneous
+    Status
+    Survey_prefill_query_string
+  }
+
+  fragment BusinessDataFragment on AirtableData {
     Record_ID
     Name
     Facebook_link
@@ -327,49 +373,7 @@ export const query = graphql`
     }
     F_B_survey {
       data {
-        From_the_business
-        From_the_editor
-        Coco_points
-        Dine_in_points
-        Take_out_points
-        Kitchen_points
-        Menu_points
-        No_plastic_straws
-        No_plastic_bags
-        BYO_container_discount
-        BYOC_discount_amount
-        Refill_my_bottle
-        Plastic_free_delivery
-        Delivery_only
-        Dine_in_straws
-        Dine_in_utensils
-        Dine_in_napkins
-        Dine_in_drinks
-        Dine_in_cups
-        Dine_in_drink_stirrers
-        Dine_in_linens__table_or_placemats_
-        Dine_in_dishes
-        Restroom_hand_towels
-        Take_out_bags
-        Take_out_containers
-        Take_out_cups
-        Take_out_container_lids
-        Take_out_cup_lids
-        Take_out_straws
-        Take_out_cup_carriers
-        Take_out_cup_sleeves
-        Take_out_food_wrapping
-        Kitchen_piping_bags
-        Kitchen_pan_liners
-        Kitchen_food_wrapping
-        Kitchen_gloves
-        Kitchen_food_freeze_packaging
-        Kitchen_waste_management
-        Food_waste_programs
-        Menu
-        Miscellaneous
-        Status
-        Survey_prefill_query_string
+        ...SurveyDataFragment
       }
     }
   }
@@ -377,7 +381,7 @@ export const query = graphql`
   query($slug: String!) {
     airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
       data {
-        ...fullBizData
+        ...BusinessDataFragment
       }
     }
   }

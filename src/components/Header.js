@@ -104,7 +104,13 @@ const Header = ({ location, showSearch, ...props }) => {
           {!user && <div className="dn m_db ml5">{betaLink}</div>}
           <Link
             activeClassName="tp-link--inherit"
-            className={cx('tp-link ml5', { 'dn m_db': showSearch })}
+            className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
+            to={getLocalizedURL('/top-ten', lang)}>
+            <FormattedMessage id="header_link_top_ten" defaultMessage="Top 10" />
+          </Link>
+          <Link
+            activeClassName="tp-link--inherit"
+            className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
             to={getLocalizedURL('/about', lang)}>
             <FormattedMessage id="header_link_about" />
           </Link>
@@ -121,6 +127,12 @@ const Header = ({ location, showSearch, ...props }) => {
           className="tp-link"
           to={getLocalizedURL('/about', lang)}>
           <FormattedMessage id="header_link_about" />
+        </Link>
+        <Link
+          activeClassName="tp-link--inherit"
+          className="tp-link"
+          to={getLocalizedURL('/top-ten', lang)}>
+          <FormattedMessage id="header_link_top_ten" defaultMessage="Top ten" />
         </Link>
         {user ? feedbackLink : betaLink}
       </div>

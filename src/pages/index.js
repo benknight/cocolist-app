@@ -10,22 +10,21 @@ import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import { badges } from '../lib/badges';
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL } from '../lib/i18n';
 
-const Index = ({ data, intl: { formatMessage }, location }) => {
+const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
   const [showAddBusinessModal, toggleAddBusinessModal] = useState(false);
-  const lang = parseLangFromURL(location.pathname);
   return (
     <>
       <Helmet>
         <title>
-          Cocolist {formatMessage({ id: 'Saigon' })} &ndash;{' '}
           {formatMessage(
             {
               id: 'find_businesses_headline',
             },
             { city: formatMessage({ id: 'Saigon' }) },
-          )}
+          )}{' '}
+          &ndash; Cocolist {formatMessage({ id: 'Saigon' })}
         </title>
       </Helmet>
       <Header location={location} showSearch={false} />
@@ -44,12 +43,12 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
         <div
           className="flex flex-column l_flex-row items-center m_items-start mb4 m_mb6"
           key={badge.key}>
-          <div className="m_flex items-center m_mv5 ph4 m_pl6 l_pl7 l_pr6 tc m_tl">
+          <div className="m_flex items-center l_justify-end w-100 l_w-40 m_mv5 ph4 m_pl6 l_pr6 tc m_tl">
             <img
               alt={formatMessage({ id: badge.title })}
               src={require(`../assets/badges/${badge.imageLargeAlt}`)}
             />
-            <div className="m_ml3 m_pr7 l_pr0 mw7">
+            <div className="m_ml3 m_pr7 l_pr0 m_mw7 l_mw6">
               <h2 className="tp-title-4">
                 <FormattedMessage id={badge.title} />
               </h2>
@@ -65,7 +64,7 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
             </div>
           </div>
           <div
-            className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
+            className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
             style={{ WebkitOverflowScrolling: 'touch' }}>
             {shuffle(
               data.surveys.edges
@@ -78,31 +77,44 @@ const Index = ({ data, intl: { formatMessage }, location }) => {
                   );
                 }),
               process.env.GATSBY_BUILD_TIMESTAMP || Date.now(),
-            ).map((survey, index) => {
-              const biz = survey.Business_record_match[0].data;
-              const thumbnail = _get(
-                biz,
-                'Profile_photo.localFiles[0].childImageSharp.fluid',
-              );
-              return (
+            )
+              .slice(0, 8)
+              .map((survey, index) => {
+                const biz = survey.Business_record_match[0].data;
+                const thumbnail = _get(
+                  biz,
+                  'Profile_photo.localFiles[0].childImageSharp.fluid',
+                );
+                return (
+                  <Link
+                    className="db pr1 pv4 w6 flex-shrink-0"
+                    key={index}
+                    to={getLocalizedURL(`/${biz.URL_key}`, langKey)}>
+                    {thumbnail && (
+                      <Img
+                        alt="business logo"
+                        className="br2 overflow-hidden"
+                        fluid={thumbnail}
+                        objectFit="contain"
+                      />
+                    )}
+                    <div className="tp-body-2 black mt1">
+                      <div className="b">{biz.Name}</div>
+                    </div>
+                  </Link>
+                );
+              })}
+            <div className="pv4 flex-shrink-0 w6 pr1">
+              <div className="aspect-ratio aspect-ratio-8x5">
                 <Link
-                  className="db pr1 pv4 w6 flex-shrink-0"
-                  key={index}
-                  to={getLocalizedURL(`/${biz.URL_key}`, lang)}>
-                  {thumbnail && (
-                    <Img
-                      alt="business logo"
-                      className="br2 overflow-hidden"
-                      fluid={thumbnail}
-                      objectFit="contain"
-                    />
-                  )}
-                  <div className="tp-body-2 black mt1">
-                    <div className="b">{biz.Name}</div>
+                  to={getLocalizedURL(badge.linkTarget, langKey)}
+                  className="br2 bg-green aspect-ratio-object flex items-center justify-center">
+                  <div className="tp-button tp-button--small tp-button--primary">
+                    <FormattedMessage id="view_more_button" defaultMessage="View more" />
                   </div>
                 </Link>
-              );
-            })}
+              </div>
+            </div>
           </div>
         </div>
       ))}
@@ -127,14 +139,7 @@ export const query = graphql`
   fragment HomepageSurveyFragment on AirtableEdge {
     node {
       data {
-        Coco_points
-        Plastic_free_delivery
-        No_plastic_straws
-        No_plastic_bags
-        BYO_container_discount
-        Refill_my_bottle
-        Food_waste_programs
-        Kitchen_points
+        ...SurveyDataFragment
         Business_record_match {
           data {
             Name
