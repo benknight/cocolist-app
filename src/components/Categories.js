@@ -4,13 +4,13 @@ import { FormattedMessage } from 'react-intl';
 
 const Categories = ({ biz, limit }) =>
   biz.Category.map(cat => cat.data.Name)
+    .slice(0, limit)
     .map((cat, index) => (
       <React.Fragment key={index}>
         <FormattedMessage id={cat} />
-        {index === biz.Category.length - 1 ? '' : ', '}
+        {index === Math.min(limit, biz.Category.length) - 1 ? '' : ', '}
       </React.Fragment>
-    ))
-    .slice(0, limit);
+    ));
 
 Categories.propTypes = {
   biz: PropTypes.shape({
