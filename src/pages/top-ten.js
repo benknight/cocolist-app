@@ -12,11 +12,17 @@ const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
   return (
     <>
       <Helmet>
-        <title>{formatMessage({ id: 'top_ten_businesses_heading' })}</title>
+        <title>
+          {formatMessage(
+            { id: 'top_ten_businesses_heading' },
+            { city: formatMessage({ id: 'Saigon' }) },
+          )}
+        </title>
       </Helmet>
       <Header location={location} />
       <BusinessList
         businesses={businesses}
+        location={location}
         title={formatMessage(
           {
             id: 'top_ten_businesses_heading',
