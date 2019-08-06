@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import { Link } from 'gatsby';
 import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
@@ -6,7 +7,7 @@ import { Wrap } from '@cocolist/thumbprint-react';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Categories from './Categories';
 
-const BusinessList = ({ businesses, location, title }) => (
+const BusinessList = ({ businesses, location, maxColumns, title }) => (
   <>
     <Wrap>
       <h1 className="tp-title-1 mv5 l_mv6 w-80 l_w-75 pt4">{title}</h1>
@@ -16,7 +17,10 @@ const BusinessList = ({ businesses, location, title }) => (
         {businesses.map((biz, index) => (
           <Link
             to={getLocalizedURL(`/${biz.URL_key}`, parseLangFromURL(location.pathname))}
-            className="black m_col-6 l_col-4"
+            className={cx('black m_col-6', {
+              'l_col-4': maxColumns === 3,
+              'l_col-6': maxColumns === 2,
+            })}
             key={biz.Record_ID}>
             <div className="mb3 m_mb5 pa2 m_pa0">
               <div className="w-100">
@@ -53,7 +57,12 @@ BusinessList.propTypes = {
     }),
   ).isRequired,
   location: PropTypes.object.isRequired,
+  maxColumns: PropTypes.oneOf([2, 3]),
   title: PropTypes.string.isRequired,
+};
+
+BusinessList.defaultProps = {
+  maxColumns: 3,
 };
 
 export default BusinessList;

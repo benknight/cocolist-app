@@ -23,6 +23,7 @@ const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
       <BusinessList
         businesses={businesses}
         location={location}
+        maxColumns={2}
         title={formatMessage(
           {
             id: 'top_ten_businesses_heading',
