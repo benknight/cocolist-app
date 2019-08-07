@@ -15,32 +15,38 @@ const BusinessList = ({ businesses, location, maxColumns, title }) => (
     <Wrap bleedBelow="medium">
       <div className="grid grid-wide l_mb6">
         {businesses.map((biz, index) => (
-          <Link
-            to={getLocalizedURL(`/${biz.URL_key}`, parseLangFromURL(location.pathname))}
-            className={cx('black m_col-6', {
+          <div
+            className={cx('m_col-6', {
               'l_col-4': maxColumns === 3,
               'l_col-6': maxColumns === 2,
-            })}
-            key={biz.Record_ID}>
-            <div className="mb3 m_mb5 pa2 m_pa0">
-              <div className="w-100">
-                <Img
-                  alt="logo"
-                  className="br2"
-                  fluid={biz.Profile_photo.localFiles[0].childImageSharp.fluid}
-                  objectFit="contain"
-                />
-              </div>
-              <div className="pv2 ph2 m_ph0">
-                <div>
-                  <span className="tp-title-6 mr2 dib">{biz.Name}</span>
-                  <span className="tp-body-2 dib">
-                    <Categories biz={biz} limit={2} />
-                  </span>
+            })}>
+            <Link
+              className="db black"
+              key={biz.Record_ID}
+              to={getLocalizedURL(
+                `/${biz.URL_key}`,
+                parseLangFromURL(location.pathname),
+              )}>
+              <div className="mb3 m_mb5 pa2 m_pa0">
+                <div className="w-100">
+                  <Img
+                    alt="logo"
+                    className="br2"
+                    fluid={biz.Profile_photo.localFiles[0].childImageSharp.fluid}
+                    objectFit="contain"
+                  />
+                </div>
+                <div className="pv2 ph2 m_ph0">
+                  <div>
+                    <span className="tp-title-6 mr2 dib">{biz.Name}</span>
+                    <span className="tp-body-2 dib">
+                      <Categories biz={biz} limit={2} />
+                    </span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          </div>
         ))}
       </div>
     </Wrap>
