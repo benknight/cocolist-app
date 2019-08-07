@@ -12,7 +12,7 @@ import {
   ContentModifierListSmall,
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
-import { Link as TPLink, Button, TextButton, Wrap } from '@cocolist/thumbprint-react';
+import { Link as TPLink, Button, TextButton } from '@cocolist/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
@@ -53,7 +53,7 @@ const BusinessPage = props => {
   const [showEditModal, toggleEditModal] = useState(false);
 
   return (
-    <>
+    <div className="bg-gray-200">
       <Helmet>
         <title>
           {biz.Name} &ndash;{' '}
@@ -68,206 +68,173 @@ const BusinessPage = props => {
 
       <Header location={props.location} />
 
-      <div className="m_pv4 l_pv6">
-        <Wrap bleedBelow="medium">
-          <div className="m_flex justify-between items-center mb5">
-            <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
-              {thumbnail && (
-                <div className={styles.thumbnailWrapper}>
-                  <Img
-                    alt="logo"
-                    className="m_br2"
-                    fluid={thumbnail}
-                    objectFit="contain"
-                  />
-                </div>
-              )}
+      <div className={cx(styles.container, 'shadow-1 center bg-white')}>
+        <div className="mb4">
+          <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
+            {thumbnail && (
+              <div className={styles.thumbnailWrapper}>
+                <Img alt="logo" fluid={thumbnail} objectFit="contain" />
+              </div>
+            )}
+          </div>
+          <div className="ph3 s_ph5 order-0">
+            <div className="flex flex-wrap items-baseline mb2 mt3 s_mt4">
+              <h1 className="tp-title-1">{biz.Name}</h1>
             </div>
-            <div className="ph3 s_ph5 m_ph0 order-0">
-              <div className="flex flex-wrap items-baseline mb2 mt3 l_mt0 l_mr6">
-                <h1 className="tp-title-1">{biz.Name}</h1>
-              </div>
-              <div className="tp-body-2">
-                <div className="flex items-start">
-                  <ContentModifierListSmall className="w1 mr2" />
-                  <div>
-                    <Categories biz={biz} />
-                  </div>
-                </div>
-                <div className="flex items-center mv1">
-                  <ContentModifierMapPinSmall className="w1 mr2" />
-                  <div>
-                    {biz.Neighborhood.map(({ data }, index) => (
-                      <React.Fragment key={index}>
-                        <FormattedMessage id={data.Name} />
-                        {index === biz.Neighborhood.length - 1 ? '' : ', '}
-                      </React.Fragment>
-                    ))}
-                  </div>
+            <div className="tp-body-2">
+              <div className="flex items-start">
+                <ContentModifierListSmall className="w1 mr2" />
+                <div>
+                  <Categories biz={biz} />
                 </div>
               </div>
-              {links.length > 0 && (
-                <div className="tp-body-2 flex items-center mv1">
-                  <ContentActionsFlagSmall className="w1 mr2" />
-                  <div>
-                    {links.map(([link, url], index) => (
-                      <div key={link} className="dib mr1">
-                        <TPLink to={url} theme="inherit" shouldOpenInNewTab>
-                          <FormattedMessage id={link.toLowerCase()} />
-                        </TPLink>
-                        {index !== links.length - 1 && ', '}
-                      </div>
-                    ))}
-                  </div>
+              <div className="flex items-center mv1">
+                <ContentModifierMapPinSmall className="w1 mr2" />
+                <div>
+                  {biz.Neighborhood.map(({ data }, index) => (
+                    <React.Fragment key={index}>
+                      <FormattedMessage id={data.Name} />
+                      {index === biz.Neighborhood.length - 1 ? '' : ', '}
+                    </React.Fragment>
+                  ))}
                 </div>
-              )}
-              <div className="tp-body-2 mv1">
-                <TextButton
-                  accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
-                  onClick={() => toggleEditModal(true)}
-                  iconLeft={<ContentActionsEditSmall className="w1" />}
-                  theme="inherit">
-                  <FormattedMessage id="edit_business_action_label" />
-                </TextButton>
               </div>
+            </div>
+            {links.length > 0 && (
+              <div className="tp-body-2 flex items-center mv1">
+                <ContentActionsFlagSmall className="w1 mr2" />
+                <div>
+                  {links.map(([link, url], index) => (
+                    <div key={link} className="dib mr1">
+                      <TPLink to={url} theme="inherit" shouldOpenInNewTab>
+                        <FormattedMessage id={link.toLowerCase()} />
+                      </TPLink>
+                      {index !== links.length - 1 && ', '}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+            <div className="tp-body-2 mv1">
+              <TextButton
+                accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
+                onClick={() => toggleEditModal(true)}
+                iconLeft={<ContentActionsEditSmall className="w1" />}
+                theme="inherit">
+                <FormattedMessage id="edit_business_action_label" />
+              </TextButton>
             </div>
           </div>
-        </Wrap>
+        </div>
 
-        {!survey && (
-          <Wrap bleedBelow="medium">
-            <div className="lh-copy bg-gray-200 pa4 tc mt4 flex flex-column items-center">
-              <NotificationAlertsWarningMedium />
-              <h3 className="tp-title-4 mt3 mb2">
-                <FormattedMessage id="business_no_data_title" />
-              </h3>
-              <p className="tp-body-2 mb3 mw7">
-                <FormattedMessage
-                  id="business_no_data_description"
-                  values={{ business: biz.Name }}
-                />
-              </p>
-              <Button
-                icon={<ContentActionsEditSmall />}
-                onClick={() => toggleEditModal(true)}
-                size="small"
-                theme="tertiary">
-                <FormattedMessage id="edit_business_action_label" />
-              </Button>
-            </div>
-          </Wrap>
-        )}
-
-        <Wrap>
-          {bizBadges.length > 0 ||
-          _get(biz, 'Business_photos.localFiles.length') ||
-          _get(survey, 'From_the_business') ||
-          _get(survey, 'From_the_editor') ? (
-            // Some badges
-            <div className="m_flex">
-              <div className="flex-auto m_pr6">
-                {bizBadges.length > 0 && (
-                  <div className="mv4 m_mt0 m_mb5 m_pb5">
-                    {bizBadges.map(badge => (
-                      <div key={badge.key} className="flex items-center pv3">
-                        <div
-                          className={cx(
-                            styles.badgeImage,
-                            'self-start flex-shrink-0 mr3',
-                          )}>
-                          <img
-                            alt=""
-                            className="dib l_dn w-100"
-                            src={require(`../assets/badges/${badge.imageSmall}`)}
-                          />
-                          <img
-                            alt=""
-                            className="dn l_dib w-100"
-                            src={require(`../assets/badges/${badge.imageLarge}`)}
-                          />
-                        </div>
-                        <div>
-                          <div className="tp-title-5 l_mb1" size={5}>
-                            <FormattedMessage id={badge.title} />
-                          </div>
-                          {badge.description && (
-                            <div className="tp-body-2 measure l_pr6">
-                              <FormattedMessage
-                                id={badge.description}
-                                values={{
-                                  business: biz.Name,
-                                  byoc_percent: survey.BYOC_discount_amount
-                                    ? `${survey.BYOC_discount_amount * 100}%`
-                                    : '',
-                                }}
-                              />
-                            </div>
-                          )}
-                        </div>
+        {survey ? (
+          <div className="ph3 s_ph5 pb5">
+            <div className="flex-auto">
+              {bizBadges.length > 0 && (
+                <div className="mv4">
+                  {bizBadges.map(badge => (
+                    <div key={badge.key} className="flex items-center pv3">
+                      <div
+                        className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
+                        <img
+                          alt=""
+                          className="dib w-100"
+                          src={require(`../assets/badges/${badge.imageSmall}`)}
+                        />
                       </div>
-                    ))}
+                      <div>
+                        <div className="tp-title-5" size={5}>
+                          <FormattedMessage id={badge.title} />
+                        </div>
+                        {badge.description && (
+                          <div className="tp-body-2 measure">
+                            <FormattedMessage
+                              id={badge.description}
+                              values={{
+                                business: biz.Name,
+                                byoc_percent: survey.BYOC_discount_amount
+                                  ? `${survey.BYOC_discount_amount * 100}%`
+                                  : '',
+                              }}
+                            />
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+              {_get(biz, 'Business_photos.localFiles.length') > 0 && (
+                <div className="mb5">
+                  <div className="tp-title-4 mb3">
+                    <FormattedMessage id="business_photos_heading" />
                   </div>
-                )}
-                {biz.Business_photos && (
-                  <div className="mb5">
-                    <div className="tp-title-4 mb3">
-                      <FormattedMessage id="business_photos_heading" />
-                    </div>
-                    {biz.Business_photos.localFiles.map((photo, index) => {
-                      const raw = biz.Business_photos.raw[index];
-                      return (
-                        <a
-                          className="dib ml1 ml0-m mt1 mr1"
-                          href={raw.thumbnails.large.url}
-                          key={index}
-                          rel="noopener noreferrer"
-                          target="_blank">
-                          <Img
-                            alt={raw.filename}
-                            className="br1"
-                            fixed={photo.childImageSharp.fixed}
-                          />
-                        </a>
-                      );
-                    })}
+                  {biz.Business_photos.localFiles.map((photo, index) => {
+                    const raw = biz.Business_photos.raw[index];
+                    return (
+                      <a
+                        className="dib ml0-m mt1 mr1"
+                        href={raw.thumbnails.large.url}
+                        key={index}
+                        rel="noopener noreferrer"
+                        target="_blank">
+                        <Img
+                          alt={raw.filename}
+                          className="br1"
+                          fixed={photo.childImageSharp.fixed}
+                        />
+                      </a>
+                    );
+                  })}
+                </div>
+              )}
+              {survey.From_the_business && (
+                <div className="mb5">
+                  <div className="tp-title-4 mb3">
+                    <FormattedMessage id="from_the_business_heading" />
                   </div>
-                )}
-                {survey.From_the_business && (
-                  <div className="mb5">
-                    <div className="tp-title-4 mb3">
-                      <FormattedMessage id="from_the_business_heading" />
-                    </div>
-                    <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                      {survey.From_the_business}
-                    </div>
+                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                    {survey.From_the_business}
                   </div>
-                )}
-                {survey.From_the_editor && (
-                  <div className="mb5">
-                    <div className="tp-title-4 mb3">
-                      <FormattedMessage id="from_the_editor_heading" />
-                    </div>
-                    <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                      {survey.From_the_editor}
-                    </div>
+                </div>
+              )}
+              {survey.From_the_editor && (
+                <div className="mb5">
+                  <div className="tp-title-4 mb3">
+                    <FormattedMessage id="from_the_editor_heading" />
                   </div>
-                )}
-              </div>
-              <div className={cx(styles.sidebar, 'flex-shrink-0')}>
-                <SurveyView survey={survey} onClickEdit={() => toggleEditModal(true)} />
-              </div>
+                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                    {survey.From_the_editor}
+                  </div>
+                </div>
+              )}
             </div>
-          ) : (
-            survey && (
-              // No badges
-              <SurveyView
-                columns={2}
-                onClickEdit={() => toggleEditModal(true)}
-                survey={survey}
+            {survey && (
+              <SurveyView survey={survey} onClickEdit={() => toggleEditModal(true)} />
+            )}
+          </div>
+        ) : (
+          // No survey
+          <div className="lh-copy pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
+            <NotificationAlertsWarningMedium />
+            <h3 className="tp-title-4 mt3 mb2">
+              <FormattedMessage id="business_no_data_title" />
+            </h3>
+            <p className="tp-body-2 mb3 mw7">
+              <FormattedMessage
+                id="business_no_data_description"
+                values={{ business: biz.Name }}
               />
-            )
-          )}
-        </Wrap>
+            </p>
+            <Button
+              icon={<ContentActionsEditSmall />}
+              onClick={() => toggleEditModal(true)}
+              size="small"
+              theme="primary">
+              <FormattedMessage id="edit_business_action_label" />
+            </Button>
+          </div>
+        )}
       </div>
       <AirtableFormModal
         formId="shrw4zfDcry512acj"
@@ -275,7 +242,7 @@ const BusinessPage = props => {
         onCloseClick={() => toggleEditModal(false)}
         prefill={_get(survey, 'Survey_prefill_query_string', '')}
       />
-    </>
+    </div>
   );
 };
 

@@ -8,13 +8,3 @@
 .itemValue + .itemValue::before {
   content: ', ';
 }
-
-@include respond-above(medium) {
-  .container {
-    margin: 0 -2rem;
-  }
-
-  .column {
-    padding: 0 2rem;
-  }
-}

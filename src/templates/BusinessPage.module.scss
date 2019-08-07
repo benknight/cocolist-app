@@ -13,22 +13,10 @@
   float: right;
 }
 
-@include respond-above(medium) {
-  .sidebar {
-    width: 300px;
-  }
-}
-
-@include respond-above(large) {
-  .badgeImage {
-    width: 100px;
-  }
-
-  .sidebar {
-    width: 320px;
-  }
-}
-
 .curtain {
   background-color: rgba(0, 0, 0, 0.5);
+}
+
+.container {
+  max-width: 600px;
 }

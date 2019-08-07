@@ -1,5 +1,4 @@
 import cx from 'classnames';
-import _chunk from 'lodash/chunk';
 import _get from 'lodash/get';
 import _isEmpty from 'lodash/isEmpty';
 import PropTypes from 'prop-types';
@@ -124,7 +123,7 @@ const Section = injectIntl(
       ([key, values]) => _get(values, 'length', 0) === 0,
     );
     return (
-      <section className="mb4 m_mb5" key={section.title}>
+      <section className="mb4" key={section.title}>
         <div className="tp-title-4 mt0 mb4 flex items-baseline">
           <FormattedMessage id={section.title} />
           <div className="ml2">
@@ -185,23 +184,18 @@ const Section = injectIntl(
   },
 );
 
-const SurveyView = ({ columns, onClickEdit, survey }) => {
+const SurveyView = ({ onClickEdit, survey }) => {
   const sections = parseSections(survey).filter(section => !_isEmpty(section.items));
   return (
-    <div className={cx(styles.container, 'm_flex flex-wrap')}>
-      {_chunk(sections, columns).map((sections, index) => (
-        <div key={`column-${index}`} className={cx(styles.column, 'flex-auto')}>
-          {sections.map(section => (
-            <Section {...{ key: section.title, onClickEdit, section, survey }} />
-          ))}
-        </div>
+    <div className={cx(styles.container)}>
+      {sections.map(section => (
+        <Section {...{ key: section.title, onClickEdit, section, survey }} />
       ))}
     </div>
   );
 };
 
 SurveyView.propTypes = {
-  columns: PropTypes.number,
   onClickEdit: PropTypes.func.isRequired,
   survey: PropTypes.object.isRequired,
 };
