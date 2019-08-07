@@ -43,16 +43,16 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         <div
           className="flex flex-column l_flex-row items-center m_items-start mb4 m_mb6"
           key={badge.key}>
-          <div className="m_flex items-center l_justify-end w-100 l_w-40 m_mv5 ph4 m_pl6 l_pr6 tc m_tl">
+          <div className="m_flex items-center l_justify-end w-100 l_w-40 m_mv5 ph4 m_pl6 l_ph4 tc m_tl">
             <img
               alt={formatMessage({ id: badge.title })}
               src={require(`../assets/badges/${badge.imageLargeAlt}`)}
             />
-            <div className="m_ml3 m_pr7 l_pr0 m_mw7 l_mw6">
+            <div className="m_ml3 m_pr7 l_pr0 m_mw7 flex-auto">
               <h2 className="tp-title-4">
                 <FormattedMessage id={badge.title} />
               </h2>
-              <div className="tp-body-1">
+              <div className="tp-body-1 mt1">
                 <FormattedMessage
                   id={badge.description}
                   values={{
@@ -60,6 +60,16 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                     byoc_percent: '',
                   }}
                 />
+                <div className="mt1 tp-body-2">
+                  <Link
+                    className="tp-link b"
+                    to={getLocalizedURL(badge.linkTarget, langKey)}>
+                    <FormattedMessage
+                      id="see_all_businesses"
+                      defaultMessage="See all businesses"
+                    />
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
