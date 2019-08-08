@@ -1,7 +1,8 @@
 import cx from 'classnames';
+import _keyBy from 'lodash/keyBy';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useState, useEffect, createRef } from 'react';
+import React, { useState, createRef } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   InstantSearch,
@@ -23,9 +24,11 @@ import {
   InputIcon,
   Link as TPLink,
 } from '@cocolist/thumbprint-react';
+import { badges } from '../lib/badges';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
 import styles from './Search.module.scss';
 
+const badgesByKey = _keyBy(badges, 'key');
 const indexName = 'Businesses';
 
 const Results = connectStateResults(
@@ -48,17 +51,6 @@ const Stats = connectStateResults(
       <FormattedMessage id="search_results_count" values={{ count: res.nbHits }} />
     )),
 );
-
-const useClickOutside = (ref, handler, events) => {
-  if (!events) events = ['mousedown', 'touchstart'];
-  const detectClickOutside = event => !ref.current.contains(event.target) && handler();
-  useEffect(() => {
-    for (const event of events) document.addEventListener(event, detectClickOutside);
-    return () => {
-      for (const event of events) document.removeEventListener(event, detectClickOutside);
-    };
-  });
-};
 
 const Root = React.forwardRef((props, ref) => <div ref={ref} {...props} />);
 
@@ -127,6 +119,16 @@ const BusinessHit = ({ hit }) => {
     <Link className="db ph3 pv2 m_pv3 bb b-gray-300" to={linkTo}>
       <div className="tp-title-6 black">
         <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
+        {hit.badges.map(key => {
+          const badge = badgesByKey[key];
+          return (
+            <img
+              alt=""
+              className="w1 h1 mr1"
+              src={require(`../assets/badges/${badge.imageSmall}`)}
+            />
+          );
+        })}
       </div>
       <div className="tp-body-3 black-300">
         <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
@@ -141,13 +143,11 @@ function Search({ className, location, size }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
-  const [focus, setFocus] = useState(false);
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
     process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   );
-  const showResults = focus;
-  useClickOutside(ref, () => setFocus(false));
+  const showResults = query.length > 0;
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -156,7 +156,7 @@ function Search({ className, location, size }) {
       root={{ Root, props: { ref } }}>
       <div className={cx(className, { [styles.large]: size === 'large' })}>
         <div className="relative z-1">
-          <SearchInput onFocus={() => setFocus(true)} size={size} />
+          <SearchInput size={size} />
         </div>
         <div
           className={cx(
@@ -166,7 +166,7 @@ function Search({ className, location, size }) {
           )}>
           <div className="flex flex-column w-100 h-100">
             <div className="tp-body-3 bb b-gray-300">
-              <div className="black-300 ph3 flex items-center">
+              <div className="black-300 ph3 flex items-center mb1">
                 <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>
                 <PoweredBy />
               </div>

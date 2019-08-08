@@ -69,6 +69,7 @@ const flatten = data => {
       type: _get(data, 'Type[0]'),
       coco_points: _get(fbSurvey, 'Coco_points') || 0,
       vnmm_rating_count: data.VNMM_rating_count || 0,
+      badges: badges.map(badge => badge.key),
       badges_en: badges.map(badge => tx[badge.title].en),
       badges_vi: badges.map(badge => tx[badge.title].vi),
       category_en: data.Category.map(cat => tx[cat.data.Name].en),
