@@ -18,7 +18,10 @@ module.exports = {
       options: {
         appId: process.env.GATSBY_ALGOLIA_APP_ID,
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
-        queries: require('./src/lib/algolia-queries'),
+        queries:
+          process.env.BUILD_ALGOLIA === 'true'
+            ? require('./src/lib/algolia-queries')
+            : [],
         // chunkSize: 10000, // default: 1000
       },
     },
