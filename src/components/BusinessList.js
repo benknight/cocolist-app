@@ -4,7 +4,8 @@ import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Wrap } from '@cocolist/thumbprint-react';
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import BusinessRenderData from '../lib/BusinessRenderData';
+import { parseLangFromURL } from '../lib/i18n';
 import Categories from './Categories';
 
 const BusinessList = ({ businesses, location, maxColumns, title }) => (
@@ -14,40 +15,37 @@ const BusinessList = ({ businesses, location, maxColumns, title }) => (
     </Wrap>
     <Wrap bleedBelow="medium">
       <div className="grid grid-wide l_mb6">
-        {businesses.map((biz, index) => (
-          <div
-            className={cx('m_col-6', {
-              'l_col-4': maxColumns === 3,
-              'l_col-6': maxColumns === 2,
-            })}>
-            <Link
-              className="db black"
-              key={biz.Record_ID}
-              to={getLocalizedURL(
-                `/${biz.URL_key}`,
-                parseLangFromURL(location.pathname),
-              )}>
-              <div className="mb3 m_mb5 pa2 m_pa0">
-                <div className="w-100">
-                  <Img
-                    alt="logo"
-                    className="br2"
-                    fluid={biz.Profile_photo.localFiles[0].childImageSharp.fluid}
-                    objectFit="contain"
-                  />
-                </div>
-                <div className="pv2 ph2 m_ph0">
-                  <div>
-                    <span className="tp-title-6 mr2 dib">{biz.Name}</span>
-                    <span className="tp-body-2 dib">
-                      <Categories biz={biz} limit={2} />
-                    </span>
+        {businesses
+          .map(biz => new BusinessRenderData(biz, parseLangFromURL(location.pathname)))
+          .map((biz, index) => (
+            <div
+              className={cx('m_col-6', {
+                'l_col-4': maxColumns === 3,
+                'l_col-6': maxColumns === 2,
+              })}
+              key={biz.id}>
+              <Link className="db black" to={biz.url}>
+                <div className="mb3 m_mb5 pa2 m_pa0">
+                  <div className="w-100">
+                    <Img
+                      alt="logo"
+                      className="br2"
+                      fluid={biz.thumbnail}
+                      objectFit="contain"
+                    />
+                  </div>
+                  <div className="pv2 ph2 m_ph0">
+                    <div>
+                      <span className="tp-title-6 mr2 dib">{biz.name}</span>
+                      <span className="tp-body-2 dib">
+                        <Categories categories={biz.categories} limit={2} />
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Link>
-          </div>
-        ))}
+              </Link>
+            </div>
+          ))}
       </div>
     </Wrap>
   </>

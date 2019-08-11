@@ -124,6 +124,7 @@ const BusinessHit = ({ hit }) => {
           return (
             <img
               alt=""
+              key={key}
               className="w1 h1 mr1"
               src={require(`../assets/badges/${badge.imageSmall}`)}
             />

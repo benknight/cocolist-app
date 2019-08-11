@@ -7,56 +7,35 @@ import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
   ContentActionsEditSmall,
-  ContentActionsFlagSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
-import { Link as TPLink, Button, TextButton } from '@cocolist/thumbprint-react';
+import { Button, Link as TPLink, TextButton } from '@cocolist/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
 import SurveyView from '../components/SurveyView';
-import { getBadgesFromSurvey } from '../lib/badges';
-import { getLocalizedVNMMURL } from '../lib/i18n';
+import BusinessRenderData from '../lib/BusinessRenderData';
 import styles from './BusinessPage.module.scss';
 
 const BusinessPage = props => {
   const {
     data: {
-      airtable: { data: biz },
+      airtable: { data: bizData },
     },
     intl: { formatMessage },
     pageContext: { langKey },
   } = props;
 
-  const thumbnail = _get(biz, 'Profile_photo.localFiles[0].childImageSharp.fluid');
-
-  const survey = (biz.F_B_survey || [])
-    .map(({ data }) => data)
-    .find(({ Status }) => Status === 'Published');
-
-  const bizBadges = survey ? getBadgesFromSurvey(survey) : [];
-
-  const links = [];
-
-  ['Google_Maps_link', 'Facebook_link', 'VNMM_link'].forEach(linkName => {
-    if (biz[linkName] && biz[linkName].length > 0) {
-      let url = biz[linkName].split(',')[0].trim();
-      if (linkName === 'VNMM_link') {
-        url = getLocalizedVNMMURL(url, langKey);
-      }
-      links.push([linkName, url]);
-    }
-  });
-
+  const biz = new BusinessRenderData(bizData, langKey);
   const [showEditModal, toggleEditModal] = useState(false);
 
   return (
     <div className="bg-gray-200">
       <Helmet>
         <title>
-          {biz.Name} &ndash;{' '}
+          {biz.name} &ndash;{' '}
           {formatMessage(
             {
               id: 'eco_friendly_biz_in_vn',
@@ -71,50 +50,54 @@ const BusinessPage = props => {
       <div className={cx(styles.container, 'shadow-1 center bg-white')}>
         <div className="mb4">
           <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
-            {thumbnail && (
+            {biz.thumbnail && (
               <div className={styles.thumbnailWrapper}>
-                <Img alt="logo" fluid={thumbnail} objectFit="contain" />
+                <Img alt="logo" fluid={biz.thumbnail} objectFit="contain" />
               </div>
             )}
           </div>
-          <div className="ph3 s_ph5 order-0">
-            <div className="flex flex-wrap items-baseline mb2 mt3 s_mt4">
-              <h1 className="tp-title-1">{biz.Name}</h1>
+          <div className="relative ph3 s_ph5 order-0">
+            <div className="flex items-end mb2 mt3 s_mt4">
+              <h1 className="tp-title-1 flex-auto">{biz.name}</h1>
+              {biz.links.length > 0 && (
+                <div className="flex flex-wrap flex-shrink-0 self-start ml4">
+                  {biz.links.map(([link, url, icon], index) => (
+                    <div
+                      key={link}
+                      className="inline-flex items-center bg-gray-300 br2 ml1 pa2 m_w-auto"
+                      title={formatMessage({ id: link.toLowerCase() })}>
+                      <TPLink
+                        accessibilityLabel={formatMessage({ id: link.toLowerCase() })}
+                        iconLeft={icon}
+                        shouldOpenInNewTab
+                        theme="inherit"
+                        to={url}
+                        size="small"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
             <div className="tp-body-2">
               <div className="flex items-start">
                 <ContentModifierListSmall className="w1 mr2" />
                 <div>
-                  <Categories biz={biz} />
+                  <Categories categories={biz.categories} />
                 </div>
               </div>
               <div className="flex items-center mv1">
                 <ContentModifierMapPinSmall className="w1 mr2" />
                 <div>
-                  {biz.Neighborhood.map(({ data }, index) => (
+                  {biz.neighborhoods.map((name, index) => (
                     <React.Fragment key={index}>
-                      <FormattedMessage id={data.Name} />
-                      {index === biz.Neighborhood.length - 1 ? '' : ', '}
+                      <FormattedMessage id={name} />
+                      {index === biz.neighborhoods.length - 1 ? '' : ', '}
                     </React.Fragment>
                   ))}
                 </div>
               </div>
             </div>
-            {links.length > 0 && (
-              <div className="tp-body-2 flex items-center mv1">
-                <ContentActionsFlagSmall className="w1 mr2" />
-                <div>
-                  {links.map(([link, url], index) => (
-                    <div key={link} className="dib mr1">
-                      <TPLink to={url} theme="inherit" shouldOpenInNewTab>
-                        <FormattedMessage id={link.toLowerCase()} />
-                      </TPLink>
-                      {index !== links.length - 1 && ', '}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
             <div className="tp-body-2 mv1">
               <TextButton
                 accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
@@ -127,12 +110,12 @@ const BusinessPage = props => {
           </div>
         </div>
 
-        {survey ? (
+        {biz.survey ? (
           <div className="ph3 s_ph5 pb5">
             <div className="flex-auto">
-              {bizBadges.length > 0 && (
+              {biz.badges.length > 0 && (
                 <div className="mv4">
-                  {bizBadges.map(badge => (
+                  {biz.badges.map(badge => (
                     <div key={badge.key} className="flex items-center pv3">
                       <div
                         className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
@@ -151,9 +134,9 @@ const BusinessPage = props => {
                             <FormattedMessage
                               id={badge.description}
                               values={{
-                                business: biz.Name,
-                                byoc_percent: survey.BYOC_discount_amount
-                                  ? `${survey.BYOC_discount_amount * 100}%`
+                                business: biz.name,
+                                byoc_percent: biz.survey.BYOC_discount_amount
+                                  ? `${biz.survey.BYOC_discount_amount * 100}%`
                                   : '',
                               }}
                             />
@@ -169,48 +152,47 @@ const BusinessPage = props => {
                   <div className="tp-title-4 mb3">
                     <FormattedMessage id="business_photos_heading" />
                   </div>
-                  {biz.Business_photos.localFiles.map((photo, index) => {
-                    const raw = biz.Business_photos.raw[index];
+                  {biz.photos.map((photo, index) => {
                     return (
                       <a
                         className="dib ml0-m mt1 mr1"
-                        href={raw.thumbnails.large.url}
+                        href={photo.raw.thumbnails.large.url}
                         key={index}
                         rel="noopener noreferrer"
                         target="_blank">
                         <Img
-                          alt={raw.filename}
+                          alt={photo.raw.filename}
                           className="br1"
-                          fixed={photo.childImageSharp.fixed}
+                          fixed={photo.fixed}
                         />
                       </a>
                     );
                   })}
                 </div>
               )}
-              {survey.From_the_business && (
+              {biz.survey.From_the_business && (
                 <div className="mb5">
                   <div className="tp-title-4 mb3">
                     <FormattedMessage id="from_the_business_heading" />
                   </div>
                   <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {survey.From_the_business}
+                    {biz.survey.From_the_business}
                   </div>
                 </div>
               )}
-              {survey.From_the_editor && (
+              {biz.survey.From_the_editor && (
                 <div className="mb5">
                   <div className="tp-title-4 mb3">
                     <FormattedMessage id="from_the_editor_heading" />
                   </div>
                   <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {survey.From_the_editor}
+                    {biz.survey.From_the_editor}
                   </div>
                 </div>
               )}
             </div>
-            {survey && (
-              <SurveyView survey={survey} onClickEdit={() => toggleEditModal(true)} />
+            {biz.survey && (
+              <SurveyView survey={biz.survey} onClickEdit={() => toggleEditModal(true)} />
             )}
           </div>
         ) : (
@@ -240,7 +222,7 @@ const BusinessPage = props => {
         formId="shrw4zfDcry512acj"
         isOpen={showEditModal}
         onCloseClick={() => toggleEditModal(false)}
-        prefill={_get(survey, 'Survey_prefill_query_string', '')}
+        prefill={_get(biz.survey, 'Survey_prefill_query_string', '')}
       />
     </div>
   );

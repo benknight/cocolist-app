@@ -2,26 +2,16 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
 
-const Categories = ({ biz, limit }) =>
-  biz.Category.map(cat => cat.data.Name)
-    .slice(0, limit)
-    .map((cat, index) => (
-      <React.Fragment key={index}>
-        <FormattedMessage id={cat} />
-        {index === Math.min(limit, biz.Category.length) - 1 ? '' : ', '}
-      </React.Fragment>
-    ));
+const Categories = ({ categories, limit }) =>
+  categories.slice(0, limit).map((cat, index) => (
+    <React.Fragment key={index}>
+      <FormattedMessage id={cat} />
+      {index === Math.min(limit, categories.length) - 1 ? '' : ', '}
+    </React.Fragment>
+  ));
 
 Categories.propTypes = {
-  biz: PropTypes.shape({
-    Categories: PropTypes.arrayOf(
-      PropTypes.shape({
-        data: PropTypes.shape({
-          Name: PropTypes.string.isRequired,
-        }).isRequired,
-      }),
-    ),
-  }),
+  categories: PropTypes.arrayOf(PropTypes.string).isRequired,
   limit: PropTypes.number,
 };
 

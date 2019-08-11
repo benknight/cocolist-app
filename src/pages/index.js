@@ -10,6 +10,7 @@ import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import { badges } from '../lib/badges';
+import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
 
 const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
@@ -92,26 +93,22 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             )
               .slice(0, 8)
               .map((survey, index) => {
-                const biz = survey.Business_record_match[0].data;
-                const thumbnail = _get(
-                  biz,
-                  'Profile_photo.localFiles[0].childImageSharp.fluid',
+                const biz = new BusinessRenderData(
+                  survey.Business_record_match[0].data,
+                  langKey,
                 );
                 return (
-                  <Link
-                    className="db pr1 pv4 w6 flex-shrink-0"
-                    key={index}
-                    to={getLocalizedURL(`/${biz.URL_key}`, langKey)}>
-                    {thumbnail && (
+                  <Link className="db pr1 pv4 w6 flex-shrink-0" key={index} to={biz.url}>
+                    {biz.thumbnail && (
                       <Img
                         alt="business logo"
                         className="br2 overflow-hidden"
-                        fluid={thumbnail}
+                        fluid={biz.thumbnail}
                         objectFit="contain"
                       />
                     )}
                     <div className="tp-body-2 black mt1">
-                      <div className="b">{biz.Name}</div>
+                      <div className="b">{biz.name}</div>
                     </div>
                   </Link>
                 );
