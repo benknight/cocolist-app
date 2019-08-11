@@ -49,6 +49,29 @@ function parseSections(survey) {
   }
   sections.push(
     {
+      title: 'kitchen_section_title',
+      items: [
+        ['kitchen_piping_bags_label', survey.Kitchen_piping_bags],
+        ['kitchen_pan_liners_label', survey.Kitchen_pan_liners],
+        ['kitchen_food_wrapping_label', survey.Kitchen_food_wrapping],
+        ['kitchen_gloves_label', survey.Kitchen_gloves],
+        ['kitchen_food_freeze_packaging_label', survey.Kitchen_food_freeze_packaging],
+        [
+          'waste_separation',
+          survey.Kitchen_waste_management.indexOf('Waste separation') !== -1
+            ? ['Yes']
+            : null,
+        ],
+        [
+          'sink_grease_traps',
+          survey.Kitchen_waste_management.indexOf('Grease traps on sinks') !== -1
+            ? ['Yes']
+            : null,
+        ],
+        ['food_waste_program_label', survey.Food_waste_programs],
+      ],
+    },
+    {
       title: 'menu_section_title',
       items: [
         [
@@ -79,29 +102,6 @@ function parseSections(survey) {
           'menu_sustainable_seafood_label',
           survey.Menu.indexOf('Sustainable seafood') !== -1 ? ['Yes'] : ['No'],
         ],
-      ],
-    },
-    {
-      title: 'kitchen_section_title',
-      items: [
-        ['kitchen_piping_bags_label', survey.Kitchen_piping_bags],
-        ['kitchen_pan_liners_label', survey.Kitchen_pan_liners],
-        ['kitchen_food_wrapping_label', survey.Kitchen_food_wrapping],
-        ['kitchen_gloves_label', survey.Kitchen_gloves],
-        ['kitchen_food_freeze_packaging_label', survey.Kitchen_food_freeze_packaging],
-        [
-          'waste_separation',
-          survey.Kitchen_waste_management.indexOf('Waste separation') !== -1
-            ? ['Yes']
-            : null,
-        ],
-        [
-          'sink_grease_traps',
-          survey.Kitchen_waste_management.indexOf('Grease traps on sinks') !== -1
-            ? ['Yes']
-            : null,
-        ],
-        ['food_waste_program_label', survey.Food_waste_programs],
       ],
     },
   );
