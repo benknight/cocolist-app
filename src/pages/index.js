@@ -127,7 +127,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           </div>
         </div>
       ))}
-      <div className="ph4 tc pv6">
+      <div className="ph4 tc pv6 bg-gray-200">
         <div className="tp-title-2 mb5">
           <FormattedMessage id="add_business_headline" />
         </div>
