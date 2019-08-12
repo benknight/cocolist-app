@@ -147,7 +147,7 @@ const BusinessPage = props => {
                   ))}
                 </div>
               )}
-              {_get(biz, 'Business_photos.localFiles.length') > 0 && (
+              {biz.photos.length > 0 && (
                 <div className="mb5">
                   <div className="tp-title-4 mb3">
                     <FormattedMessage id="business_photos_heading" />

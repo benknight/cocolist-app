@@ -51,7 +51,7 @@ class BusinessRenderData {
   }
 
   get photos() {
-    return this.data.Business_photos.localFiles
+    return _get(this.data, 'Business_photos.localFiles', [])
       .map((photo, index) => ({
         fixed: photo.childImageSharp.fixed,
         raw: this.data.Business_photos.raw[index],
