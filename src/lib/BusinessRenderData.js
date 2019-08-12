@@ -43,18 +43,20 @@ class BusinessRenderData {
   }
 
   get neighborhoods() {
-    return this.data.Neighborhood.map(({ data }) => data.Name);
+    return this.data.Neighborhood.map(({ data }) => data.Name).reverse();
   }
 
   get categories() {
-    return this.data.Category.map(({ data }) => data.Name);
+    return this.data.Category.map(({ data }) => data.Name).reverse();
   }
 
   get photos() {
-    return this.data.Business_photos.localFiles.map((photo, index) => ({
-      fixed: photo.childImageSharp.fixed,
-      raw: this.data.Business_photos.raw[index],
-    }));
+    return this.data.Business_photos.localFiles
+      .map((photo, index) => ({
+        fixed: photo.childImageSharp.fixed,
+        raw: this.data.Business_photos.raw[index],
+      }))
+      .reverse();
   }
 
   get links() {
