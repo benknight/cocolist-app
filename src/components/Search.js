@@ -9,7 +9,7 @@ import {
   Index,
   InfiniteHits,
   Highlight,
-  RefinementList,
+  // RefinementList,
   connectStateResults,
   connectSearchBox,
 } from 'react-instantsearch-dom';
@@ -142,7 +142,7 @@ const BusinessHit = ({ hit }) => {
 
 function Search({ className, location, size }) {
   const ref = createRef();
-  const lang = parseLangFromURL(location.pathname);
+  // const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
@@ -165,13 +165,13 @@ function Search({ className, location, size }) {
             { dn: !showResults },
             'bg-gray-200 m_br3 overflow-hidden shadow-1',
           )}>
-          <div className="flex flex-column w-100 h-100">
+          <div className="flex flex-column">
             <div className="tp-body-3 bb b-gray-300">
-              <div className="black-300 ph3 flex items-center mb1">
+              <div className="black-300 ph3 flex items-center mv1 m_mt0">
                 <div className="flex-auto">{query && query.length > 0 && <Stats />}</div>
                 <PoweredBy />
               </div>
-              <RefinementList
+              {/* <RefinementList
                 attribute={`badges_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
               />
@@ -179,7 +179,7 @@ function Search({ className, location, size }) {
                 attribute={`neighborhood_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
               />
-              {/* <RefinementList attribute={`category_${lang}`} /> */}
+              <RefinementList attribute={`category_${lang}`} /> */}
             </div>
             <div
               className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}
