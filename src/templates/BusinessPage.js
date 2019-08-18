@@ -147,6 +147,35 @@ const BusinessPage = props => {
                   ))}
                 </div>
               )}
+
+              {/* From the business */}
+
+              {biz.survey.From_the_business && (
+                <div className="mb5">
+                  <div className="tp-title-4 mb3">
+                    <FormattedMessage id="from_the_business_heading" />
+                  </div>
+                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                    {biz.survey.From_the_business}
+                  </div>
+                </div>
+              )}
+
+              {/* From the editor */}
+
+              {biz.survey.From_the_editor && (
+                <div className="mb5">
+                  <div className="tp-title-4 mb3">
+                    <FormattedMessage id="from_the_editor_heading" />
+                  </div>
+                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                    {biz.survey.From_the_editor}
+                  </div>
+                </div>
+              )}
+
+              {/* Business photos */}
+
               {biz.photos.length > 0 && (
                 <div className="mb5">
                   <div className="tp-title-4 mb3">
@@ -168,26 +197,6 @@ const BusinessPage = props => {
                       </a>
                     );
                   })}
-                </div>
-              )}
-              {biz.survey.From_the_business && (
-                <div className="mb5">
-                  <div className="tp-title-4 mb3">
-                    <FormattedMessage id="from_the_business_heading" />
-                  </div>
-                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {biz.survey.From_the_business}
-                  </div>
-                </div>
-              )}
-              {biz.survey.From_the_editor && (
-                <div className="mb5">
-                  <div className="tp-title-4 mb3">
-                    <FormattedMessage id="from_the_editor_heading" />
-                  </div>
-                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {biz.survey.From_the_editor}
-                  </div>
                 </div>
               )}
             </div>
@@ -296,7 +305,7 @@ export const query = graphql`
     Profile_photo {
       localFiles {
         childImageSharp {
-          fluid(maxWidth: 400, maxHeight: 250) {
+          fluid(maxWidth: 800, maxHeight: 480) {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
