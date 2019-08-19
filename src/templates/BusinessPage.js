@@ -9,9 +9,8 @@ import {
   ContentActionsEditSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
-  NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
-import { Button, Link as TPLink, TextButton } from '@cocolist/thumbprint-react';
+import { Link as TPLink, TextButton } from '@cocolist/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
@@ -110,122 +109,93 @@ const BusinessPage = props => {
           </div>
         </div>
 
-        {biz.survey ? (
-          <div className="ph3 s_ph5 pb5">
-            <div className="flex-auto">
-              {biz.badges.length > 0 && (
-                <div className="mv4">
-                  {biz.badges.map(badge => (
-                    <div key={badge.key} className="flex items-center pv3">
-                      <div
-                        className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
-                        <img
-                          alt=""
-                          className="dib w-100"
-                          src={require(`../assets/badges/${badge.imageSmall}`)}
-                        />
-                      </div>
-                      <div>
-                        <div className="tp-title-5" size={5}>
-                          <FormattedMessage id={badge.title} />
-                        </div>
-                        {badge.description && (
-                          <div className="tp-body-2 measure">
-                            <FormattedMessage
-                              id={badge.description}
-                              values={{
-                                business: biz.name,
-                                byoc_percent: biz.survey.BYOC_discount_amount
-                                  ? `${biz.survey.BYOC_discount_amount * 100}%`
-                                  : '',
-                              }}
-                            />
-                          </div>
-                        )}
-                      </div>
+        <div className="ph3 s_ph5 pb5">
+          <div className="flex-auto">
+            {biz.badges.length > 0 && (
+              <div className="mv4">
+                {biz.badges.map(badge => (
+                  <div key={badge.key} className="flex items-center pv3">
+                    <div
+                      className={cx(styles.badgeImage, 'self-start flex-shrink-0 mr3')}>
+                      <img
+                        alt=""
+                        className="dib w-100"
+                        src={require(`../assets/badges/${badge.imageSmall}`)}
+                      />
                     </div>
-                  ))}
+                    <div>
+                      <div className="tp-title-5" size={5}>
+                        <FormattedMessage id={badge.title} />
+                      </div>
+                      {badge.description && (
+                        <div className="tp-body-2 measure">
+                          <FormattedMessage
+                            id={badge.description}
+                            values={{
+                              business: biz.name,
+                              byoc_percent: biz.survey.BYOC_discount_amount
+                                ? `${biz.survey.BYOC_discount_amount * 100}%`
+                                : '',
+                            }}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {/* From the business */}
+
+            {_get(biz, 'survey.From_the_business') && (
+              <div className="mb5">
+                <div className="tp-title-4 mb3">
+                  <FormattedMessage id="from_the_business_heading" />
                 </div>
-              )}
-
-              {/* From the business */}
-
-              {biz.survey.From_the_business && (
-                <div className="mb5">
-                  <div className="tp-title-4 mb3">
-                    <FormattedMessage id="from_the_business_heading" />
-                  </div>
-                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {biz.survey.From_the_business}
-                  </div>
+                <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                  {biz.survey.From_the_business}
                 </div>
-              )}
+              </div>
+            )}
 
-              {/* From the editor */}
+            {/* From the editor */}
 
-              {biz.survey.From_the_editor && (
-                <div className="mb5">
-                  <div className="tp-title-4 mb3">
-                    <FormattedMessage id="from_the_editor_heading" />
-                  </div>
-                  <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                    {biz.survey.From_the_editor}
-                  </div>
+            {_get(biz, 'survey.From_the_editor') && (
+              <div className="mb5">
+                <div className="tp-title-4 mb3">
+                  <FormattedMessage id="from_the_editor_heading" />
                 </div>
-              )}
-
-              {/* Business photos */}
-
-              {biz.photos.length > 0 && (
-                <div className="mb5">
-                  <div className="tp-title-4 mb3">
-                    <FormattedMessage id="business_photos_heading" />
-                  </div>
-                  {biz.photos.map((photo, index) => {
-                    return (
-                      <a
-                        className="dib ml0-m mt1 mr1"
-                        href={photo.raw.thumbnails.large.url}
-                        key={index}
-                        rel="noopener noreferrer"
-                        target="_blank">
-                        <Img
-                          alt={photo.raw.filename}
-                          className="br1"
-                          fixed={photo.fixed}
-                        />
-                      </a>
-                    );
-                  })}
+                <div className="measure" style={{ whiteSpace: 'pre-line' }}>
+                  {biz.survey.From_the_editor}
                 </div>
-              )}
-            </div>
-            {biz.survey && (
-              <SurveyView survey={biz.survey} onClickEdit={() => toggleEditModal(true)} />
+              </div>
+            )}
+
+            {/* Business photos */}
+
+            {biz.photos.length > 0 && (
+              <div className="mb5">
+                <div className="tp-title-4 mb3">
+                  <FormattedMessage id="business_photos_heading" />
+                </div>
+                {biz.photos.map((photo, index) => {
+                  return (
+                    <a
+                      className="dib ml0-m mt1 mr1"
+                      href={photo.raw.thumbnails.large.url}
+                      key={index}
+                      rel="noopener noreferrer"
+                      target="_blank">
+                      <Img alt={photo.raw.filename} className="br1" fixed={photo.fixed} />
+                    </a>
+                  );
+                })}
+              </div>
             )}
           </div>
-        ) : (
-          // No survey
-          <div className="lh-copy pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
-            <NotificationAlertsWarningMedium />
-            <h3 className="tp-title-4 mt3 mb2">
-              <FormattedMessage id="business_no_data_title" />
-            </h3>
-            <p className="tp-body-2 mb3 mw7">
-              <FormattedMessage
-                id="business_no_data_description"
-                values={{ business: biz.Name }}
-              />
-            </p>
-            <Button
-              icon={<ContentActionsEditSmall />}
-              onClick={() => toggleEditModal(true)}
-              size="small"
-              theme="primary">
-              <FormattedMessage id="edit_business_action_label" />
-            </Button>
-          </div>
-        )}
+          <SurveyView biz={biz} onClickEdit={() => toggleEditModal(true)} />
+        </div>
       </div>
       <AirtableFormModal
         formId="shrw4zfDcry512acj"

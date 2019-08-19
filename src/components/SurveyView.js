@@ -2,8 +2,11 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { TextButton } from '@cocolist/thumbprint-react';
-import { ContentActionsEditSmall } from '@thumbtack/thumbprint-icons';
+import { Button, TextButton } from '@cocolist/thumbprint-react';
+import {
+  ContentActionsEditSmall,
+  NotificationAlertsWarningMedium,
+} from '@thumbtack/thumbprint-icons';
 import styles from './SurveyView.module.scss';
 
 function getSurveyItems(survey) {
@@ -74,8 +77,33 @@ function getSurveyItems(survey) {
   return items;
 }
 
-const SurveyView = ({ onClickEdit, survey }) => {
-  const items = getSurveyItems(survey).filter(item => item[1] && item[1].length > 0);
+const SurveyView = ({ onClickEdit, biz }) => {
+  const items =
+    biz.survey &&
+    getSurveyItems(biz.survey).filter(item => item[1] && item[1].length > 0);
+  if (!biz.survey || items.length === 0) {
+    return (
+      <div className="lh-copy bt b-gray-300 pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
+        <NotificationAlertsWarningMedium />
+        <h3 className="tp-title-4 mt3 mb2">
+          <FormattedMessage id="business_no_data_title" />
+        </h3>
+        <p className="tp-body-2 mb3 mw7">
+          <FormattedMessage
+            id="business_no_data_description"
+            values={{ business: biz.name }}
+          />
+        </p>
+        <Button
+          icon={<ContentActionsEditSmall />}
+          onClick={onClickEdit}
+          size="small"
+          theme="primary">
+          <FormattedMessage id="edit_business_action_label" />
+        </Button>
+      </div>
+    );
+  }
   return (
     <div className={cx(styles.container)}>
       <div className="mt0 mb4 flex items-baseline justify-between">
@@ -120,7 +148,7 @@ const SurveyView = ({ onClickEdit, survey }) => {
 
 SurveyView.propTypes = {
   onClickEdit: PropTypes.func.isRequired,
-  survey: PropTypes.object.isRequired,
+  biz: PropTypes.object.isRequired,
 };
 
 SurveyView.defaultProps = {
