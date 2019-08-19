@@ -76,6 +76,16 @@ const badges = [
     test: survey => !!survey.No_plastic_bags,
     linkTarget: '/no-plastic-bags',
   },
+  {
+    key: 'noPlasticBottles',
+    imageSmall: 'no-plastic-bottles-small.svg',
+    imageLarge: 'no-plastic-bottles.svg',
+    imageLargeAlt: 'no-plastic-bottles-alt.svg',
+    title: 'no_plastic_bottles_label',
+    description: 'no_plastic_bottles_description',
+    test: survey => !!survey.No_plastic_bottles,
+    linkTarget: '/no-plastic-bottles',
+  },
 ];
 
 function getBadgesFromSurvey(survey) {

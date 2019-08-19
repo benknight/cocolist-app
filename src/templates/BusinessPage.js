@@ -248,6 +248,7 @@ export const query = graphql`
     Menu_points
     No_plastic_straws
     No_plastic_bags
+    No_plastic_bottles
     BYO_container_discount
     BYOC_discount_amount
     Refill_my_bottle
