@@ -6,6 +6,7 @@ import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
 import { Button } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import OPGPreviewImage from '../assets/opg-preview.jpg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Search from '../components/Search';
@@ -15,18 +16,30 @@ import { getLocalizedURL } from '../lib/i18n';
 
 const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
   const [showAddBusinessModal, toggleAddBusinessModal] = useState(false);
+  const pageTitle = formatMessage(
+    {
+      id: 'find_businesses_headline',
+    },
+    { city: formatMessage({ id: 'Saigon' }) },
+  );
   return (
     <>
       <Helmet>
         <title>
-          {formatMessage(
-            {
-              id: 'find_businesses_headline',
-            },
-            { city: formatMessage({ id: 'Saigon' }) },
-          )}{' '}
-          &ndash; Cocolist {formatMessage({ id: 'Saigon' })}
+          {pageTitle} &ndash; Cocolist {formatMessage({ id: 'Saigon' })}
         </title>
+        <meta property="fb:app_id" content="375503033345734" />
+        <meta property="og:title" content={`Cocolist – ${pageTitle}`} />
+        <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
+        <meta
+          property="og:url"
+          content={`https://cocolist.vn${getLocalizedURL('/', langKey)}`}
+        />
+        <meta
+          property="og:description"
+          content="Find restaurants in Saigon offering green delivery, no plastic, free drinking water, and discounts for eco-conscious consumers."
+        />
+        <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
       </Helmet>
       <Header location={location} showSearch={false} />
       <div className="pv6 mv2 ph3 m_mv5 m_ph6 m_pv7 l_ph7 mw9">
