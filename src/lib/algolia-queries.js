@@ -29,6 +29,7 @@ const businessQuery = `
                 BYO_container_discount
                 No_plastic_bags
                 No_plastic_straws
+                No_plastic_bottles
                 Plastic_free_delivery
                 Refill_my_bottle
                 Status
