@@ -1,14 +1,12 @@
 import axios from 'axios';
 import { StaticQuery, graphql } from 'gatsby';
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Button, ButtonRow, Input, Label, Select } from '@cocolist/thumbprint-react';
-import auth from '../lib/auth';
 import getCookieValue from '../lib/getCookieValue';
 import { parseLangFromURL } from '../lib/i18n';
-import { AuthContext } from './AuthProvider';
 
-function createHubspotContact(email, formData) {
+function createHubspotContact(formData) {
   const formId = process.env.GATSBY_HUBSPOT_BETA_FORM_GUID;
   const portalId = process.env.GATSBY_HUBSPOT_PORTAL_ID;
   const target = `https://api.hsforms.com/submissions/v3/integration/submit/${portalId}/${formId}`;
@@ -33,7 +31,7 @@ function createHubspotContact(email, formData) {
       },
       {
         name: 'email',
-        value: email,
+        value: formData.email,
       },
       {
         name: 'hs_language',
@@ -43,14 +41,18 @@ function createHubspotContact(email, formData) {
   });
 }
 
-function EditProfile({ intl: { formatMessage } }) {
+function Signup({ intl: { formatMessage } }) {
   const [isLoading, setIsLoading] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
+    email: '',
     firstName: '',
     lastName: '',
     district: '',
   });
-  const { user } = useContext(AuthContext);
+  if (isSuccess) {
+    return <FormattedMessage id="signup_thanks" />;
+  }
   return (
     <StaticQuery
       query={graphql`
@@ -77,20 +79,29 @@ function EditProfile({ intl: { formatMessage } }) {
           onSubmit={async event => {
             event.preventDefault();
             setIsLoading(true);
-            await Promise.all([
-              auth.updateUser({
-                displayName: `${formData.firstName} ${formData.lastName}`.trim(),
-              }),
-              createHubspotContact(user.email, formData),
-            ]);
+            try {
+              await Promise.all([createHubspotContact(formData)]);
+              setIsSuccess(true);
+            } catch (error) {
+              // Gulp!
+            }
             setIsLoading(false);
           }}>
-          <div className="tp-title-3">
-            <FormattedMessage id="profile_heading" />
+          <div className="mv4">
+            <Label for="email">
+              <FormattedMessage id="signin_email_label" />
+            </Label>
+            <Input
+              id="email"
+              isRequired
+              onChange={email => setFormData({ ...formData, email })}
+              type="email"
+              value={formData.email}
+            />
           </div>
           <div className="mv4">
             <Label for="firstName">
-              <FormattedMessage id="profile_first_name_label" />
+              <FormattedMessage id="signup_first_name_label" />
             </Label>
             <Input
               id="firstName"
@@ -102,7 +113,7 @@ function EditProfile({ intl: { formatMessage } }) {
           </div>
           <div className="mv4">
             <Label for="lastName">
-              <FormattedMessage id="profile_last_name_label" />
+              <FormattedMessage id="signup_last_name_label" />
             </Label>
             <Input
               id="lastName"
@@ -113,7 +124,7 @@ function EditProfile({ intl: { formatMessage } }) {
           </div>
           <div className="mv4">
             <Label for="district">
-              <FormattedMessage id="profile_district_label" />
+              <FormattedMessage id="signup_district_label" />
             </Label>
             <Select
               id="district"
@@ -131,7 +142,7 @@ function EditProfile({ intl: { formatMessage } }) {
           </div>
           <ButtonRow justify="right">
             <Button isLoading={isLoading} type="submit">
-              <FormattedMessage id="profile_button_save" />
+              <FormattedMessage id="signup_button_save" />
             </Button>
           </ButtonRow>
         </form>
@@ -140,4 +151,4 @@ function EditProfile({ intl: { formatMessage } }) {
   );
 }
 
-export default injectIntl(EditProfile);
+export default injectIntl(Signup);

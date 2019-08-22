@@ -1,17 +1,17 @@
 import cx from 'classnames';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { TextButton, Link as TPLink } from '@cocolist/thumbprint-react';
+import { TextButton } from '@cocolist/thumbprint-react';
 import {
   NavigationCaretDownTiny,
   NavigationCaretUpTiny,
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
-import { AuthContext } from './AuthProvider';
 import Search from './Search';
+import SignupLink from './SignupLink';
 import styles from './Header.module.scss';
 
 const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
@@ -42,7 +42,6 @@ const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
-  const { user } = useContext(AuthContext);
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
@@ -59,19 +58,6 @@ const Header = ({ location, showSearch, ...props }) => {
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   });
-  const feedbackLink = (
-    <TPLink to="mailto:feedback@cocolist.vn?subject=Beta%20feedback">
-      <FormattedMessage id="header_link_feedback" />
-    </TPLink>
-  );
-  const betaLink = (
-    <Link
-      activeClassName="tp-link--inherit"
-      className="tp-link"
-      to={getLocalizedURL('/signup', lang)}>
-      <FormattedMessage id="header_link_beta" />
-    </Link>
-  );
   return (
     <header
       className={cx(styles.container, 'z-2 bg-white', {
@@ -82,16 +68,18 @@ const Header = ({ location, showSearch, ...props }) => {
         <Link className="inline-flex mb1 mr3 m_mr4" to={getLocalizedURL('/', lang)}>
           <img alt="logo" className={styles.logo} src={logo} />
         </Link>
-        <div className="mr3 m_dn">
-          <TextButton
-            accessibilityLabel="Open Cocolist navigation"
-            iconLeft={
-              isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
-            }
-            onClick={() => setNavExpanded(!isNavExpanded)}
-            theme="inherit"
-          />
-        </div>
+        {showSearch && (
+          <div className="mr3 m_dn">
+            <TextButton
+              accessibilityLabel="Open Cocolist navigation"
+              iconLeft={
+                isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
+              }
+              onClick={() => setNavExpanded(!isNavExpanded)}
+              theme="inherit"
+            />
+          </div>
+        )}
         <div className="flex-auto">
           {showSearch && (
             <div className={styles.searchWrapper}>
@@ -100,8 +88,9 @@ const Header = ({ location, showSearch, ...props }) => {
           )}
         </div>
         <div className="flex items-baseline b nowrap">
-          {user && <div className="dn m_db ml5">{feedbackLink}</div>}
-          {!user && <div className="dn m_db ml5">{betaLink}</div>}
+          <div className={cx('ml3 m_ml5', { 'dn m_db': showSearch })}>
+            <SignupLink />
+          </div>
           <Link
             activeClassName="tp-link--inherit"
             className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
@@ -134,7 +123,7 @@ const Header = ({ location, showSearch, ...props }) => {
           to={getLocalizedURL('/top-ten', lang)}>
           <FormattedMessage id="header_link_top_ten" defaultMessage="Top ten" />
         </Link>
-        {user ? feedbackLink : betaLink}
+        <SignupLink />
       </div>
     </header>
   );

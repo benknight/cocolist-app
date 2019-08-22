@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
 import auth from '../lib/auth';
 import { AuthContext } from './AuthProvider';
-import EditProfile from './EditProfile';
+import Signup from './Signup';
 import Login from './Login';
 import styles from './AuthGate.module.scss';
 
@@ -15,7 +15,7 @@ function AuthGate(props) {
   let content = null;
 
   if (user && !_get(user, 'displayName')) {
-    content = <EditProfile />;
+    content = <Signup />;
   } else if (!user) {
     if (user !== null) {
       return null;

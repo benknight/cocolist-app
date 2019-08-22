@@ -9,7 +9,7 @@ import '@cocolist/thumbprint-atomic';
 import '@cocolist/thumbprint-scss';
 import './src/styles/global.scss';
 import React from 'react';
-import AuthProvider from './src/components/AuthProvider';
+// import AuthProvider from './src/components/AuthProvider';
 import IntlProvider from './src/components/IntlProvider';
 import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/i18n';
 
@@ -28,7 +28,9 @@ export const onClientEntry = () => {
 
 export const wrapPageElement = ({ element, props }) => (
   <IntlProvider location={props.location}>
-    <AuthProvider location={props.location}>{element}</AuthProvider>
+    {/* <AuthProvider location={props.location}> */}
+    {element}
+    {/* </AuthProvider> */}
   </IntlProvider>
 );
 
