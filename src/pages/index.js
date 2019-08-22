@@ -6,7 +6,7 @@ import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
 import { Button } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import OPGPreviewImage from '../assets/opg-preview.jpg';
+import OPGPreviewImage from '../assets/og-preview.jpg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Search from '../components/Search';
@@ -25,9 +25,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
   return (
     <>
       <Helmet>
-        <title>
-          {pageTitle} &ndash; Cocolist {formatMessage({ id: 'Saigon' })}
-        </title>
+        <title>Cocolist &ndash; {pageTitle}</title>
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`Cocolist – ${pageTitle}`} />
         <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
@@ -37,7 +35,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         />
         <meta
           property="og:description"
-          content="Find restaurants in Saigon offering green delivery, no plastic, free drinking water, and discounts for eco-conscious consumers."
+          content="Find restaurants in Saigon with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water."
         />
         <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
       </Helmet>

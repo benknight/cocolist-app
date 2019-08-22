@@ -42,6 +42,7 @@ const BusinessPage = props => {
             { city: formatMessage({ id: 'Saigon' }) },
           )}
         </title>
+        {/* TODO: Add social meta tags */}
       </Helmet>
 
       <Header location={props.location} />
