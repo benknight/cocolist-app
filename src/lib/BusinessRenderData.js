@@ -91,6 +91,10 @@ class BusinessRenderData {
     }
     return links;
   }
+
+  get cocoPoints() {
+    return this.data.Coco_points;
+  }
 }
 
 export default BusinessRenderData;

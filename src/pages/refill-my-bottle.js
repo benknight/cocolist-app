@@ -5,11 +5,12 @@ import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
+import sortBusinesses from '../lib/sortBusinesses';
 
 const RefillMyBottle = ({ data, intl: { formatMessage }, location }) => {
-  const businesses = data.allAirtable.edges.map(
-    edge => edge.node.data.Business_record_match[0].data,
-  );
+  const businesses = data.allAirtable.edges
+    .map(edge => edge.node.data.Business_record_match[0].data)
+    .sort(sortBusinesses);
   const title = (
     <FormattedMessage
       id="business_list_heading"
@@ -49,7 +50,6 @@ export const query = graphql`
         table: { eq: "Food & Beverage Survey" }
         data: { Status: { eq: "Published" }, Refill_my_bottle: { eq: true } }
       }
-      sort: { fields: data___Coco_points, order: DESC }
     ) {
       edges {
         node {

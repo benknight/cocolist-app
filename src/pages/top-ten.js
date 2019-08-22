@@ -4,11 +4,13 @@ import Helmet from 'react-helmet';
 import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
+import sortBusinesses from '../lib/sortBusinesses';
 
 const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
-  const businesses = data.allAirtable.edges.map(
-    edge => edge.node.data.Business_record_match[0].data,
-  );
+  const businesses = data.allAirtable.edges
+    .map(edge => edge.node.data.Business_record_match[0].data)
+    .sort(sortBusinesses)
+    .slice(0, 10);
   return (
     <>
       <Helmet>
@@ -42,8 +44,6 @@ export const query = graphql`
         table: { eq: "Food & Beverage Survey" }
         data: { Status: { eq: "Published" } }
       }
-      sort: { fields: data___Coco_points, order: DESC }
-      limit: 10
     ) {
       edges {
         node {
