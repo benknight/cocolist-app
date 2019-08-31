@@ -4,13 +4,14 @@ import Helmet from 'react-helmet';
 import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
-import sortBusinesses from '../lib/sortBusinesses';
+import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
-  const businesses = data.allAirtable.edges
-    .map(edge => edge.node.data.Business_record_match[0].data)
-    .sort(sortBusinesses)
-    .slice(0, 10);
+  const businesses = getBusinessesFromSurveyData(
+    data.allAirtable.edges.filter(
+      edge => edge.node.data.Business_record_match.length > 0,
+    ),
+  ).slice(0, 10);
   return (
     <>
       <Helmet>

@@ -5,12 +5,10 @@ import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
-import sortBusinesses from '../lib/sortBusinesses';
+import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 const RefillMyBottle = ({ data, intl: { formatMessage }, location }) => {
-  const businesses = data.allAirtable.edges
-    .map(edge => edge.node.data.Business_record_match[0].data)
-    .sort(sortBusinesses);
+  const businesses = getBusinessesFromSurveyData(data.allAirtable.edges);
   const title = (
     <FormattedMessage
       id="business_list_heading"

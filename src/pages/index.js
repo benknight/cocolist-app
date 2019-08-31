@@ -104,11 +104,9 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             )
               .slice(0, 8)
               .map((survey, index) => {
-                const biz = new BusinessRenderData(
-                  survey.Business_record_match[0].data,
-                  langKey,
-                );
-                return (
+                return survey.Business_record_match.map(
+                  ({ data }) => new BusinessRenderData(data, langKey),
+                ).map(biz => (
                   <Link className="db pr1 pv4 w6 flex-shrink-0" key={index} to={biz.url}>
                     {biz.thumbnail && (
                       <Img
@@ -122,7 +120,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                       <div className="b">{biz.name}</div>
                     </div>
                   </Link>
-                );
+                ));
               })}
             <div className="pv4 flex-shrink-0 w6 pr1">
               <div className="aspect-ratio aspect-ratio-8x5">

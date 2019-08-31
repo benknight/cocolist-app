@@ -6,14 +6,13 @@ import { injectIntl } from 'react-intl';
 import BusinessList from '../components/BusinessList';
 import Header from '../components/Header';
 import { badges } from '../lib/badges';
-import sortBusinesses from '../lib/sortBusinesses';
+import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 const GreenKitchen = ({ data, intl: { formatMessage }, location }) => {
   const kitchenBadge = badges.find(b => b.key === 'kitchen');
-  const businesses = data.allAirtable.edges
-    .filter(edge => kitchenBadge.test(edge.node.data))
-    .map(edge => edge.node.data.Business_record_match[0].data)
-    .sort(sortBusinesses);
+  const businesses = getBusinessesFromSurveyData(
+    data.allAirtable.edges.filter(edge => kitchenBadge.test(edge.node.data)),
+  );
   const title = (
     <FormattedMessage
       id="business_list_heading"
