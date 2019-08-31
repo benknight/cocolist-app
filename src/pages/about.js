@@ -74,15 +74,16 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             reduce my own eco-footprint, I wanted to do more.
           </Text>
           <Text>
-            With a thriving local business community and an increasing awareness in
-            Vietnam about environmental issues, there is a growing interest among
-            consumers to choose businesses that have taken steps be greener.
+            Saigon has a thriving local business community and at the same time people are
+            becoming more awareness about environmental issues. More consumers prefer to
+            choose businesses that have taken steps be greener or shown a commitment to
+            lessen their impact.
           </Text>
           <Text>
-            And in fact many business owners are already trying to make an impact by doing
-            things like reducing or eliminating single-use plastic, even when it might
-            hurt their bottom line. These businesses deserve to be rewarded for their
-            actions.
+            And in fact there are already lots of businesses in Saigon doing things like
+            reducing single-use plastics or eliminating them entirely, even when it might
+            hurt their bottom line.{' '}
+            <em>These businesses deserve to be rewarded for their actions.</em>
           </Text>
           <Text>
             But how can eco-conscious consumers find eco-conscious businesses? Until now,
@@ -90,14 +91,15 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             <Footnote index={1} />
             <Footnote index={2} />, or blogs
             <Footnote index={3} />, but these still have one key problem: there is no
-            independent, comprehensive list of eco-conscious businesses.
+            independent, comprehensive list.
           </Text>
           <Text>
             That’s why I created <b>Cocolist</b>, Vietnam's first up-to-date directory of
             eco-conscious businesses. Starting specifically with food & beverage
-            businesses in Saigon, my goal is to expand into more industries like
-            hospitality and health & beauty, and more cities like Da Nang and Hanoi in the
-            coming months.
+            businesses in Saigon, this project's goal is to eventually expand into more
+            industries like hospitality and health & beauty, and more cities like Da Nang
+            and Hanoi in the coming months. By giving consumers the power of choice, I
+            hope Cocolist will inspire more business owners to take action.
           </Text>
         </section>
 
