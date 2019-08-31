@@ -62,7 +62,7 @@ BusinessList.propTypes = {
   ).isRequired,
   location: PropTypes.object.isRequired,
   maxColumns: PropTypes.oneOf([2, 3]),
-  title: PropTypes.string.isRequired,
+  title: PropTypes.node.isRequired,
 };
 
 BusinessList.defaultProps = {
