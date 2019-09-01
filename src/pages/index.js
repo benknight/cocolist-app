@@ -149,7 +149,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         </Button>
       </div>
       <div className="ph4 m_ph6 l_ph7 pv6 bg-gray-300">
-        <div className="tp-title-2 mb5 mw7">
+        <div className="tp-title-3 mb5 mw7">
           <FormattedMessage id="signup_heading" />
         </div>
         <div className="mw7">

@@ -3,7 +3,7 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
-import BusinessList from '../components/BusinessList';
+import BusinessList, { BusinessListSelector } from '../components/BusinessList';
 import Header from '../components/Header';
 import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
@@ -14,11 +14,7 @@ const GreenDelivery = ({ data, intl: { formatMessage }, location }) => {
       id="business_list_heading"
       values={{
         city: formatMessage({ id: 'Saigon' }),
-        thing: (
-          <span className="green">
-            {formatMessage({ id: 'green_delivery_label' }).toLowerCase()}
-          </span>
-        ),
+        thing: <BusinessListSelector selected="green-delivery" />,
       }}
     />
   );

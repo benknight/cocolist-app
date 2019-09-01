@@ -1,12 +1,54 @@
 import cx from 'classnames';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
 import React from 'react';
+import { injectIntl } from 'react-intl';
 import { Wrap } from '@cocolist/thumbprint-react';
+import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
 import BusinessRenderData from '../lib/BusinessRenderData';
-import { parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Categories from './Categories';
+
+export const BusinessListSelector = injectIntl(
+  ({ children, intl: { formatMessage }, selected }) => {
+    const lang = parseLangFromURL(window.location.pathname);
+    const options = {
+      byoc: 'byoc_discount_label',
+      'green-delivery': 'green_delivery_label',
+      'food-waste': 'food_waste_program_label',
+      'green-kitchen': 'green_kitchen_label',
+      'no-plastic-bags': 'no_plastic_bags_label',
+      'no-plastic-bottles': 'no_plastic_bottles_label',
+      'no-plastic-straws': 'no_plastic_straws_label',
+      'refill-my-bottle': 'refill_my_bottle_label',
+      'top-ten': 'top_ten_businesses_heading',
+    };
+    return (
+      <div className="dib relative">
+        <select
+          className="tp-body-1 absolute top-0 left-0 w-100 h-100"
+          onChange={event => navigate(getLocalizedURL(`/${event.target.value}`, lang))}
+          style={{ opacity: 0 }}>
+          {Object.keys(options).map(key => (
+            <option key={key} selected={key === selected} value={key}>
+              {formatMessage(
+                { id: options[key] },
+                { city: formatMessage({ id: 'Saigon' }) },
+              )}
+            </option>
+          ))}
+        </select>
+        <div className="dib green underline">
+          {formatMessage({ id: options[selected] }).toLowerCase()}
+          <div class="dib ml2">
+            <NavigationCaretDownSmall />
+          </div>
+        </div>
+      </div>
+    );
+  },
+);
 
 const BusinessList = ({ businesses, location, maxColumns, title }) => (
   <>
