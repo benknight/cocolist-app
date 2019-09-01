@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { Link, navigate } from 'gatsby';
 import Img from 'gatsby-image';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useContext } from 'react';
 import { injectIntl } from 'react-intl';
 import { Wrap } from '@cocolist/thumbprint-react';
 import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
@@ -10,9 +10,12 @@ import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import Categories from './Categories';
 
+const LocationContext = React.createContext(null);
+
 export const BusinessListSelector = injectIntl(
   ({ children, intl: { formatMessage }, selected }) => {
-    const lang = parseLangFromURL(window.location.pathname);
+    const location = useContext(LocationContext);
+    const lang = parseLangFromURL(location.pathname);
     const options = {
       byoc: 'byoc_discount_label',
       'green-delivery': 'green_delivery_label',
@@ -51,7 +54,7 @@ export const BusinessListSelector = injectIntl(
 );
 
 const BusinessList = ({ businesses, location, maxColumns, title }) => (
-  <>
+  <LocationContext.Provider value={location}>
     <Wrap>
       <h1 className="tp-title-1 mv5 l_mv6 w-80 l_w-75 pt4">{title}</h1>
     </Wrap>
@@ -90,7 +93,7 @@ const BusinessList = ({ businesses, location, maxColumns, title }) => (
           ))}
       </div>
     </Wrap>
-  </>
+  </LocationContext.Provider>
 );
 
 BusinessList.propTypes = {
