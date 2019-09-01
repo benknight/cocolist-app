@@ -23,9 +23,11 @@
 }
 
 .langEmoji {
-  opacity: 0.6;
+  opacity: 0.8;
   filter: saturate(2) contrast(2);
-  transform: scale(1.5);
+  @include respond-above(medium) {
+    transform: scale(1.5);
+  }
 }
 
 .langShort {
@@ -40,7 +42,7 @@
   }
 
   .langShort {
-    display: block;
+    display: inline-block;
     @include respond-above(medium) {
       display: none;
     }
@@ -49,7 +51,7 @@
 
 .noSearch {
   .langLong {
-    display: block;
+    display: inline-block;
   }
   .langShort {
     display: none;

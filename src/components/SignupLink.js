@@ -21,7 +21,7 @@ const SignupButton = ({ intl: { formatMessage } }) => {
           <ModalDefaultTitle>{formatMessage({ id: 'signup_heading' })}</ModalDefaultTitle>
         </ModalDefaultHeader>
         <ModalDefaultContent>
-          <Signup />
+          <Signup isPopup />
         </ModalDefaultContent>
       </ModalDefault>
     </>

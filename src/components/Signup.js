@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { StaticQuery, graphql } from 'gatsby';
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Button, ButtonRow, Input, Label, Select } from '@cocolist/thumbprint-react';
@@ -41,7 +42,8 @@ function createHubspotContact(formData) {
   });
 }
 
-function Signup({ intl: { formatMessage } }) {
+function Signup({ intl: { formatMessage }, isPopup }) {
+  const [isExpanded, setExpanded] = useState(isPopup);
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [formData, setFormData] = useState({
@@ -94,53 +96,60 @@ function Signup({ intl: { formatMessage } }) {
             <Input
               id="email"
               isRequired
-              onChange={email => setFormData({ ...formData, email })}
+              onChange={email => {
+                setFormData({ ...formData, email });
+                if (!isExpanded) setExpanded(true);
+              }}
               type="email"
               value={formData.email}
             />
           </div>
-          <div className="mv4">
-            <Label for="firstName">
-              <FormattedMessage id="signup_first_name_label" />
-            </Label>
-            <Input
-              id="firstName"
-              isRequired
-              onChange={firstName => setFormData({ ...formData, firstName })}
-              type="text"
-              value={formData.firstName}
-            />
-          </div>
-          <div className="mv4">
-            <Label for="lastName">
-              <FormattedMessage id="signup_last_name_label" />
-            </Label>
-            <Input
-              id="lastName"
-              onChange={lastName => setFormData({ ...formData, lastName })}
-              type="text"
-              value={formData.lastName}
-            />
-          </div>
-          <div className="mv4">
-            <Label for="district">
-              <FormattedMessage id="signup_district_label" />
-            </Label>
-            <Select
-              id="district"
-              isFullWidth
-              onChange={district => setFormData({ ...formData, district })}
-              size="large"
-              value={formData.district}>
-              <option></option>
-              {edges.map(({ node: { data: { Name } } }) => (
-                <option key={Name} value={Name}>
-                  {formatMessage({ id: Name })}
-                </option>
-              ))}
-            </Select>
-          </div>
-          <ButtonRow justify="right">
+          {isExpanded && (
+            <>
+              <div className="mv4">
+                <Label for="firstName">
+                  <FormattedMessage id="signup_first_name_label" />
+                </Label>
+                <Input
+                  id="firstName"
+                  isRequired
+                  onChange={firstName => setFormData({ ...formData, firstName })}
+                  type="text"
+                  value={formData.firstName}
+                />
+              </div>
+              <div className="mv4">
+                <Label for="lastName">
+                  <FormattedMessage id="signup_last_name_label" />
+                </Label>
+                <Input
+                  id="lastName"
+                  onChange={lastName => setFormData({ ...formData, lastName })}
+                  type="text"
+                  value={formData.lastName}
+                />
+              </div>
+              <div className="mv4">
+                <Label for="district">
+                  <FormattedMessage id="signup_district_label" />
+                </Label>
+                <Select
+                  id="district"
+                  isFullWidth
+                  onChange={district => setFormData({ ...formData, district })}
+                  size="large"
+                  value={formData.district}>
+                  <option></option>
+                  {edges.map(({ node: { data: { Name } } }) => (
+                    <option key={Name} value={Name}>
+                      {formatMessage({ id: Name })}
+                    </option>
+                  ))}
+                </Select>
+              </div>
+            </>
+          )}
+          <ButtonRow justify="left">
             <Button isLoading={isLoading} type="submit">
               <FormattedMessage id="signup_button_save" />
             </Button>
@@ -150,5 +159,9 @@ function Signup({ intl: { formatMessage } }) {
     />
   );
 }
+
+Signup.propTypes = {
+  isPopup: PropTypes.bool,
+};
 
 export default injectIntl(Signup);

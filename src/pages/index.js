@@ -10,6 +10,7 @@ import OPGPreviewImage from '../assets/og-preview.jpg';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Header from '../components/Header';
 import Search from '../components/Search';
+import Signup from '../components/Signup';
 import { badges } from '../lib/badges';
 import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
@@ -107,7 +108,10 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                 return survey.Business_record_match.map(
                   ({ data }) => new BusinessRenderData(data, langKey),
                 ).map(biz => (
-                  <Link className="db pr1 pv4 w6 flex-shrink-0" key={index} to={biz.url}>
+                  <Link
+                    className="db pr1 pv4 w6 flex-shrink-0"
+                    key={biz.name}
+                    to={biz.url}>
                     {biz.thumbnail && (
                       <Img
                         alt="business logo"
@@ -136,13 +140,21 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           </div>
         </div>
       ))}
-      <div className="ph4 tc pv6 bg-gray-200">
-        <div className="tp-title-2 mb5">
+      <div className="ph4 m_ph6 l_ph7 pv6 bg-gray-200">
+        <div className="tp-title-2 mb5 mw7">
           <FormattedMessage id="add_business_headline" />
         </div>
         <Button onClick={() => toggleAddBusinessModal(true)}>
           <FormattedMessage id="add_business_button_label" />
         </Button>
+      </div>
+      <div className="ph4 m_ph6 l_ph7 pv6 bg-gray-300">
+        <div className="tp-title-2 mb5 mw7">
+          <FormattedMessage id="signup_heading" />
+        </div>
+        <div className="mw7">
+          <Signup />
+        </div>
       </div>
       <AirtableFormModal
         formId="shrw4zfDcry512acj"

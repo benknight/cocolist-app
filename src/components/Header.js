@@ -17,14 +17,25 @@ import styles from './Header.module.scss';
 const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
 
 const LangSwitch = props => (
-  <div className={cx(styles.lang, { [styles.truncate]: props.truncate })}>
+  <div
+    className={cx(
+      styles.lang,
+      { [styles.truncate]: props.truncate },
+      'dib br1 bg-gray-300 pa1',
+    )}>
     {props.lang === 'en' ? (
       <Link
         onClick={() => cacheLangPreference('vi')}
         title="Tiếng Việt"
         to={getLocalizedURL(props.location.pathname, 'vi')}>
-        <span className={cx(styles.langLong)}>Tiếng Việt</span>
-        <span className={cx(styles.langShort, 'pa2')}>VI</span>
+        <span
+          aria-label="Tiếng Việt"
+          className={cx(styles.langEmoji, 'pl1 dib')}
+          role="img">
+          🇻🇳
+        </span>
+        <span className={cx(styles.langLong, 'pl1')}>Tiếng Việt</span>
+        <span className={cx(styles.langShort, 'pl1')}>VI</span>
       </Link>
     ) : (
       <Link
@@ -32,7 +43,7 @@ const LangSwitch = props => (
         to={getLocalizedURL(props.location.pathname, 'en')}
         title="English">
         <span className={cx(styles.langLong)}>English</span>
-        <span className={cx(styles.langShort, 'pa2')}>EN</span>
+        <span className={cx(styles.langShort)}>EN</span>
       </Link>
     )}
   </div>
@@ -65,11 +76,11 @@ const Header = ({ location, showSearch, ...props }) => {
         [styles.noSearch]: !showSearch,
       })}>
       <div className="relative z-1 flex items-center pb2 pt3 ph3">
-        <Link className="inline-flex mb1 mr3 m_mr4" to={getLocalizedURL('/', lang)}>
+        <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
           <img alt="logo" className={styles.logo} src={logo} />
         </Link>
         {showSearch && (
-          <div className="mr3 m_dn">
+          <div className="mh3 m_dn">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
@@ -82,30 +93,27 @@ const Header = ({ location, showSearch, ...props }) => {
         )}
         <div className="flex-auto">
           {showSearch && (
-            <div className={styles.searchWrapper}>
+            <div className={cx(styles.searchWrapper, 'm_ml4')}>
               <Search className="m_relative" location={location} size="small" />
             </div>
           )}
         </div>
         <div className="flex items-baseline b nowrap">
-          <div className={cx('ml3 m_ml5', { 'dn m_db': showSearch })}>
-            <SignupLink />
-          </div>
           <Link
             activeClassName="tp-link--inherit"
-            className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
+            className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
             to={getLocalizedURL('/top-ten', lang)}>
             <FormattedMessage id="header_link_top_ten" defaultMessage="Top 10" />
           </Link>
           <Link
             activeClassName="tp-link--inherit"
-            className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
+            className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
             to={getLocalizedURL('/about', lang)}>
             <FormattedMessage id="header_link_about" />
           </Link>
           {props.showLangSwitch && (
-            <div className="ml3 m_ml5">
-              <LangSwitch {...{ lang, location }} truncate={showSearch} />
+            <div className="pl3 m_pl5">
+              <LangSwitch {...{ lang, location }} truncate />
             </div>
           )}
         </div>
