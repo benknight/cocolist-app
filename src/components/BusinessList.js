@@ -44,6 +44,7 @@ export const BusinessListSelector = injectIntl(
         </select>
         <div className="dib green underline">
           {formatMessage({ id: options[selected] }).toLowerCase()}
+          &nbsp;
           <div class="dib ml2">
             <NavigationCaretDownSmall />
           </div>
