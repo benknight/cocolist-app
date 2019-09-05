@@ -42,10 +42,12 @@ export const BusinessListSelector = injectIntl(
             </option>
           ))}
         </select>
-        <div className="dib green underline">
-          {formatMessage({ id: options[selected] }).toLowerCase()}
+        <div className="dib green">
+          <span className="underline">
+            {formatMessage({ id: options[selected] }).toLowerCase()}
+          </span>
           &nbsp;
-          <div class="dib ml2">
+          <div class="dib ml1">
             <NavigationCaretDownSmall />
           </div>
         </div>
