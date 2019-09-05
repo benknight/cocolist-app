@@ -127,7 +127,7 @@ const SurveyView = ({ onClickEdit, biz }) => {
                 <FormattedMessage id={key} />
               </div>
               <div className="tr flex items-center">
-                <div className="mr1">
+                <div className="mr1 mw6">
                   {values &&
                     values.map((value, index) => (
                       <React.Fragment key={`${key}-${index}`}>
