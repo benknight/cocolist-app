@@ -75,7 +75,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           </Text>
           <Text>
             Saigon has a thriving local business community and at the same time people are
-            becoming more awareness about environmental issues. More consumers prefer to
+            becoming more aware about environmental issues. More consumers prefer to
             choose businesses that have taken steps be greener or shown a commitment to
             lessen their impact.
           </Text>
