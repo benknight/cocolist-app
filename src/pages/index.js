@@ -192,7 +192,7 @@ export const query = graphql`
   query {
     surveys: allAirtable(
       filter: {
-        table: { eq: "Food & Beverage Survey" }
+        table: { eq: "Survey" }
         data: {
           Business_record_match: { elemMatch: { data: { Record_ID: { ne: null } } } }
         }

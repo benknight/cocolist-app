@@ -41,7 +41,7 @@ export const query = graphql`
   {
     allAirtable(
       filter: {
-        table: { eq: "Food & Beverage Survey" }
+        table: { eq: "Survey" }
         data: { Status: { eq: "Published" }, BYO_container_discount: { eq: true } }
       }
       sort: { fields: data___Coco_points, order: DESC }

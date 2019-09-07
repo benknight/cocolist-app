@@ -41,7 +41,7 @@ export const query = graphql`
   {
     allAirtable(
       filter: {
-        table: { eq: "Food & Beverage Survey" }
+        table: { eq: "Survey" }
         data: {
           Status: { eq: "Published" }
           Plastic_free_delivery: { in: ["Always", "Available on request"] }
