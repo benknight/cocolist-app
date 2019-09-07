@@ -22,4 +22,4 @@ To edit translations, simply email us at translations@cocolist.vn.  The full tra
 
 ## Contributing
 
-If you're interested in contributing, please send an email to ben@cocolist.vn
+If you're interested in contributing code, please send an email to ben@cocolist.vn
