@@ -33,8 +33,8 @@ const badges = [
     imageLargeAlt: 'water-refill-alt.svg',
     title: 'refill_my_bottle_label',
     description: 'refill_my_bottle_description',
-    test: survey => !!survey.Refill_my_bottle,
-    linkTarget: '/refill-my-bottle',
+    test: survey => !!survey.Free_drinking_water,
+    linkTarget: '/free-drinking-water',
   },
   {
     key: 'foodWaste',

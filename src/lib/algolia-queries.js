@@ -31,7 +31,7 @@ const businessQuery = `
                 No_plastic_straws
                 No_plastic_bottles
                 Plastic_free_delivery
-                Refill_my_bottle
+                Free_drinking_water
                 Status
                 Kitchen_points
                 Food_waste_programs

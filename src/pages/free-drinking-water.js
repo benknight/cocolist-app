@@ -14,7 +14,7 @@ const RefillMyBottle = ({ data, intl: { formatMessage }, location }) => {
       id="business_list_heading"
       values={{
         city: formatMessage({ id: 'Saigon' }),
-        thing: <BusinessListSelector selected="refill-my-bottle" />,
+        thing: <BusinessListSelector selected="free-drinking-water" />,
       }}
     />
   );
@@ -42,7 +42,7 @@ export const query = graphql`
     allAirtable(
       filter: {
         table: { eq: "Food & Beverage Survey" }
-        data: { Status: { eq: "Published" }, Refill_my_bottle: { eq: true } }
+        data: { Status: { eq: "Published" }, Free_drinking_water: { eq: true } }
       }
     ) {
       edges {

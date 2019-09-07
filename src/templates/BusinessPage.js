@@ -222,7 +222,7 @@ export const query = graphql`
     No_plastic_bottles
     BYO_container_discount
     BYOC_discount_amount
-    Refill_my_bottle
+    Free_drinking_water
     Plastic_free_delivery
     Delivery_only
     Dine_in_straws

@@ -24,7 +24,7 @@ export const BusinessListSelector = injectIntl(
       'no-plastic-bags': 'no_plastic_bags_label',
       'no-plastic-bottles': 'no_plastic_bottles_label',
       'no-plastic-straws': 'no_plastic_straws_label',
-      'refill-my-bottle': 'refill_my_bottle_label',
+      'free-drinking-water': 'refill_my_bottle_label',
       'top-ten': 'top_ten_businesses_heading',
     };
     return (
