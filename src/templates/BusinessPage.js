@@ -228,7 +228,7 @@ export const query = graphql`
     Dine_in_straws
     Dine_in_utensils
     Dine_in_napkins
-    Dine_in_drinks
+    Dine_in_drink_containers
     Dine_in_cups
     Dine_in_drink_stirrers
     Dine_in_linens__table_or_placemats_
