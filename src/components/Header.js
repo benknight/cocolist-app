@@ -10,8 +10,10 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import AddBusinessAction from './AddBusinessAction';
+import Alert from './Alert';
 import Search from './Search';
-import SignupLink from './SignupLink';
+import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
 
 const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
@@ -21,7 +23,7 @@ const LangSwitch = props => (
     className={cx(
       styles.lang,
       { [styles.truncate]: props.truncate },
-      'dib br1 bg-gray-300 pa1',
+      'dib br1 bg-gray-300 pv1 ph2',
     )}>
     {props.lang === 'en' ? (
       <Link
@@ -34,16 +36,16 @@ const LangSwitch = props => (
           role="img">
           🇻🇳
         </span>
-        <span className={cx(styles.langLong, 'pl1')}>Tiếng Việt</span>
-        <span className={cx(styles.langShort, 'pl1')}>VI</span>
+        <span className={styles.langLong}>Tiếng Việt</span>
+        <span className={styles.langShort}>VI</span>
       </Link>
     ) : (
       <Link
         onClick={() => cacheLangPreference('en')}
         to={getLocalizedURL(props.location.pathname, 'en')}
         title="English">
-        <span className={cx(styles.langLong)}>English</span>
-        <span className={cx(styles.langShort)}>EN</span>
+        <span className={styles.langLong}>English</span>
+        <span className={styles.langShort}>EN</span>
       </Link>
     )}
   </div>
@@ -70,16 +72,23 @@ const Header = ({ location, showSearch, ...props }) => {
     return () => window.removeEventListener('scroll', listener);
   });
   return (
-    <header
-      className={cx(styles.container, 'z-2 bg-white', {
-        [styles.hasShadow]: isScrolled,
-        [styles.noSearch]: !showSearch,
-      })}>
-      <div className="relative z-1 flex items-center pb2 pt3 ph3">
-        <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
-          <img alt="logo" className={styles.logo} src={logo} />
+    <>
+      <Alert className="bg-green white" id="2019-09-09-opensource">
+        <FormattedMessage id="open_source_alert" />{' '}
+        <Link to="/about#opensource">
+          <FormattedMessage id="read_more_action" />
         </Link>
-        {showSearch && (
+        .
+      </Alert>
+      <header
+        className={cx(styles.container, 'z-2 bg-white', {
+          [styles.hasShadow]: isScrolled,
+          [styles.noSearch]: !showSearch,
+        })}>
+        <div className="relative z-1 flex items-center pb2 pt3 ph3">
+          <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
+            <img alt="logo" className={styles.logo} src={logo} />
+          </Link>
           <div className="mh3 m_dn">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
@@ -90,50 +99,51 @@ const Header = ({ location, showSearch, ...props }) => {
               theme="inherit"
             />
           </div>
-        )}
-        <div className="flex-auto">
-          {showSearch && (
-            <div className={cx(styles.searchWrapper, 'm_ml4')}>
-              <Search className="m_relative" location={location} size="small" />
-            </div>
-          )}
+          <div className="flex-auto">
+            {showSearch && (
+              <div className={cx(styles.searchWrapper, 'm_ml4')}>
+                <Search className="m_relative" location={location} size="small" />
+              </div>
+            )}
+          </div>
+          <div className="flex items-baseline b nowrap">
+            <Link
+              activeClassName="tp-link--inherit"
+              className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
+              to={getLocalizedURL('/top-ten', lang)}>
+              <FormattedMessage id="header_link_top_ten" defaultMessage="Top 10" />
+            </Link>
+            <Link
+              activeClassName="tp-link--inherit"
+              className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
+              to={getLocalizedURL('/about', lang)}>
+              <FormattedMessage id="header_link_about" />
+            </Link>
+            {props.showLangSwitch && (
+              <div className="pl3 m_pl5">
+                <LangSwitch {...{ lang, location }} truncate />
+              </div>
+            )}
+          </div>
         </div>
-        <div className="flex items-baseline b nowrap">
+        <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
           <Link
             activeClassName="tp-link--inherit"
-            className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
-            to={getLocalizedURL('/top-ten', lang)}>
-            <FormattedMessage id="header_link_top_ten" defaultMessage="Top 10" />
-          </Link>
-          <Link
-            activeClassName="tp-link--inherit"
-            className={cx('tp-link pl3 m_pl5', { 'dn m_db': showSearch })}
+            className="tp-link"
             to={getLocalizedURL('/about', lang)}>
             <FormattedMessage id="header_link_about" />
           </Link>
-          {props.showLangSwitch && (
-            <div className="pl3 m_pl5">
-              <LangSwitch {...{ lang, location }} truncate />
-            </div>
-          )}
+          <Link
+            activeClassName="tp-link--inherit"
+            className="tp-link"
+            to={getLocalizedURL('/top-ten', lang)}>
+            <FormattedMessage id="header_link_top_ten" defaultMessage="Top ten" />
+          </Link>
+          <SignupAction />
+          <AddBusinessAction variant="text" />
         </div>
-      </div>
-      <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
-        <Link
-          activeClassName="tp-link--inherit"
-          className="tp-link"
-          to={getLocalizedURL('/about', lang)}>
-          <FormattedMessage id="header_link_about" />
-        </Link>
-        <Link
-          activeClassName="tp-link--inherit"
-          className="tp-link"
-          to={getLocalizedURL('/top-ten', lang)}>
-          <FormattedMessage id="header_link_top_ten" defaultMessage="Top ten" />
-        </Link>
-        <SignupLink />
-      </div>
-    </header>
+      </header>
+    </>
   );
 };
 
