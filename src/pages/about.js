@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { graphql } from 'gatsby';
+import { Link, graphql } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -94,7 +94,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             independent, comprehensive list.
           </Text>
           <Text>
-            That’s why I created <b>Cocolist</b>, Vietnam's first up-to-date directory of
+            That’s why we created <b>Cocolist</b>, Vietnam's first up-to-date directory of
             eco-conscious businesses. Starting specifically with food & beverage
             businesses in Saigon, this project's goal is to eventually expand into more
             industries like hospitality and health & beauty, and more cities like Da Nang
@@ -119,11 +119,31 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             — when deciding whether or not to use the eco-friendly packaging that is
             currently available on the market.
           </Text>
+          <a id="opensource" />
           <Text>
             Therefore the goal of Cocolist is to incentivize green business practices by
             giving <u className="underline">positive recognition only</u>, and the data
             being collected reflects that. Along the way, any time a business takes
             another step, the app will recalculate its score (see below) and publish it.
+          </Text>
+        </section>
+
+        <section className="tp-body-1">
+          <h3 className="tp-title-4 mt5 mb3">Open source</h3>
+          <Text>
+            We believe that the best way to encourage participation is to be as
+            transparent as possible. That's why we've made our full data set and website
+            open source and open for anyone to contribute and improve. In addition, it
+            will always be free for businesses to have a listing on Cocolist. We don't
+            believe in profiting off business owners that are already footing the
+            additional costs of replacing plastic.
+          </Text>
+          <Text>
+            If you're interested in contributing,{' '}
+            <TPLink to="https://github.com/benknight/cocolist" shouldOpenInNewTab>
+              find more details on Github
+            </TPLink>
+            .
           </Text>
         </section>
 
