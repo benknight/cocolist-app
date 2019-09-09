@@ -11,7 +11,7 @@ The Cocolist web app uses an Airtable base as its data source. Data can be viewe
 Dataset|Link
 --|--
 Businesses|https://airtable.com/shrGqNGUnmB4VQ8AE
-Business survey|https://airtable.com/shrWBRwTEUAAbN9VS
+Survey|https://airtable.com/shrWBRwTEUAAbN9VS
 Translations|https://airtable.com/shrulHZ6BGdaiw9fG
 
 ### How to edit data
