@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Link, graphql } from 'gatsby';
+import { graphql } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -29,7 +29,7 @@ const Footnote = props => (
 );
 
 const Text = props => (
-  <p className={cx(props.className, 'measure-wide mb3')}>{props.children}</p>
+  <p className={cx(props.className, 'measure-wide mb3')} {...props} />
 );
 
 const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => (
@@ -119,8 +119,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             — when deciding whether or not to use the eco-friendly packaging that is
             currently available on the market.
           </Text>
-          <a id="opensource" />
-          <Text>
+          <Text id="opensource">
             Therefore the goal of Cocolist is to incentivize green business practices by
             giving <u className="underline">positive recognition only</u>, and the data
             being collected reflects that. Along the way, any time a business takes
