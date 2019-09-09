@@ -254,6 +254,24 @@ export const query = graphql`
     Miscellaneous
     Status
     Survey_prefill_query_string
+    Attachments {
+      localFiles {
+        childImageSharp {
+          fixed(width: 100, height: 100) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
+        }
+      }
+      raw {
+        filename
+        url
+        thumbnails {
+          large {
+            url
+          }
+        }
+      }
+    }
   }
 
   fragment BusinessDataFragment on AirtableData {
@@ -279,24 +297,6 @@ export const query = graphql`
         childImageSharp {
           fluid(maxWidth: 800, maxHeight: 480) {
             ...GatsbyImageSharpFluid_noBase64
-          }
-        }
-      }
-    }
-    Business_photos {
-      localFiles {
-        childImageSharp {
-          fixed(width: 100, height: 100) {
-            ...GatsbyImageSharpFixed_noBase64
-          }
-        }
-      }
-      raw {
-        filename
-        url
-        thumbnails {
-          large {
-            url
           }
         }
       }

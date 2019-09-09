@@ -73,7 +73,6 @@ module.exports = {
               Neighborhood: [],
             },
             mapping: {
-              Business_photos: 'fileNode',
               Profile_photo: 'fileNode',
             },
           },
@@ -98,6 +97,9 @@ module.exports = {
               Food_waste_programs: [],
               Menu: [],
               Kitchen_waste_management: [],
+            },
+            mapping: {
+              Attachments: 'fileNode',
             },
           },
           {

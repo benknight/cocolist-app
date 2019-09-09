@@ -51,10 +51,10 @@ class BusinessRenderData {
   }
 
   get photos() {
-    return _get(this.data, 'Business_photos.localFiles', [])
+    return _get(this.survey, 'Attachments.localFiles', [])
       .map((photo, index) => ({
         fixed: photo.childImageSharp.fixed,
-        raw: this.data.Business_photos.raw[index],
+        raw: this.survey.Attachments.raw[index],
       }))
       .reverse();
   }
