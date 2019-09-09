@@ -10,9 +10,9 @@ const badges = [
     title: 'green_delivery_label',
     description: 'green_delivery_description',
     test: survey => {
-      const always = survey.Plastic_free_delivery === 'Always';
-      const onRequest = survey.Plastic_free_delivery === 'Available on request';
-      return always || onRequest;
+      const always = survey.Green_delivery === '100% plastic-free';
+      const reduced = survey.Green_delivery === 'Reduced plastic';
+      return always || reduced;
     },
     linkTarget: '/green-delivery',
   },

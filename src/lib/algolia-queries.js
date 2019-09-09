@@ -30,7 +30,7 @@ const businessQuery = `
                 No_plastic_bags
                 No_plastic_straws
                 No_plastic_bottles
-                Plastic_free_delivery
+                Green_delivery
                 Free_drinking_water
                 Status
                 Kitchen_points

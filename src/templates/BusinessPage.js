@@ -223,7 +223,7 @@ export const query = graphql`
     BYO_container_discount
     BYOC_discount_amount
     Free_drinking_water
-    Plastic_free_delivery
+    Green_delivery
     Delivery_only
     Dine_in_straws
     Dine_in_utensils

@@ -11,10 +11,7 @@ import styles from './SurveyView.module.scss';
 
 function getSurveyItems(survey) {
   const items = [
-    [
-      'plastic_free_delivery_label',
-      survey.Plastic_free_delivery && [survey.Plastic_free_delivery],
-    ],
+    ['green_delivery_label', survey.Green_delivery && [survey.Green_delivery]],
     ['take_out_bags_label', survey.Take_out_bags],
     ['take_out_containers_label', survey.Take_out_containers],
     ['take_out_container_lids_label', survey.Take_out_container_lids],

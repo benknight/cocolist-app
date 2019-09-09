@@ -44,7 +44,7 @@ export const query = graphql`
         table: { eq: "Survey" }
         data: {
           Status: { eq: "Published" }
-          Plastic_free_delivery: { in: ["Always", "Available on request"] }
+          Green_delivery: { in: ["100% plastic-free", "Reduced plastic"] }
         }
       }
       sort: { fields: data___Coco_points, order: DESC }
