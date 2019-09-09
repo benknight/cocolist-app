@@ -1,13 +1,12 @@
 import _get from 'lodash/get';
 import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
-import React, { useState } from 'react';
+import React from 'react';
 import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
-import { Button } from '@cocolist/thumbprint-react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import OPGPreviewImage from '../assets/og-preview.jpg';
-import AirtableFormModal from '../components/AirtableFormModal';
+import AddBusinessAction from '../components/AddBusinessAction';
 import Header from '../components/Header';
 import Search from '../components/Search';
 import Signup from '../components/Signup';
@@ -16,7 +15,6 @@ import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
 
 const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
-  const [showAddBusinessModal, toggleAddBusinessModal] = useState(false);
   const pageTitle = formatMessage(
     {
       id: 'find_businesses_headline',
@@ -144,9 +142,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         <div className="tp-title-2 mb5 mw7">
           <FormattedMessage id="add_business_headline" />
         </div>
-        <Button onClick={() => toggleAddBusinessModal(true)}>
-          <FormattedMessage id="add_business_button_label" />
-        </Button>
+        <AddBusinessAction variant="button" />
       </div>
       <div className="ph4 m_ph6 l_ph7 pv6 bg-gray-300">
         <div className="tp-title-3 mb5 mw7">
@@ -156,11 +152,6 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           <Signup />
         </div>
       </div>
-      <AirtableFormModal
-        formId="shrw4zfDcry512acj"
-        isOpen={showAddBusinessModal}
-        onCloseClick={() => toggleAddBusinessModal(false)}
-      />
     </>
   );
 };

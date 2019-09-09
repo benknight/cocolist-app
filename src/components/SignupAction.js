@@ -9,7 +9,7 @@ import {
 } from '@cocolist/thumbprint-react';
 import Signup from './Signup';
 
-const SignupButton = ({ intl: { formatMessage } }) => {
+const SignupAction = ({ intl: { formatMessage } }) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <>
@@ -28,4 +28,4 @@ const SignupButton = ({ intl: { formatMessage } }) => {
   );
 };
 
-export default injectIntl(SignupButton);
+export default injectIntl(SignupAction);
