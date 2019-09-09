@@ -6,12 +6,12 @@ Find more details about this project's mission here: https://cocolist.vn/about
 
 ## Database
 
-The Cocolist web app uses Airtable as its data source. Data can be viewed and downloaded here:
+The Cocolist web app uses an Airtable base as its data source. Data can be viewed and downloaded here:
 
 Dataset|Link
 --|--
 Businesses|https://airtable.com/shrGqNGUnmB4VQ8AE
-Business survey|https://airtable.com/shrWBRwTEUAAbN9VS
+Survey|https://airtable.com/shrWBRwTEUAAbN9VS
 Translations|https://airtable.com/shrulHZ6BGdaiw9fG
 
 ### How to edit data
