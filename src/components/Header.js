@@ -32,7 +32,7 @@ const LangSwitch = props => (
         to={getLocalizedURL(props.location.pathname, 'vi')}>
         <span
           aria-label="Tiếng Việt"
-          className={cx(styles.langEmoji, 'pl1 dib')}
+          className={cx(styles.langEmoji, 'ph1 dib')}
           role="img">
           🇻🇳
         </span>
