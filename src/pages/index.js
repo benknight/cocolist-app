@@ -99,7 +99,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                     'Business_record_match[0].data.Profile_photo.localFiles[0].childImageSharp.fluid',
                   );
                 }),
-              process.env.GATSBY_BUILD_TIMESTAMP || Date.now(),
+              badge.key + (process.env.GATSBY_BUILD_TIMESTAMP || Date.now()),
             )
               .slice(0, 8)
               .map((survey, index) => {
