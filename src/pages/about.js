@@ -28,7 +28,7 @@ const Footnote = props => (
   </TPLink>
 );
 
-const Text = props => (
+const Text = ({ className, ...props }) => (
   <p className={cx(props.className, 'measure-wide mb3')} {...props} />
 );
 
