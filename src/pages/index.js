@@ -112,7 +112,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                     to={biz.url}>
                     {biz.thumbnail && (
                       <Img
-                        alt="business logo"
+                        alt=""
                         className="br2 overflow-hidden"
                         fluid={biz.thumbnail}
                         objectFit="contain"
@@ -160,7 +160,7 @@ export const query = graphql`
   fragment HomepageSurveyFragment on AirtableEdge {
     node {
       data {
-        ...SurveyDataFragment
+        ...FBSurveyDataFragment
         Business_record_match {
           data {
             Name

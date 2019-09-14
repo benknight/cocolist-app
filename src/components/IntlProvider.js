@@ -12,28 +12,53 @@ const IntlProvider = props => (
   <StaticQuery
     query={graphql`
       {
-        allAirtable(filter: { table: { eq: "Translations" } }) {
+        tx: allAirtable(filter: { table: { eq: "Translations" } }) {
           edges {
             node {
               data {
-                Key
+                key: Key
                 en
                 vi
               }
             }
           }
         }
+        hoods: allAirtable(filter: { table: { eq: "Neighborhoods" } }) {
+          edges {
+            node {
+              data {
+                key: Name
+                en: Name
+                vi: Name_VI
+              }
+            }
+          }
+        }
+        cities: allAirtable(filter: { table: { eq: "Cities" } }) {
+          edges {
+            node {
+              data {
+                key: Name
+                en: Name
+                vi: Name_VI
+              }
+            }
+          }
+        }
       }
     `}
-    render={({ allAirtable: { edges } }) => {
+    render={({ cities, hoods, tx }) => {
       const lang = parseLangFromURL(props.location.pathname);
-      const messages = edges.reduce((values, currentValue) => {
-        const {
-          node: { data },
-        } = currentValue;
-        values[data.Key] = data[lang];
-        return values;
-      }, {});
+      const messages = [...tx.edges, ...hoods.edges, ...cities.edges].reduce(
+        (values, currentValue) => {
+          const {
+            node: { data },
+          } = currentValue;
+          values[data.key] = data[lang];
+          return values;
+        },
+        {},
+      );
       return (
         <ReactIntlProvider locale={lang} messages={messages}>
           <>

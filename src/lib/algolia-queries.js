@@ -23,7 +23,7 @@ const businessQuery = `
                 Name
               }
             }
-            F_B_survey {
+            Survey {
               data {
                 Coco_points
                 BYO_container_discount
@@ -60,7 +60,7 @@ const settings = {}; // { attributesToSnippet: [`excerpt:20`] }
 const flatten = data => {
   const tx = _keyBy(data.translations.edges.map(({ node: { data } }) => data), 'Key');
   return data.businesses.edges.map(({ node: { data } }) => {
-    const fbSurvey = (data.F_B_survey || [])
+    const fbSurvey = (data.Survey || [])
       .map(({ data }) => data)
       .find(({ Status }) => Status === 'Published');
     const badges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];

@@ -1,5 +1,7 @@
 require('dotenv').config();
 
+const baseId = 'appYMPFmCnV9M4Szq';
+
 module.exports = {
   siteMetadata: {
     author: 'Benjamin Knight',
@@ -63,12 +65,14 @@ module.exports = {
       options: {
         apiKey: process.env.AIRTABLE_API_KEY,
         tables: [
+          // in alphabetical order:
           {
-            baseId: 'appYMPFmCnV9M4Szq',
+            baseId,
             tableName: 'Businesses',
             tableView: process.env.NODE_ENV === 'development' ? 'Dev' : 'Businesses',
-            tableLinks: ['F&B_survey', 'Neighborhood', 'Category'],
+            tableLinks: ['Survey', 'Neighborhood', 'Category'],
             defaultValues: {
+              // TODO: don't rely on this
               Category: [],
               Neighborhood: [],
             },
@@ -77,20 +81,24 @@ module.exports = {
             },
           },
           {
-            baseId: 'appYMPFmCnV9M4Szq',
+            baseId,
+            tableName: 'Categories',
+          },
+          {
+            baseId,
             tableName: 'Cities',
           },
           {
-            baseId: 'appYMPFmCnV9M4Szq',
+            baseId,
+            tableName: 'Locations',
+          },
+          {
+            baseId,
             tableName: 'Neighborhoods',
             tableLinks: ['City'],
           },
           {
-            baseId: 'appYMPFmCnV9M4Szq',
-            tableName: 'Categories',
-          },
-          {
-            baseId: 'appYMPFmCnV9M4Szq',
+            baseId,
             tableName: 'Survey',
             tableLinks: ['Business_record_match'],
             defaultValues: {
@@ -103,19 +111,12 @@ module.exports = {
             },
           },
           {
-            baseId: 'appYMPFmCnV9M4Szq',
+            baseId,
             tableName: 'Translations',
           },
         ],
       },
     },
-    // {
-    //   resolve: 'gatsby-plugin-i18n',
-    //   options: {
-    //     langKeyDefault: 'en',
-    //     prefixDefault: false,
-    //   },
-    // },
     {
       resolve: 'gatsby-plugin-google-analytics',
       options: {

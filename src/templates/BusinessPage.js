@@ -209,7 +209,7 @@ const BusinessPage = props => {
 };
 
 export const query = graphql`
-  fragment SurveyDataFragment on AirtableData {
+  fragment FBSurveyDataFragment on AirtableData {
     From_the_business
     From_the_editor
     Coco_points
@@ -278,7 +278,6 @@ export const query = graphql`
     Record_ID
     Name
     Facebook_link
-    Google_Maps_link
     VNMM_link
     URL_key
     Category {
@@ -301,9 +300,9 @@ export const query = graphql`
         }
       }
     }
-    F_B_survey {
+    Survey {
       data {
-        ...SurveyDataFragment
+        ...FBSurveyDataFragment
       }
     }
   }

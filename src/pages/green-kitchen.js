@@ -53,7 +53,7 @@ export const query = graphql`
       edges {
         node {
           data {
-            ...SurveyDataFragment
+            ...FBSurveyDataFragment
             Business_record_match {
               data {
                 ...BusinessDataFragment

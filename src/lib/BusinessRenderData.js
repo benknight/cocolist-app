@@ -30,7 +30,7 @@ class BusinessRenderData {
   }
 
   get survey() {
-    return (this.data.F_B_survey || [])
+    return (this.data.Survey || [])
       .map(({ data }) => data)
       .find(({ Status }) => Status === 'Published');
   }
@@ -61,13 +61,6 @@ class BusinessRenderData {
 
   get links() {
     const links = [];
-    if (this.data.Google_Maps_link) {
-      links.push([
-        'Google_Maps_link',
-        this.data.Google_Maps_link.split(',')[0].trim(),
-        <img alt="Google Maps logo" className="w1 h1" src={gmapsLogo} />,
-      ]);
-    }
     if (this.data.Facebook_link) {
       links.push([
         'Facebook_link',
