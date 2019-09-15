@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { StaticQuery, graphql } from 'gatsby';
+import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -52,111 +52,109 @@ function Signup({ intl: { formatMessage }, isPopup }) {
     lastName: '',
     district: '',
   });
+  const {
+    districts: { edges },
+  } = useStaticQuery(graphql`
+    {
+      districts: allAirtable(
+        filter: {
+          table: { eq: "Neighborhoods" }
+          data: { City: { elemMatch: { data: { Name: { eq: "Saigon" } } } } }
+        }
+        sort: { fields: data___Business_count, order: DESC }
+      ) {
+        edges {
+          node {
+            data {
+              Name
+            }
+          }
+        }
+      }
+    }
+  `);
   if (isSuccess) {
     return <FormattedMessage id="signup_thanks" />;
   }
   return (
-    <StaticQuery
-      query={graphql`
-        {
-          districts: allAirtable(
-            filter: {
-              table: { eq: "Neighborhoods" }
-              data: { City: { elemMatch: { data: { Name: { eq: "Saigon" } } } } }
-            }
-            sort: { fields: data___Business_count, order: DESC }
-          ) {
-            edges {
-              node {
-                data {
-                  Name
-                }
-              }
-            }
-          }
+    <form
+      onSubmit={async event => {
+        event.preventDefault();
+        setIsLoading(true);
+        try {
+          await Promise.all([createHubspotContact(formData)]);
+          setIsSuccess(true);
+        } catch (error) {
+          // Gulp!
         }
-      `}
-      render={({ districts: { edges } }) => (
-        <form
-          onSubmit={async event => {
-            event.preventDefault();
-            setIsLoading(true);
-            try {
-              await Promise.all([createHubspotContact(formData)]);
-              setIsSuccess(true);
-            } catch (error) {
-              // Gulp!
-            }
-            setIsLoading(false);
-          }}>
+        setIsLoading(false);
+      }}>
+      <div className="mv4">
+        <Label for="email">
+          <FormattedMessage id="signin_email_label" />
+        </Label>
+        <Input
+          id="email"
+          isRequired
+          onChange={email => {
+            setFormData({ ...formData, email });
+            if (!isExpanded) setExpanded(true);
+          }}
+          type="email"
+          value={formData.email}
+        />
+      </div>
+      {isExpanded && (
+        <>
           <div className="mv4">
-            <Label for="email">
-              <FormattedMessage id="signin_email_label" />
+            <Label for="firstName">
+              <FormattedMessage id="signup_first_name_label" />
             </Label>
             <Input
-              id="email"
+              id="firstName"
               isRequired
-              onChange={email => {
-                setFormData({ ...formData, email });
-                if (!isExpanded) setExpanded(true);
-              }}
-              type="email"
-              value={formData.email}
+              onChange={firstName => setFormData({ ...formData, firstName })}
+              type="text"
+              value={formData.firstName}
             />
           </div>
-          {isExpanded && (
-            <>
-              <div className="mv4">
-                <Label for="firstName">
-                  <FormattedMessage id="signup_first_name_label" />
-                </Label>
-                <Input
-                  id="firstName"
-                  isRequired
-                  onChange={firstName => setFormData({ ...formData, firstName })}
-                  type="text"
-                  value={formData.firstName}
-                />
-              </div>
-              <div className="mv4">
-                <Label for="lastName">
-                  <FormattedMessage id="signup_last_name_label" />
-                </Label>
-                <Input
-                  id="lastName"
-                  onChange={lastName => setFormData({ ...formData, lastName })}
-                  type="text"
-                  value={formData.lastName}
-                />
-              </div>
-              <div className="mv4">
-                <Label for="district">
-                  <FormattedMessage id="signup_district_label" />
-                </Label>
-                <Select
-                  id="district"
-                  isFullWidth
-                  onChange={district => setFormData({ ...formData, district })}
-                  size="large"
-                  value={formData.district}>
-                  <option></option>
-                  {edges.map(({ node: { data: { Name } } }) => (
-                    <option key={Name} value={Name}>
-                      {formatMessage({ id: Name })}
-                    </option>
-                  ))}
-                </Select>
-              </div>
-            </>
-          )}
-          <ButtonRow justify="left">
-            <Button isLoading={isLoading} type="submit">
-              <FormattedMessage id="signup_button_save" />
-            </Button>
-          </ButtonRow>
-        </form>
+          <div className="mv4">
+            <Label for="lastName">
+              <FormattedMessage id="signup_last_name_label" />
+            </Label>
+            <Input
+              id="lastName"
+              onChange={lastName => setFormData({ ...formData, lastName })}
+              type="text"
+              value={formData.lastName}
+            />
+          </div>
+          <div className="mv4">
+            <Label for="district">
+              <FormattedMessage id="signup_district_label" />
+            </Label>
+            <Select
+              id="district"
+              isFullWidth
+              onChange={district => setFormData({ ...formData, district })}
+              size="large"
+              value={formData.district}>
+              <option></option>
+              {edges.map(({ node: { data: { Name } } }) => (
+                <option key={Name} value={Name}>
+                  {formatMessage({ id: Name })}
+                </option>
+              ))}
+            </Select>
+          </div>
+        </>
       )}
-    />
+      <ButtonRow justify="left">
+        <Button isLoading={isLoading} type="submit">
+          <FormattedMessage id="signup_button_save" />
+        </Button>
+      </ButtonRow>
+    </form>
   );
 }
 
