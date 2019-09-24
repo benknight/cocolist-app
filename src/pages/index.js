@@ -1,3 +1,4 @@
+import cx from 'classnames';
 import _get from 'lodash/get';
 import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
@@ -8,11 +9,13 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import AddBusinessAction from '../components/AddBusinessAction';
 import Header from '../components/Header';
+import Map from '../components/Map';
 import Search from '../components/Search';
 import Signup from '../components/Signup';
 import { badges } from '../lib/badges';
 import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
+import styles from './index.module.scss';
 
 const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
   const pageTitle = formatMessage(
@@ -39,16 +42,25 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
       </Helmet>
       <Header location={location} showSearch={false} />
-      <div className="pv6 mv2 ph3 m_mv5 m_ph6 m_pv7 l_ph7 mw9">
-        <div className="s_pr6 m_pr0 mw7">
-          <h1 className="tp-title-1 mb3">
-            <FormattedMessage
-              id="find_businesses_headline"
-              values={{ city: formatMessage({ id: 'Saigon' }) }}
-            />
-          </h1>
+      <div className="relative mb4">
+        <Map className={styles.mapContainer} center="saigon" location={location} />
+        <div
+          className={cx(
+            styles.mapGradientOverlay,
+            'relative ph4 l_pr0 m_pl6 m_mr6 l_pl7 l_mr7 pv4 m_pv7 mw8',
+          )}>
+          <div className="pv4 l_pv6">
+            <div className="s_pr6 m_pr0 mw7">
+              <h1 className="tp-title-1 mb3">
+                <FormattedMessage
+                  id="find_businesses_headline"
+                  values={{ city: formatMessage({ id: 'Saigon' }) }}
+                />
+              </h1>
+            </div>
+            <Search className="relative z-1" location={location} size="large" />
+          </div>
         </div>
-        <Search className="relative z-1" location={location} size="large" />
       </div>
       {badges.map(badge => (
         <div
@@ -58,6 +70,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             <div className="m_flex items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl5 tc m_tl">
               <img
                 alt={formatMessage({ id: badge.title })}
+                className={cx(styles.badge, 'mb1')}
                 src={require(`../assets/badges/${badge.imageLargeAlt}`)}
               />
               <div className="m_ml3 m_pr7 l_pr0 m_mw7 flex-auto">

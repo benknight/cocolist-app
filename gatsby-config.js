@@ -91,6 +91,7 @@ module.exports = {
           {
             baseId,
             tableName: 'Locations',
+            tableLinks: ['Business'],
           },
           {
             baseId,

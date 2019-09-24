@@ -1,0 +1,26 @@
+@import '../styles/mixins.scss';
+
+.mapContainer {
+  position: relative;
+  height: 50vh;
+  @include respond-above(large) {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: auto;
+  }
+}
+
+.mapGradientOverlay {
+  background: white;
+  @include respond-above(large) {
+    background: linear-gradient(to right, white, white, transparent);
+  }
+}
+
+.badge {
+  width: 100px;
+  height: 100px;
+}
