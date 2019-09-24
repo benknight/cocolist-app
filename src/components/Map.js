@@ -68,7 +68,7 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
     throw new Error(error);
   }
   const data = useStaticQuery(query);
-  const [breakpoint, screenWidth] = useBreakpoint();
+  const breakpoint = useBreakpoint();
   useEffect(() => {
     if (loaded && typeof window !== 'undefined') {
       const { maps } = window.google,
@@ -148,7 +148,7 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
             }
           });
           marker.addListener('mouseover', () => {
-            if (screenWidth > tpBreakpointLargeValue) {
+            if (window.innerWidth > tpBreakpointLargeValue) {
               infoWindow.setContent(infoWindowContent);
               infoWindow.open(map, marker);
             }
@@ -156,7 +156,7 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
         });
       // map.fitBounds(bounds);
     }
-  }, [breakpoint, center, data, formatMessage, lang, loaded, screenWidth]);
+  }, [breakpoint, center, data, formatMessage, lang, loaded]);
   return (
     <div className={className}>
       <div id="map" className="absolute top0 right0 bottom0 left0" />

@@ -25,5 +25,5 @@ export default function useBreakpoint() {
     };
   });
 
-  return [breakpoint, window.innerWidth];
+  return breakpoint;
 }
