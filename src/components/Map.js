@@ -54,7 +54,9 @@ const mapCenter = {
 };
 
 // Make it possible to programmatically navigate from infoWindow
-window.__navigate = navigate;
+if (typeof window !== 'undefined') {
+  window.__navigate = navigate;
+}
 
 // Cache Google Maps objects
 let infoWindow;
