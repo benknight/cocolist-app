@@ -69,7 +69,10 @@ module.exports = {
           {
             baseId,
             tableName: 'Businesses',
-            tableView: process.env.NODE_ENV === 'development' ? 'Dev' : 'Businesses',
+            tableView:
+              process.env.NODE_ENV === 'development' || process.env.DEV === 'true'
+                ? 'Dev'
+                : 'Businesses',
             tableLinks: ['Survey', 'Neighborhood', 'Category'],
             defaultValues: {
               // TODO: don't rely on this

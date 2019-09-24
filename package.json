@@ -4,6 +4,7 @@
   "scripts": {
     "build": "GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
     "build-algolia": "BUILD_ALGOLIA=true npm run build",
+    "build-dev": "DEV=true npm run build",
     "deploy": "firebase deploy",
     "deploy-functions": "firebase deploy --only functions",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
