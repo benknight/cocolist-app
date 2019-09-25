@@ -147,6 +147,28 @@ const BusinessPage = props => {
               </div>
             )}
 
+            {/* Business photos */}
+
+            {biz.photos.length > 0 && (
+              <div className="mb5">
+                <div className="tp-title-4 mb3">
+                  <FormattedMessage id="business_photos_heading" />
+                </div>
+                {biz.photos.map((photo, index) => {
+                  return (
+                    <a
+                      className="dib ml0-m mt1 mr1"
+                      href={photo.raw.thumbnails.large.url}
+                      key={index}
+                      rel="noopener noreferrer"
+                      target="_blank">
+                      <Img alt={photo.raw.filename} className="br1" fixed={photo.fixed} />
+                    </a>
+                  );
+                })}
+              </div>
+            )}
+
             {/* From the business */}
 
             {_get(biz, 'survey.From_the_business') && (
@@ -170,28 +192,6 @@ const BusinessPage = props => {
                 <div className="measure" style={{ whiteSpace: 'pre-line' }}>
                   {biz.survey.From_the_editor}
                 </div>
-              </div>
-            )}
-
-            {/* Business photos */}
-
-            {biz.photos.length > 0 && (
-              <div className="mb5">
-                <div className="tp-title-4 mb3">
-                  <FormattedMessage id="business_photos_heading" />
-                </div>
-                {biz.photos.map((photo, index) => {
-                  return (
-                    <a
-                      className="dib ml0-m mt1 mr1"
-                      href={photo.raw.thumbnails.large.url}
-                      key={index}
-                      rel="noopener noreferrer"
-                      target="_blank">
-                      <Img alt={photo.raw.filename} className="br1" fixed={photo.fixed} />
-                    </a>
-                  );
-                })}
               </div>
             )}
           </div>
