@@ -7,6 +7,9 @@ import auth from '../lib/auth';
 
 export const AuthContext = React.createContext({});
 
+// TODO: Switch to this React Hook: https://usehooks.com/useAuth/
+// This class has only been left here for reference for when auth becomes required again.
+
 class AuthProvider extends React.PureComponent {
   state = {
     invalidLink: null,
