@@ -12,7 +12,7 @@ import Header from '../components/Header';
 import Map from '../components/Map';
 import Search from '../components/Search';
 import Signup from '../components/Signup';
-import { badges } from '../lib/badges';
+import { badges } from '../lib/Badges.common';
 import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
 import styles from './index.module.scss';

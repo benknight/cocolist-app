@@ -7,7 +7,7 @@ import { injectIntl } from 'react-intl';
 import { tpBreakpointLargeValue } from '@cocolist/thumbprint-tokens';
 import mapStyles from '../assets/map-styles.json';
 import markerGreen from '../assets/marker-green.png';
-import { getBadgesFromSurvey } from '../lib/badges';
+import { getBadgesFromSurvey } from '../lib/Badges.common';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import useBreakpoint from '../lib/useBreakpoint';
 import useScript from '../lib/useScript';

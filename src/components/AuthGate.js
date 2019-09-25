@@ -2,7 +2,7 @@ import cx from 'classnames';
 import _get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React, { useContext } from 'react';
-import auth from '../lib/auth';
+import auth from '../lib/Auth';
 import { AuthContext } from './AuthProvider';
 import Signup from './Signup';
 import Login from './Login';

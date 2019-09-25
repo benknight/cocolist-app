@@ -1,6 +1,6 @@
 const _get = require('lodash/get');
 const _keyBy = require('lodash/keyBy');
-const { getBadgesFromSurvey } = require('./badges');
+const { getBadgesFromSurvey } = require('./Badges.common');
 
 const businessQuery = `
   {

@@ -1,11 +1,10 @@
 import _get from 'lodash/get';
 import React from 'react';
 import { SocialFacebookSmall } from '@thumbtack/thumbprint-icons';
-import gmapsLogo from '../assets/gmaps-logo.svg';
 import messengerLogo from '../assets/messenger-logo.svg';
 import vnmmLogo from '../assets/vnmm-logo.svg';
 import { getLocalizedURL, getLocalizedVNMMURL } from '../lib/i18n';
-import { getBadgesFromSurvey } from './badges';
+import { getBadgesFromSurvey } from './Badges.common';
 
 class BusinessRenderData {
   constructor(data, langKey) {

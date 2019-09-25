@@ -1,5 +1,5 @@
 const _flatten = require('lodash/flatten');
-const { getBadgesFromSurvey } = require('./badges');
+const { getBadgesFromSurvey } = require('./Badges.common');
 const BusinessRenderData = require('./BusinessRenderData').default;
 
 function sortBusinesses(a, b) {

@@ -22,7 +22,7 @@ module.exports = {
         apiKey: process.env.ALGOLIA_ADMIN_KEY,
         queries:
           process.env.BUILD_ALGOLIA === 'true'
-            ? require('./src/lib/algolia-queries')
+            ? require('./src/lib/AlgoliaQueries.common')
             : [],
         // chunkSize: 10000, // default: 1000
       },

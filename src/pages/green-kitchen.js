@@ -5,7 +5,7 @@ import { FormattedMessage } from 'react-intl';
 import { injectIntl } from 'react-intl';
 import BusinessList, { BusinessListSelector } from '../components/BusinessList';
 import Header from '../components/Header';
-import { badges } from '../lib/badges';
+import { badges } from '../lib/Badges.common';
 import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 const GreenKitchen = ({ data, intl: { formatMessage }, location }) => {

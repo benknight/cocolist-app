@@ -24,7 +24,7 @@ import {
   InputIcon,
   Link as TPLink,
 } from '@cocolist/thumbprint-react';
-import { badges } from '../lib/badges';
+import { badges } from '../lib/Badges.common';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
 import styles from './Search.module.scss';
 

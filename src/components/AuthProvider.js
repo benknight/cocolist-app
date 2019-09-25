@@ -3,7 +3,7 @@ import _pick from 'lodash/pick';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { LoaderDots } from '@cocolist/thumbprint-react';
-import auth from '../lib/auth';
+import auth from '../lib/Auth';
 
 export const AuthContext = React.createContext({});
 

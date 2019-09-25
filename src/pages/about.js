@@ -7,7 +7,7 @@ import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
 import Hero from '../components/Hero';
-import { badges } from '../lib/badges';
+import { badges } from '../lib/Badges.common';
 
 const urls = {
   dineGreen: 'http://www.dinegreen.com/certification-standards',
