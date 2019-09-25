@@ -10,46 +10,48 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
 import Alert from './Alert';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
 
-const cacheLangPreference = lang => window.localStorage.setItem('langSelection', lang);
-
-const LangSwitch = props => (
-  <div
-    className={cx(
-      styles.lang,
-      { [styles.truncate]: props.truncate },
-      'dib br1 bg-gray-300 pv1 ph2',
-    )}>
-    {props.lang === 'en' ? (
-      <Link
-        onClick={() => cacheLangPreference('vi')}
-        title="Tiếng Việt"
-        to={getLocalizedURL(props.location.pathname, 'vi')}>
-        <span
-          aria-label="Tiếng Việt"
-          className={cx(styles.langEmoji, 'ph1 dib')}
-          role="img">
-          🇻🇳
-        </span>
-        <span className={styles.langLong}>Tiếng Việt</span>
-        <span className={styles.langShort}>VI</span>
-      </Link>
-    ) : (
-      <Link
-        onClick={() => cacheLangPreference('en')}
-        to={getLocalizedURL(props.location.pathname, 'en')}
-        title="English">
-        <span className={styles.langLong}>English</span>
-        <span className={styles.langShort}>EN</span>
-      </Link>
-    )}
-  </div>
-);
+const LangSwitch = props => {
+  const [, cacheLangSelection] = useLocalStorage('langSelection');
+  return (
+    <div
+      className={cx(
+        styles.lang,
+        { [styles.truncate]: props.truncate },
+        'dib br1 bg-gray-300 pv1 ph2',
+      )}>
+      {props.lang === 'en' ? (
+        <Link
+          onClick={() => cacheLangSelection('vi')}
+          title="Tiếng Việt"
+          to={getLocalizedURL(props.location.pathname, 'vi')}>
+          <span
+            aria-label="Tiếng Việt"
+            className={cx(styles.langEmoji, 'ph1 dib')}
+            role="img">
+            🇻🇳
+          </span>
+          <span className={styles.langLong}>Tiếng Việt</span>
+          <span className={styles.langShort}>VI</span>
+        </Link>
+      ) : (
+        <Link
+          onClick={() => cacheLangSelection('en')}
+          to={getLocalizedURL(props.location.pathname, 'en')}
+          title="English">
+          <span className={styles.langLong}>English</span>
+          <span className={styles.langShort}>EN</span>
+        </Link>
+      )}
+    </div>
+  );
+};
 
 const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);

@@ -4,13 +4,15 @@ import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import { TextButton } from '@cocolist/thumbprint-react';
 import { NavigationCloseSmall } from '@thumbtack/thumbprint-icons';
+import useLocalStorage from '../lib/useLocalStorage';
 
 function Alert({ intl: { formatMessage }, ...props }) {
   const storageKey = `${props.id}_dismissed`;
   const [isHidden, hide] = useState(true);
+  const [storageValue, setStorageValue] = useLocalStorage(storageKey);
   useEffect(() => {
-    hide(window.localStorage.getItem(storageKey));
-  }, [storageKey]);
+    hide(storageValue);
+  }, [storageValue]);
   return (
     <div
       className={cx('relative z-3 tp-alert tp-alert--banner', props.className, {
@@ -23,7 +25,7 @@ function Alert({ intl: { formatMessage }, ...props }) {
           iconLeft={<NavigationCloseSmall />}
           onClick={() => {
             hide(true);
-            window.localStorage.setItem(storageKey, true);
+            setStorageValue(true);
           }}
           theme="inherit"
         />
