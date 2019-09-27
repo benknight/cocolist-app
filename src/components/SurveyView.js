@@ -47,10 +47,6 @@ function getSurveyItems(survey) {
     ],
     ['food_waste_program_label', survey.Food_waste_programs],
     [
-      'menu_local_ingredients_label',
-      survey.Menu.indexOf('Local ingredients') !== -1 ? ['Yes'] : null,
-    ],
-    [
       'menu_plant_based_label',
       survey.Menu.indexOf('Plant-based menu') !== -1 ? ['Yes'] : null,
     ],
@@ -58,18 +54,17 @@ function getSurveyItems(survey) {
       'menu_vegetarian_label',
       survey.Menu.indexOf('Vegetarian menu') !== -1 ? ['Yes'] : null,
     ],
-    ['menu_seasonal_label', survey.Menu.indexOf('Seasonal menu') !== -1 ? ['Yes'] : null],
     [
-      'menu_farm_to_table_label',
-      survey.Menu.indexOf('Farm-to-table') !== -1 ? ['Yes'] : null,
+      'menu_plant_based_options_label',
+      survey.Menu.indexOf('Plant-based options') !== -1 ? ['Yes'] : null,
+    ],
+    [
+      'menu_vegetarian_options_label',
+      survey.Menu.indexOf('Vegetarian options') !== -1 ? ['Yes'] : null,
     ],
     [
       'menu_kitchen_garden_label',
       survey.Menu.indexOf('Kitchen garden') !== -1 ? ['Yes'] : null,
-    ],
-    [
-      'menu_sustainable_seafood_label',
-      survey.Menu.indexOf('Sustainable seafood') !== -1 ? ['Yes'] : null,
     ],
   ];
   return items;
