@@ -1,6 +1,8 @@
 {
   "hosting": {
     "appAssociation": "AUTO",
+    "cleanUrls": true,
+    "trailingSlash": false,
     "public": "public",
     "headers": [
       {
