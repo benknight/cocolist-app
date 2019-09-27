@@ -109,15 +109,17 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
           <div className="flex items-baseline b nowrap">
-            <AddBusinessAction variant="text" />
+            <div className="dn m_db ml3 m_ml4 l_ml5">
+              <AddBusinessAction variant="text" />
+            </div>
             <Link
               activeClassName="tp-link--inherit"
-              className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
+              className={cx('tp-link ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}
               to={getLocalizedURL('/about', lang)}>
               <FormattedMessage id="header_link_about" />
             </Link>
             {props.showLangSwitch && (
-              <div className="ml3 m_ml5">
+              <div className="ml3 m_ml4 l_ml5">
                 <LangSwitch {...{ lang, location }} truncate />
               </div>
             )}
