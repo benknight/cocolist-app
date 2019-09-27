@@ -45,7 +45,6 @@ function getSurveyItems(survey) {
         ? ['Yes']
         : null,
     ],
-    ['food_waste_program_label', survey.Food_waste_programs],
     [
       'menu_plant_based_label',
       survey.Menu.indexOf('Plant-based menu') !== -1 ? ['Yes'] : null,
