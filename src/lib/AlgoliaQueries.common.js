@@ -16,6 +16,7 @@ const businessQuery = `
             Category {
               data {
                 Name
+                Name_VI
               }
             }
             Neighborhood {
@@ -75,8 +76,8 @@ const flatten = data => {
       badge_count: badges.length,
       badges_en: badges.map(badge => tx[badge.title].en),
       badges_vi: badges.map(badge => tx[badge.title].vi),
-      category_en: data.Category.map(cat => tx[cat.data.Name].en),
-      category_vi: data.Category.map(cat => tx[cat.data.Name].vi),
+      category_en: data.Category.map(cat => cat.data.Name),
+      category_vi: data.Category.map(cat => cat.data.Name_VI),
       neighborhood_en: data.Neighborhood.map(hood => hood.data.Name),
       neighborhood_vi: data.Neighborhood.map(hood => hood.data.Name_VI),
       slug: data.URL_key,

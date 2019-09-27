@@ -9,7 +9,7 @@ import { parseLangFromURL } from '../lib/i18n';
 addLocaleData([...en, ...vi]);
 
 const IntlProvider = props => {
-  const { cities, hoods, tx } = useStaticQuery(graphql`
+  const { categories, cities, hoods, tx } = useStaticQuery(graphql`
     {
       tx: allAirtable(filter: { table: { eq: "Translations" } }) {
         edges {
@@ -44,19 +44,32 @@ const IntlProvider = props => {
           }
         }
       }
+      categories: allAirtable(filter: { table: { eq: "Categories" } }) {
+        edges {
+          node {
+            data {
+              key: Name
+              en: Name
+              vi: Name_VI
+            }
+          }
+        }
+      }
     }
   `);
   const lang = parseLangFromURL(props.location.pathname);
-  const messages = [...tx.edges, ...hoods.edges, ...cities.edges].reduce(
-    (values, currentValue) => {
-      const {
-        node: { data },
-      } = currentValue;
-      values[data.key] = data[lang];
-      return values;
-    },
-    {},
-  );
+  const messages = [
+    ...tx.edges,
+    ...hoods.edges,
+    ...cities.edges,
+    ...categories.edges,
+  ].reduce((values, currentValue) => {
+    const {
+      node: { data },
+    } = currentValue;
+    values[data.key] = data[lang];
+    return values;
+  }, {});
   return (
     <ReactIntlProvider locale={lang} messages={messages}>
       <>
