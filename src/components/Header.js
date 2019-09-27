@@ -109,6 +109,7 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
           <div className="flex items-baseline b nowrap">
+            <AddBusinessAction variant="text" />
             <Link
               activeClassName="tp-link--inherit"
               className={cx('tp-link ml3 m_ml5', { 'dn m_db': showSearch })}
