@@ -47,7 +47,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
         <div
           className={cx(
             styles.mapGradientOverlay,
-            'relative ph4 l_pr0 m_pl6 m_mr6 l_pl7 l_mr7 pv4 m_pv7 mw8',
+            'relative ph4 l_pr0 m_pl6 m_mr6 l_pl7 l_mr7 pv4 l_pv7 mw8',
           )}>
           <div className="pv4 l_pv6">
             <div className="s_pr6 m_pr0 mw7">

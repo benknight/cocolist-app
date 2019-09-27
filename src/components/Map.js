@@ -116,7 +116,7 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
             showLocationInfo = biz.Location_count > 1,
             infoWindowContent = `
               <div class="${cx('tp-body-2 mw6', styles.infoWindow)}">
-                <a class="tp-title-6 mb2 color-inherit" href="${bizLink}" onclick="window.__navigate('${bizLink}'); return false;">
+                <a class="dib tp-title-6 mb2 color-inherit" href="${bizLink}" onclick="window.__navigate('${bizLink}'); return false;">
                   ${biz.Name}
                   ${showLocationInfo ? `&ndash; ${loc.Name}` : ''}
                 </a>
