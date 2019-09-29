@@ -1,6 +1,9 @@
 name: Nightly deploy
 
 on:
+  push:
+    branches:
+      - master
   schedule:
     # Cron syntax cheat sheet: https://devhints.io/cron
     - cron: '0 0 * * *' # Every midnight GMT
