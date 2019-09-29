@@ -43,12 +43,6 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
       </title>
     </Helmet>
     <Header location={location} />
-    <Hero
-      alt="Trash-covered beach in Cam Ranh, Vietnam"
-      fluid={data.file.childImageSharp.fluid}
-      objectFit="cover"
-      title="Flotsam & jetsam washed up on a Vietnamese beach: much of it is single-use plastic"
-    />
     {langKey === 'vi' && (
       <div className="tp-alert tp-alert--banner tp-alert--warning">
         <div className="tp-alert__text">
@@ -321,16 +315,16 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
   </>
 );
 
-export const query = graphql`
-  query {
-    file(relativePath: { eq: "trash-in-vietnam.jpg" }) {
-      childImageSharp {
-        fluid(quality: 90, maxWidth: 1200) {
-          ...GatsbyImageSharpFluid_noBase64
-        }
-      }
-    }
-  }
-`;
+// export const query = graphql`
+//   query {
+//     file(relativePath: { eq: "trash-in-vietnam.jpg" }) {
+//       childImageSharp {
+//         fluid(quality: 90, maxWidth: 1200) {
+//           ...GatsbyImageSharpFluid_noBase64
+//         }
+//       }
+//     }
+//   }
+// `;
 
 export default injectIntl(About);
