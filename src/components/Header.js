@@ -109,7 +109,7 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
           <div className="flex items-baseline b nowrap">
-            <div className="dn m_db ml3 m_ml4 l_ml5">
+            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
               <AddBusinessAction variant="text" />
             </div>
             <Link
@@ -132,8 +132,8 @@ const Header = ({ location, showSearch, ...props }) => {
             to={getLocalizedURL('/about', lang)}>
             <FormattedMessage id="header_link_about" />
           </Link>
-          <SignupAction />
           <AddBusinessAction variant="text" />
+          <SignupAction />
         </div>
       </header>
     </>
