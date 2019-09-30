@@ -21,6 +21,7 @@ jobs:
         run: npm run build
         env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
+          ALGOLIA_ADMIN_KEY: ${{ secrets.ALGOLIA_ADMIN_KEY }}
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_FIREBASE_API_KEY: ${{ secrets.FIREBASE_TOKEN }}
