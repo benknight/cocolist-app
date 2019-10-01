@@ -116,25 +116,29 @@ const BusinessHit = ({ hit }) => {
   const lang = parseLangFromURL(window.location.pathname);
   const linkTo = getLocalizedURL(`/${hit.slug}`, lang);
   return (
-    <Link className="db ph3 pv2 m_pv3 bb b-gray-300" to={linkTo}>
-      <div className="tp-title-6 black">
-        <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
+    <Link className="db ph3 pv2 m_pv3 bb b-gray-300 flex items-center" to={linkTo}>
+      <div className="flex-auto">
+        <div className="tp-title-6 black">
+          <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
+        </div>
+        <div className="tp-body-3 black-300">
+          <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
+          <span className="mh2">/</span>
+          <Highlight attribute={`neighborhood_${lang}`} hit={hit} tagName="mark" />
+        </div>
+      </div>
+      <div className="nowrap">
         {hit.badges.map(key => {
           const badge = badgesByKey[key];
           return (
             <img
               alt=""
               key={key}
-              className="w1 h1 mr1"
+              className="w2 h2 m_w3 m_h3 mr1"
               src={require(`../assets/badges/${badge.imageSmall}`)}
             />
           );
         })}
-      </div>
-      <div className="tp-body-3 black-300">
-        <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
-        <span className="mh2">/</span>
-        <Highlight attribute={`neighborhood_${lang}`} hit={hit} tagName="mark" />
       </div>
     </Link>
   );
