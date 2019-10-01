@@ -27,6 +27,21 @@ const badges = [
     linkTarget: '/byoc',
   },
   {
+    key: 'vegetarian',
+    imageSmall: 'vegetarian-small.svg',
+    imageLarge: 'vegetarian.svg',
+    imageLargeAlt: 'vegetarian-alt.svg',
+    title: 'menu_vegetarian_label',
+    description: 'menu_vegetarian_description',
+    test: survey => {
+      const menu = _get(survey, 'Menu', []);
+      return (
+        menu.indexOf('Vegetarian menu') !== -1 || menu.indexOf('Plant-based menu') !== -1
+      );
+    },
+    linkTarget: '/vegetarian',
+  },
+  {
     key: 'refill',
     imageSmall: 'water-refill-small.svg',
     imageLarge: 'water-refill.svg',

@@ -20,6 +20,7 @@ export const BusinessListSelector = injectIntl(
       byoc: 'byoc_discount_label',
       'green-delivery': 'green_delivery_label',
       'food-waste': 'food_waste_program_label',
+      vegetarian: 'menu_vegetarian_label',
       'green-kitchen': 'green_kitchen_label',
       'no-plastic-bags': 'no_plastic_bags_label',
       'no-plastic-bottles': 'no_plastic_bottles_label',
