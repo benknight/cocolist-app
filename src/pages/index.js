@@ -70,10 +70,10 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             <div className="m_flex items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl5 tc m_tl">
               <img
                 alt={formatMessage({ id: badge.title })}
-                className={cx(styles.badge, 'mb1')}
-                src={require(`../assets/badges/${badge.imageLargeAlt}`)}
+                className={cx(styles.badge, 'mb1 self-start')}
+                src={require(`../assets/badges/${badge.imageLarge}`)}
               />
-              <div className="m_ml3 m_pr7 l_pr0 m_mw7 flex-auto">
+              <div className="m_ml3 l_ml4 m_pr7 l_pr0 m_mw7 flex-auto">
                 <h2 className="tp-title-4">
                   <FormattedMessage id={badge.title} />
                 </h2>

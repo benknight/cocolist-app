@@ -23,4 +23,8 @@
 .badge {
   width: 100px;
   height: 100px;
+  @include respond-above(large) {
+    width: 110px;
+    height: 110px;
+  }
 }
