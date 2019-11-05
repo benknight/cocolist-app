@@ -3,7 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
-import firebase from 'firebase/app';
+// import firebase from 'firebase/app';
 import '@cocolist/thumbprint-global-css';
 import '@cocolist/thumbprint-atomic';
 import '@cocolist/thumbprint-scss';
@@ -29,14 +29,14 @@ export const wrapPageElement = ({ element, props }) => (
   <IntlProvider location={props.location}>{element}</IntlProvider>
 );
 
-var firebaseConfig = {
-  apiKey: process.env.GATSBY_FIREBASE_API_KEY,
-  authDomain: 'cocolist-app.firebaseapp.com',
-  databaseURL: 'https://cocolist-app.firebaseio.com',
-  projectId: 'cocolist-app',
-  storageBucket: 'cocolist-app.appspot.com',
-  messagingSenderId: '665301945275',
-  appId: '1:665301945275:web:15bc0317862ae1da',
-};
-
-firebase.initializeApp(firebaseConfig);
+// var firebaseConfig = {
+//   apiKey: process.env.GATSBY_FIREBASE_API_KEY,
+//   authDomain: 'cocolist-app.firebaseapp.com',
+//   databaseURL: 'https://cocolist-app.firebaseio.com',
+//   projectId: 'cocolist-app',
+//   storageBucket: 'cocolist-app.appspot.com',
+//   messagingSenderId: '665301945275',
+//   appId: '1:665301945275:web:15bc0317862ae1da',
+// };
+//
+// firebase.initializeApp(firebaseConfig);
