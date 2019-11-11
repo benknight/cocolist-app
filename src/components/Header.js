@@ -12,7 +12,6 @@ import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
-import Alert from './Alert';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
@@ -75,13 +74,6 @@ const Header = ({ location, showSearch, ...props }) => {
   });
   return (
     <>
-      <Alert className="bg-green white" id="2019-09-09-opensource">
-        <FormattedMessage id="open_source_alert" />{' '}
-        <Link to="/about#opensource">
-          <FormattedMessage id="read_more_action" />
-        </Link>
-        .
-      </Alert>
       <header
         className={cx(styles.container, 'z-2 bg-white', {
           [styles.hasShadow]: isScrolled,
