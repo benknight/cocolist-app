@@ -5,7 +5,7 @@ const baseId = 'appYMPFmCnV9M4Szq';
 module.exports = {
   siteMetadata: {
     author: 'Benjamin Knight',
-    description: 'Find eco-conscious businesses in Saigon',
+    description: 'Find eco-conscious businesses in Vietnam',
     title: 'Cocolist',
     siteUrl: 'https://cocolist.vn',
   },

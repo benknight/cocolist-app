@@ -57,15 +57,17 @@ function Signup({ intl: { formatMessage }, isPopup }) {
   } = useStaticQuery(graphql`
     {
       districts: allAirtable(
-        filter: {
-          table: { eq: "Neighborhoods" }
-          data: { City: { elemMatch: { data: { Name: { eq: "Saigon" } } } } }
-        }
-        sort: { fields: data___Business_count, order: DESC }
+        filter: { table: { eq: "Neighborhoods" } }
+        sort: { fields: data___City___data___Name, order: DESC }
       ) {
         edges {
           node {
             data {
+              City {
+                data {
+                  Name
+                }
+              }
               Name
             }
           }
@@ -140,8 +142,9 @@ function Signup({ intl: { formatMessage }, isPopup }) {
               size="large"
               value={formData.district}>
               <option></option>
-              {edges.map(({ node: { data: { Name } } }) => (
+              {edges.map(({ node: { data: { City, Name } } }) => (
                 <option key={Name} value={Name}>
+                  {formatMessage({ id: City[0].data.Name })} –{' '}
                   {formatMessage({ id: Name })}
                 </option>
               ))}

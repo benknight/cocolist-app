@@ -17,17 +17,20 @@ import BusinessRenderData from '../lib/BusinessRenderData';
 import { getLocalizedURL } from '../lib/i18n';
 import styles from './index.module.scss';
 
+const metaDescription = `Find restaurants in Vietnam with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water.`;
+
 const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey } }) => {
   const pageTitle = formatMessage(
     {
       id: 'find_businesses_headline',
     },
-    { city: formatMessage({ id: 'Saigon' }) },
+    { city: formatMessage({ id: 'Vietnam' }) },
   );
   return (
     <>
       <Helmet>
         <title>Cocolist &ndash; {pageTitle}</title>
+        <meta name="description" content={metaDescription} />
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`Cocolist – ${pageTitle}`} />
         <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
@@ -35,10 +38,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           property="og:url"
           content={`https://cocolist.vn${getLocalizedURL('/', langKey)}`}
         />
-        <meta
-          property="og:description"
-          content="Find restaurants in Saigon with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water."
-        />
+        <meta property="og:description" content={metaDescription} />
         <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
       </Helmet>
       <Header location={location} showSearch={false} />
@@ -54,7 +54,7 @@ const Index = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               <h1 className="tp-title-1 mb3">
                 <FormattedMessage
                   id="find_businesses_headline"
-                  values={{ city: formatMessage({ id: 'Saigon' }) }}
+                  values={{ city: formatMessage({ id: 'Vietnam' }) }}
                 />
               </h1>
             </div>

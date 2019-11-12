@@ -38,7 +38,7 @@ export const BusinessListSelector = injectIntl(
             <option key={key} selected={key === selected} value={key}>
               {formatMessage(
                 { id: options[key] },
-                { city: formatMessage({ id: 'Saigon' }) },
+                { city: formatMessage({ id: 'Vietnam' }) },
               )}
             </option>
           ))}

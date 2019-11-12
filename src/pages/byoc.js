@@ -13,7 +13,7 @@ const BYOC = ({ data, intl: { formatMessage }, location }) => {
     <FormattedMessage
       id="business_list_heading"
       values={{
-        city: formatMessage({ id: 'Saigon' }),
+        city: formatMessage({ id: 'Vietnam' }),
         thing: <BusinessListSelector selected="byoc" />,
       }}
     />
@@ -25,7 +25,7 @@ const BYOC = ({ data, intl: { formatMessage }, location }) => {
           {formatMessage(
             { id: 'business_list_heading' },
             {
-              city: formatMessage({ id: 'Saigon' }),
+              city: formatMessage({ id: 'Vietnam' }),
               thing: formatMessage({ id: 'byoc_discount_label' }).toLowerCase(),
             },
           )}

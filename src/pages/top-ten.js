@@ -18,7 +18,7 @@ const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
         <title>
           {formatMessage(
             { id: 'top_ten_businesses_heading' },
-            { city: formatMessage({ id: 'Saigon' }) },
+            { city: formatMessage({ id: 'Vietnam' }) },
           )}
         </title>
       </Helmet>
@@ -31,7 +31,7 @@ const TopTen = ({ data, intl: { formatMessage }, location, title }) => {
           {
             id: 'top_ten_businesses_heading',
           },
-          { city: formatMessage({ id: 'Saigon' }) },
+          { city: formatMessage({ id: 'Vietnam' }) },
         )}
       />
     </>

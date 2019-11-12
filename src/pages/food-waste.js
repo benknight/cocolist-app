@@ -17,7 +17,7 @@ const FoodWaste = ({ data, intl: { formatMessage }, location }) => {
     <FormattedMessage
       id="business_list_heading"
       values={{
-        city: formatMessage({ id: 'Saigon' }),
+        city: formatMessage({ id: 'Vietnam' }),
         thing: <BusinessListSelector selected="food-waste" />,
       }}
     />
@@ -29,7 +29,7 @@ const FoodWaste = ({ data, intl: { formatMessage }, location }) => {
           {formatMessage(
             { id: 'business_list_heading' },
             {
-              city: formatMessage({ id: 'Saigon' }),
+              city: formatMessage({ id: 'Vietnam' }),
               thing: formatMessage({ id: 'food_waste_program_label' }).toLowerCase(),
             },
           )}

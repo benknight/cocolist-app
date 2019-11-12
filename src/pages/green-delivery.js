@@ -13,7 +13,7 @@ const GreenDelivery = ({ data, intl: { formatMessage }, location }) => {
     <FormattedMessage
       id="business_list_heading"
       values={{
-        city: formatMessage({ id: 'Saigon' }),
+        city: formatMessage({ id: 'Vietnam' }),
         thing: <BusinessListSelector selected="green-delivery" />,
       }}
     />
@@ -25,7 +25,7 @@ const GreenDelivery = ({ data, intl: { formatMessage }, location }) => {
           {formatMessage(
             { id: 'business_list_heading' },
             {
-              city: formatMessage({ id: 'Saigon' }),
+              city: formatMessage({ id: 'Vietnam' }),
               thing: formatMessage({ id: 'green_delivery_label' }).toLowerCase(),
             },
           )}

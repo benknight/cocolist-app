@@ -39,7 +39,7 @@ const BusinessPage = props => {
             {
               id: 'eco_friendly_biz_in_vn',
             },
-            { city: formatMessage({ id: 'Saigon' }) },
+            { city: formatMessage({ id: 'Vietnam' }) },
           )}
         </title>
         {/* TODO: Add social meta tags */}
