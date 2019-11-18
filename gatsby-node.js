@@ -11,9 +11,9 @@ require('dotenv').config();
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
 
-  const businessPageQuery = await graphql(`
+  const { data } = await graphql(`
     {
-      allAirtable(filter: { table: { eq: "Businesses" } }) {
+      businesses: allAirtable(filter: { table: { eq: "Businesses" } }) {
         edges {
           node {
             data {
@@ -22,19 +22,28 @@ exports.createPages = async ({ graphql, actions }) => {
           }
         }
       }
+      cities: allAirtable(filter: { table: { eq: "Cities" } }) {
+        edges {
+          node {
+            data {
+              Name
+            }
+          }
+        }
+      }
     }
   `);
 
-  const filtered = businessPageQuery.data.allAirtable.edges.filter(
+  const bizFiltered = data.businesses.edges.filter(
     edge => !!_.get(edge, 'node.data.URL_key'),
   );
 
-  const grouped = _.groupBy(filtered, 'node.data.URL_key');
+  const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL_key');
 
   let hasDuplicates = false;
 
-  Object.keys(grouped).forEach(key => {
-    if (grouped[key].length > 1) {
+  Object.keys(bizGrouped).forEach(key => {
+    if (bizGrouped[key].length > 1) {
       hasDuplicates = true;
       console.error(`Duplicate URL_key fields found for string "${key}"`);
     }
@@ -46,7 +55,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const BusinessPage = path.resolve('./src/templates/BusinessPage.js');
 
-  filtered.forEach(({ node }) => {
+  bizFiltered.forEach(({ node }) => {
     // English
     createPage({
       path: node.data.URL_key,
@@ -58,12 +67,73 @@ exports.createPages = async ({ graphql, actions }) => {
     });
     // Vietnamese
     createPage({
-      path: `/vi/${node.data.URL_key}`,
+      path: `vi/${node.data.URL_key}`,
       component: BusinessPage,
       context: {
         langKey: 'vi',
         slug: node.data.URL_key,
       },
+    });
+  });
+
+  const CityPage = path.resolve('./src/templates/CityPage.js');
+  const ListPage = path.resolve('./src/templates/ListPage.js');
+
+  const listPages = [
+    'byoc',
+    'green-delivery',
+    'food-waste',
+    'vegetarian',
+    'green-kitchen',
+    'no-plastic-bags',
+    'no-plastic-bottles',
+    'no-plastic-straws',
+    'free-drinking-water',
+  ];
+
+  data.cities.edges.forEach(({ node: { data: city } }) => {
+    const citySlug = city.Name.toLowerCase();
+
+    createPage({
+      path: citySlug,
+      component: CityPage,
+      context: {
+        langKey: 'en',
+        city: city.Name,
+        slug: citySlug,
+      },
+    });
+
+    createPage({
+      path: `vi/${citySlug}`,
+      component: CityPage,
+      context: {
+        langKey: 'vi',
+        city: city.Name,
+        slug: citySlug,
+      },
+    });
+
+    // Create list pages for city
+    listPages.forEach(listSlug => {
+      createPage({
+        path: `${citySlug}/${listSlug}`,
+        component: ListPage,
+        context: {
+          langKey: 'en',
+          city: city.Name,
+          slug: listSlug,
+        },
+      });
+      createPage({
+        path: `vi/${citySlug}/${listSlug}`,
+        component: ListPage,
+        context: {
+          langKey: 'vi',
+          city: city.Name,
+          slug: listSlug,
+        },
+      });
     });
   });
 };

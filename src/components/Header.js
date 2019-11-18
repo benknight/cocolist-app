@@ -12,12 +12,13 @@ import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
+import CitySelector from './CitySelector';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
 
 const LangSwitch = props => {
-  const [, cacheLangSelection] = useLocalStorage('langSelection');
+  const [, setLangSelection] = useLocalStorage('langSelection');
   return (
     <div
       className={cx(
@@ -27,7 +28,7 @@ const LangSwitch = props => {
       )}>
       {props.lang === 'en' ? (
         <Link
-          onClick={() => cacheLangSelection('vi')}
+          onClick={() => setLangSelection('vi')}
           title="Tiếng Việt"
           to={getLocalizedURL(props.location.pathname, 'vi')}>
           <span
@@ -41,9 +42,9 @@ const LangSwitch = props => {
         </Link>
       ) : (
         <Link
-          onClick={() => cacheLangSelection('en')}
+          onClick={() => setLangSelection('en')}
           to={getLocalizedURL(props.location.pathname, 'en')}
-          title="English">
+          title="Switch to English">
           <span className={styles.langLong}>English</span>
           <span className={styles.langShort}>EN</span>
         </Link>
@@ -56,6 +57,8 @@ const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
+  const [citySelection] = useLocalStorage('citySelection');
+  const homeLink = getLocalizedURL(`/${(citySelection || '').toLowerCase()}`, lang);
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
@@ -80,10 +83,16 @@ const Header = ({ location, showSearch, ...props }) => {
           [styles.noSearch]: !showSearch,
         })}>
         <div className="relative z-1 flex items-center pb2 pt3 ph3">
-          <Link className="inline-flex mb1" to={getLocalizedURL('/', lang)}>
+          <Link
+            className="inline-flex mb1 pr3"
+            onClick={event => {
+              setNavExpanded(!isNavExpanded);
+              event.preventDefault();
+            }}
+            to={homeLink}>
             <img alt="logo" className={styles.logo} src={logo} />
           </Link>
-          <div className="mh3 m_dn">
+          <div className="mr3">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
@@ -104,12 +113,6 @@ const Header = ({ location, showSearch, ...props }) => {
             <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
               <AddBusinessAction variant="text" />
             </div>
-            <Link
-              activeClassName="tp-link--inherit"
-              className={cx('tp-link ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}
-              to={getLocalizedURL('/about', lang)}>
-              <FormattedMessage id="header_link_about" />
-            </Link>
             {props.showLangSwitch && (
               <div className="ml3 m_ml4 l_ml5">
                 <LangSwitch {...{ lang, location }} truncate />
@@ -118,6 +121,9 @@ const Header = ({ location, showSearch, ...props }) => {
           </div>
         </div>
         <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
+          <Link className="tp-link" to={homeLink}>
+            <FormattedMessage id="header_link_home" />
+          </Link>
           <Link
             activeClassName="tp-link--inherit"
             className="tp-link"
@@ -126,6 +132,9 @@ const Header = ({ location, showSearch, ...props }) => {
           </Link>
           <AddBusinessAction variant="text" />
           <SignupAction />
+          {location.pathname !== getLocalizedURL('/', lang) && (
+            <CitySelector className="mt4" location={location} variant="thumbnails" />
+          )}
         </div>
       </header>
     </>

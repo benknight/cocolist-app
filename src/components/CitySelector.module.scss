@@ -1,0 +1,21 @@
+@import '../styles/mixins.scss';
+
+.text {
+  text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35), 1px 1px 5px rgba(0, 0, 0, 0.5), 1px 1px 25px black;
+}
+
+.grid .text {
+  @include tp-title-1;
+
+  @include respond-above(small) {
+    @include tp-title-2;
+  }
+
+  @include respond-above(small) {
+    @include tp-title-3;
+  }
+}
+
+.thumbnails .text {
+  @include tp-title-5;
+}

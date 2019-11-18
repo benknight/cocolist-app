@@ -25,6 +25,23 @@ const businessQuery = `
                 Name_VI
               }
             }
+            Locations {
+              data {
+                Name
+                Neighborhood {
+                  data {
+                    Name
+                    Name_VI
+                  }
+                }
+                City {
+                  data {
+                    Name
+                    Name_VI
+                  }
+                }
+              }
+            }
             Survey {
               data {
                 Coco_points
@@ -60,7 +77,10 @@ const businessQuery = `
 const settings = {}; // { attributesToSnippet: [`excerpt:20`] }
 
 const flatten = data => {
-  const tx = _keyBy(data.translations.edges.map(({ node: { data } }) => data), 'Key');
+  const tx = _keyBy(
+    data.translations.edges.map(({ node: { data } }) => data),
+    'Key',
+  );
   return data.businesses.edges.map(({ node: { data } }) => {
     const fbSurvey = (data.Survey || [])
       .map(({ data }) => data)
@@ -78,8 +98,13 @@ const flatten = data => {
       badges_vi: badges.map(badge => tx[badge.title].vi),
       category_en: data.Category.map(cat => cat.data.Name),
       category_vi: data.Category.map(cat => cat.data.Name_VI),
-      neighborhood_en: data.Neighborhood.map(hood => hood.data.Name),
-      neighborhood_vi: data.Neighborhood.map(hood => hood.data.Name_VI),
+      locations: data.Locations.map(({ data }) => ({
+        name: data.Name,
+        city_en: data.City[0].data.Name,
+        city_vi: data.City[0].data.Name_VI,
+        neighborhood_en: data.Neighborhood[0].data.Name,
+        neighborhood_vi: data.Neighborhood[0].data.Name_VI,
+      })),
       slug: data.URL_key,
     };
   });

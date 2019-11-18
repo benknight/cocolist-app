@@ -42,17 +42,6 @@ const query = graphql`
   }
 `;
 
-const mapCenter = {
-  danang: 'TODO',
-  hanoi: 'TODO',
-  saigon: {
-    xs: '10.788890, 106.709555',
-    small: '10.788890, 106.709555',
-    medium: '10.788890, 106.709555',
-    large: '10.791881, 106.653460',
-  },
-};
-
 // Make it possible to programmatically navigate from infoWindow
 if (typeof window !== 'undefined') {
   window.__navigate = navigate;
@@ -61,7 +50,7 @@ if (typeof window !== 'undefined') {
 // Cache Google Maps objects
 let infoWindow;
 
-const Map = ({ className, center, intl: { formatMessage }, location }) => {
+const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => {
   const lang = parseLangFromURL(location.pathname);
   const [loaded, error] = useScript(mapsScriptURL);
   if (error) {
@@ -79,11 +68,12 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
           disableAutoPan: breakpoint === 'large',
         });
       const map = new maps.Map(document.getElementById('map'));
+      const centerLatLng = new maps.LatLng(
+        center.split(',')[0].trim(),
+        center.split(',')[1].trim(),
+      );
       map.setOptions({
-        center: new maps.LatLng(
-          mapCenter[center][breakpoint].split(',')[0].trim(),
-          mapCenter[center][breakpoint].split(',')[1].trim(),
-        ),
+        center: centerLatLng,
         disableDefaultUI: true,
         fullscreenControl: true,
         fullscreenControlOptions: {
@@ -91,8 +81,42 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
         },
         gestureHandling: breakpoint === 'large' ? 'greedy' : 'auto',
         styles: mapStyles,
-        zoom: 13,
+        zoom,
       });
+
+      if (breakpoint === 'large') {
+        window.google.maps.event.addListenerOnce(map, 'projection_changed', () => {
+          // latlng is the apparent centre-point
+          // offsetx is the distance you want that point to move to the right, in pixels
+          // offsety is the distance you want that point to move upwards, in pixels
+          // offset can be negative
+          // offsetx and offsety are both optional
+          const offsetX = 400;
+          const offsetY = 0;
+
+          const scale = Math.pow(2, map.getZoom());
+
+          const worldCoordinateCenter = map
+            .getProjection()
+            .fromLatLngToPoint(centerLatLng);
+
+          const pixelOffset = new window.google.maps.Point(
+            offsetX / scale || 0,
+            offsetY / scale || 0,
+          );
+
+          const worldCoordinateNewCenter = new window.google.maps.Point(
+            worldCoordinateCenter.x - pixelOffset.x,
+            worldCoordinateCenter.y + pixelOffset.y,
+          );
+
+          const newCenter = map
+            .getProjection()
+            .fromPointToLatLng(worldCoordinateNewCenter);
+
+          map.setCenter(newCenter);
+        });
+      }
 
       // Add locations to map
       locations
@@ -154,9 +178,10 @@ const Map = ({ className, center, intl: { formatMessage }, location }) => {
             }
           });
         });
+
       // map.fitBounds(bounds);
     }
-  }, [breakpoint, center, data, formatMessage, lang, loaded]);
+  }, [breakpoint, center, data, formatMessage, lang, loaded, zoom]);
   return (
     <div className={className}>
       <div id="map" className="absolute top0 right0 bottom0 left0" />

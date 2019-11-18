@@ -73,11 +73,12 @@ module.exports = {
               process.env.NODE_ENV === 'development' || process.env.DEV === 'true'
                 ? 'Dev'
                 : 'Businesses',
-            tableLinks: ['Survey', 'Neighborhood', 'Category'],
+            tableLinks: ['Survey', 'Neighborhood', 'Category', 'Locations'],
             defaultValues: {
               // TODO: don't rely on this
               Category: [],
               Neighborhood: [],
+              Locations: [],
             },
             mapping: {
               Profile_photo: 'fileNode',
@@ -90,11 +91,14 @@ module.exports = {
           {
             baseId,
             tableName: 'Cities',
+            mapping: {
+              Cover: 'fileNode',
+            },
           },
           {
             baseId,
             tableName: 'Locations',
-            tableLinks: ['Business'],
+            tableLinks: ['Business', 'City', 'Neighborhood'],
           },
           {
             baseId,

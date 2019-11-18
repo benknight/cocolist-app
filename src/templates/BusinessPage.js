@@ -18,6 +18,114 @@ import SurveyView from '../components/SurveyView';
 import BusinessRenderData from '../lib/BusinessRenderData';
 import styles from './BusinessPage.module.scss';
 
+export const query = graphql`
+  fragment FBSurveyDataFragment on AirtableData {
+    From_the_business
+    From_the_editor
+    Coco_points
+    Dine_in_points
+    Take_out_points
+    Kitchen_points
+    Menu_points
+    No_plastic_straws
+    No_plastic_bags
+    No_plastic_bottles
+    BYO_container_discount
+    BYOC_discount_amount
+    Free_drinking_water
+    Green_delivery
+    Delivery_only
+    Dine_in_straws
+    Dine_in_utensils
+    Dine_in_napkins
+    Dine_in_drink_containers
+    Dine_in_cups
+    Dine_in_drink_stirrers
+    Dine_in_linens__table_or_placemats_
+    Dine_in_dishes
+    Restroom_hand_towels
+    Take_out_bags
+    Take_out_containers
+    Take_out_cups
+    Take_out_container_lids
+    Take_out_cup_lids
+    Take_out_straws
+    Take_out_cup_carriers
+    Take_out_cup_sleeves
+    Take_out_food_wrapping
+    Kitchen_piping_bags
+    Kitchen_pan_liners
+    Kitchen_food_wrapping
+    Kitchen_gloves
+    Kitchen_food_freeze_packaging
+    Kitchen_waste_management
+    Food_waste_programs
+    Menu
+    Miscellaneous
+    Status
+    Survey_prefill_query_string
+    Attachments {
+      localFiles {
+        childImageSharp {
+          fixed(width: 100, height: 100) {
+            ...GatsbyImageSharpFixed_noBase64
+          }
+        }
+      }
+      raw {
+        filename
+        url
+        thumbnails {
+          large {
+            url
+          }
+        }
+      }
+    }
+  }
+
+  fragment BusinessDataFragment on AirtableData {
+    Record_ID
+    Name
+    Facebook_link
+    VNMM_link
+    URL_key
+    Category {
+      data {
+        Name
+        Businesses
+      }
+    }
+    Neighborhood {
+      data {
+        Name
+      }
+    }
+    Profile_photo {
+      localFiles {
+        childImageSharp {
+          fluid(maxWidth: 800, maxHeight: 480, cropFocus: CENTER) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
+      }
+    }
+    Survey {
+      data {
+        ...FBSurveyDataFragment
+      }
+    }
+  }
+
+  query($slug: String!) {
+    airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
+      data {
+        ...BusinessDataFragment
+      }
+    }
+  }
+`;
+
 const BusinessPage = props => {
   const {
     data: {
@@ -207,113 +315,5 @@ const BusinessPage = props => {
     </div>
   );
 };
-
-export const query = graphql`
-  fragment FBSurveyDataFragment on AirtableData {
-    From_the_business
-    From_the_editor
-    Coco_points
-    Dine_in_points
-    Take_out_points
-    Kitchen_points
-    Menu_points
-    No_plastic_straws
-    No_plastic_bags
-    No_plastic_bottles
-    BYO_container_discount
-    BYOC_discount_amount
-    Free_drinking_water
-    Green_delivery
-    Delivery_only
-    Dine_in_straws
-    Dine_in_utensils
-    Dine_in_napkins
-    Dine_in_drink_containers
-    Dine_in_cups
-    Dine_in_drink_stirrers
-    Dine_in_linens__table_or_placemats_
-    Dine_in_dishes
-    Restroom_hand_towels
-    Take_out_bags
-    Take_out_containers
-    Take_out_cups
-    Take_out_container_lids
-    Take_out_cup_lids
-    Take_out_straws
-    Take_out_cup_carriers
-    Take_out_cup_sleeves
-    Take_out_food_wrapping
-    Kitchen_piping_bags
-    Kitchen_pan_liners
-    Kitchen_food_wrapping
-    Kitchen_gloves
-    Kitchen_food_freeze_packaging
-    Kitchen_waste_management
-    Food_waste_programs
-    Menu
-    Miscellaneous
-    Status
-    Survey_prefill_query_string
-    Attachments {
-      localFiles {
-        childImageSharp {
-          fixed(width: 100, height: 100) {
-            ...GatsbyImageSharpFixed_noBase64
-          }
-        }
-      }
-      raw {
-        filename
-        url
-        thumbnails {
-          large {
-            url
-          }
-        }
-      }
-    }
-  }
-
-  fragment BusinessDataFragment on AirtableData {
-    Record_ID
-    Name
-    Facebook_link
-    VNMM_link
-    URL_key
-    Category {
-      data {
-        Name
-        Businesses
-      }
-    }
-    Neighborhood {
-      data {
-        Name
-      }
-    }
-    Profile_photo {
-      localFiles {
-        childImageSharp {
-          fluid(maxWidth: 800, maxHeight: 480, cropFocus: CENTER) {
-            ...GatsbyImageSharpFluid_noBase64
-          }
-        }
-      }
-    }
-    Survey {
-      data {
-        ...FBSurveyDataFragment
-      }
-    }
-  }
-
-  query($slug: String!) {
-    airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
-      data {
-        ...BusinessDataFragment
-      }
-    }
-  }
-`;
 
 export default injectIntl(BusinessPage);

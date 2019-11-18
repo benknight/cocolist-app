@@ -14,14 +14,26 @@ import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/i18n';
 
 export const onClientEntry = () => {
   const { location, localStorage, navigator } = window;
+
+  // Obey user language selection, defaulting to browser lang
   const clientLang = navigator.language.split('-')[0];
   const langSelection = localStorage.getItem('langSelection');
   const targetLang = langSelection || clientLang;
+
   if (isValidLang(targetLang)) {
     const lang = parseLangFromURL(location.pathname);
     if (lang !== targetLang) {
       location.replace(getLocalizedURL(location.pathname, targetLang));
+      return;
     }
+  }
+
+  // If the user has selected a city, redirect them to the city page
+  const citySelection = localStorage.getItem('citySelection');
+
+  if (citySelection && (location.pathname === '/' || location.pathname === '/vi/')) {
+    location.assign(location.pathname + JSON.parse(citySelection).toLowerCase());
+    return;
   }
 };
 

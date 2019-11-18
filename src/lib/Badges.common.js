@@ -14,7 +14,7 @@ const badges = [
       const reduced = survey.Green_delivery === 'Reduced plastic';
       return always || reduced;
     },
-    linkTarget: '/green-delivery',
+    linkSlug: 'green-delivery',
   },
   {
     key: 'byoc',
@@ -24,7 +24,7 @@ const badges = [
     title: 'byoc_discount_label',
     description: 'byoc_discount_description',
     test: survey => !!survey.BYO_container_discount,
-    linkTarget: '/byoc',
+    linkSlug: 'byoc',
   },
   {
     key: 'vegetarian',
@@ -39,7 +39,7 @@ const badges = [
         menu.indexOf('Vegetarian menu') !== -1 || menu.indexOf('Plant-based menu') !== -1
       );
     },
-    linkTarget: '/vegetarian',
+    linkSlug: 'vegetarian',
   },
   {
     key: 'refill',
@@ -49,7 +49,7 @@ const badges = [
     title: 'refill_my_bottle_label',
     description: 'refill_my_bottle_description',
     test: survey => !!survey.Free_drinking_water,
-    linkTarget: '/free-drinking-water',
+    linkSlug: 'free-drinking-water',
   },
   {
     key: 'foodWaste',
@@ -59,7 +59,7 @@ const badges = [
     title: 'food_waste_program_label',
     description: 'food_waste_program_description',
     test: survey => _get(survey, 'Food_waste_programs', []).length > 0,
-    linkTarget: '/food-waste',
+    linkSlug: 'food-waste',
   },
   {
     key: 'kitchen',
@@ -69,7 +69,7 @@ const badges = [
     title: 'green_kitchen_label',
     description: 'green_kitchen_description',
     test: survey => _get(survey, 'Kitchen_points', 0) > 3,
-    linkTarget: '/green-kitchen',
+    linkSlug: 'green-kitchen',
   },
   {
     key: 'noPlasticStraws',
@@ -79,7 +79,7 @@ const badges = [
     title: 'no_plastic_straws_label',
     description: 'no_plastic_straws_description',
     test: survey => !!survey.No_plastic_straws,
-    linkTarget: '/no-plastic-straws',
+    linkSlug: 'no-plastic-straws',
   },
   {
     key: 'noPlasticBags',
@@ -89,7 +89,7 @@ const badges = [
     title: 'no_plastic_bags_label',
     description: 'no_plastic_bags_description',
     test: survey => !!survey.No_plastic_bags,
-    linkTarget: '/no-plastic-bags',
+    linkSlug: 'no-plastic-bags',
   },
   {
     key: 'noPlasticBottles',
@@ -99,7 +99,7 @@ const badges = [
     title: 'no_plastic_bottles_label',
     description: 'no_plastic_bottles_description',
     test: survey => !!survey.No_plastic_bottles,
-    linkTarget: '/no-plastic-bottles',
+    linkSlug: 'no-plastic-bottles',
   },
 ];
 
