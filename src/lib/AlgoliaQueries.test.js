@@ -19,14 +19,10 @@ describe('AlgoliaQueries', () => {
       neighborhoods_en: {
         Danang: ['Hoi An'],
         Saigon: ['District 1', 'District 2'],
-        Hanoi: [],
-        Dalat: [],
       },
       neighborhoods_vi: {
         Danang: ['Hội An'],
         Saigon: ['Quận 1', 'Quận 2'],
-        Hanoi: [],
-        Dalat: [],
       },
     });
   });
