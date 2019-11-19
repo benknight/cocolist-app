@@ -12,7 +12,6 @@ import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
-import CitySelector from './CitySelector';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
@@ -132,9 +131,6 @@ const Header = ({ location, showSearch, ...props }) => {
           </Link>
           <AddBusinessAction variant="text" />
           <SignupAction />
-          {location.pathname !== getLocalizedURL('/', lang) && (
-            <CitySelector className="mt4" location={location} variant="thumbnails" />
-          )}
         </div>
       </header>
     </>

@@ -5,11 +5,12 @@ import PropTypes from 'prop-types';
 import React, { useState, createRef } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
+  Configure,
   InstantSearch,
   Index,
   InfiniteHits,
   Highlight,
-  // RefinementList,
+  RefinementList,
   connectStateResults,
   connectSearchBox,
 } from 'react-instantsearch-dom';
@@ -26,6 +27,8 @@ import {
 } from '@cocolist/thumbprint-react';
 import { badges } from '../lib/Badges.common';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
+import useLocalStorage from '../lib/useLocalStorage';
+import CitySelector from './CitySelector';
 import styles from './Search.module.scss';
 
 const badgesByKey = _keyBy(badges, 'key');
@@ -54,48 +57,56 @@ const Stats = connectStateResults(
 
 const Root = React.forwardRef((props, ref) => <div ref={ref} {...props} />);
 
-let SearchInput = ({ refine, intl: { formatMessage }, ...props }) => {
-  const [value, setValue] = useState('');
-  return (
-    <form>
-      <Input
-        type="search"
-        placeholder={formatMessage({ id: 'search_placeholder' })}
-        aria-label={formatMessage({ id: 'search_placeholder' })}
-        innerLeft={
-          <InputIcon>
-            {props.size === 'large' ? (
-              <NavigationSearchMedium />
-            ) : (
-              <NavigationSearchSmall />
-            )}
-          </InputIcon>
-        }
-        innerRight={
-          value.length > 0 && (
-            <InputClearButton
-              onClick={() => {
-                setValue('');
-                refine('');
-              }}
-            />
-          )
-        }
-        onChange={value => {
-          setValue(value);
-          // if (value.length === 0 || value.length > 2) {
-          refine(value);
-          // }
-        }}
-        size={props.size}
-        value={value}
-        {...props}
-      />
-    </form>
-  );
-};
-
-SearchInput = connectSearchBox(injectIntl(SearchInput));
+const SearchInput = connectSearchBox(
+  injectIntl(({ refine, intl: { formatMessage }, location, size, ...props }) => {
+    const [value, setValue] = useState('');
+    const [citySelection] = useLocalStorage('citySelection');
+    return (
+      <form>
+        <Input
+          type="search"
+          placeholder={formatMessage({ id: 'search_placeholder' })}
+          aria-label={formatMessage({ id: 'search_placeholder' })}
+          innerLeft={
+            <InputIcon>
+              {size === 'large' ? <NavigationSearchMedium /> : <NavigationSearchSmall />}
+            </InputIcon>
+          }
+          innerRight={
+            <div className="flex items-center h-100 pr3">
+              {value.length > 0 && (
+                <InputClearButton
+                  onClick={() => {
+                    setValue('');
+                    refine('');
+                  }}
+                />
+              )}
+              {size === 'small' && (
+                <CitySelector className="tp-body-2" location={location} variant="modal">
+                  {citySelection ? (
+                    <FormattedMessage id={citySelection} />
+                  ) : (
+                    <FormattedMessage id="change_location_label" />
+                  )}
+                </CitySelector>
+              )}
+            </div>
+          }
+          onChange={value => {
+            setValue(value);
+            // if (value.length === 0 || value.length > 2) {
+            refine(value);
+            // }
+          }}
+          size={size}
+          value={value}
+          {...props}
+        />
+      </form>
+    );
+  }),
+);
 
 const PoweredBy = () => (
   <div className="tp-body-3">
@@ -122,9 +133,9 @@ const BusinessHit = ({ hit }) => {
           <Highlight attribute="name" hit={hit} tagName="mark" />{' '}
         </div>
         <div className="tp-body-3 black-300">
-          <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
-          <span className="mh2">/</span>
-          <Highlight attribute={`neighborhood_${lang}`} hit={hit} tagName="mark" />
+          <span className="inline-flex items-center">
+            <Highlight attribute={`category_${lang}`} hit={hit} tagName="mark" />
+          </span>
         </div>
       </div>
       <div className="nowrap">
@@ -144,25 +155,33 @@ const BusinessHit = ({ hit }) => {
   );
 };
 
-function Search({ className, location, size }) {
+function Search({ className, location, size, ...props }) {
   const ref = createRef();
-  // const lang = parseLangFromURL(location.pathname);
+  const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
   const searchClient = algoliasearch(
     process.env.GATSBY_ALGOLIA_APP_ID,
     process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   );
   const showResults = query.length > 0;
+  const [citySelection] = useLocalStorage('citySelection');
+  const city = props.city || citySelection;
   return (
     <InstantSearch
       searchClient={searchClient}
       indexName={indexName}
       onSearchStateChange={({ query }) => setQuery(query)}
       root={{ Root, props: { ref } }}>
+      {city && <Configure filters={`cities_en:${city}`} />}
       <div className={cx(className, { [styles.large]: size === 'large' })}>
         <div className="relative z-1">
-          <SearchInput size={size} />
+          <SearchInput location={location} size={size} />
         </div>
+        {size === 'large' && (
+          <CitySelector className="mt3 tp-body-2" location={location} variant="modal">
+            <FormattedMessage id="change_location_label" />
+          </CitySelector>
+        )}
         <div
           className={cx(
             styles.results,
@@ -178,12 +197,12 @@ function Search({ className, location, size }) {
               {/* <RefinementList
                 attribute={`badges_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
-              />
+              /> */}
               <RefinementList
-                attribute={`neighborhood_${lang}`}
+                attribute={`neighborhoods_${lang}.${city}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
               />
-              <RefinementList attribute={`category_${lang}`} /> */}
+              {/* <RefinementList attribute={`category_${lang}`} /> */}
             </div>
             <div
               className={cx(styles.hitsWrapper, 'flex-auto overflow-auto bg-white')}
@@ -203,6 +222,7 @@ function Search({ className, location, size }) {
 
 Search.propTypes = {
   className: PropTypes.string,
+  city: PropTypes.string,
   location: PropTypes.object.isRequired,
   size: PropTypes.oneOf(['small', 'large']).isRequired,
 };

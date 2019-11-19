@@ -8,7 +8,6 @@ import { shuffle } from 'shuffle-seed';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import AddBusinessAction from '../components/AddBusinessAction';
-import CitySelector from '../components/CitySelector';
 import Header from '../components/Header';
 import Map from '../components/Map';
 import Search from '../components/Search';
@@ -144,8 +143,12 @@ const CityPage = ({
                 />
               </h1>
             </div>
-            <Search className="relative z-1" location={location} size="large" />
-            <CitySelector className="mt3 tp-body-2" location={location} variant="modal" />
+            <Search
+              city={city}
+              className="relative z-1"
+              location={location}
+              size="large"
+            />
           </div>
         </div>
       </div>
@@ -232,7 +235,7 @@ const CityPage = ({
                   </Link>
                 ));
               })}
-              {surveys.length > 8 && (
+              {data.surveys.edges.length > 8 && (
                 <div className="pv4 flex-shrink-0 w6 pr1">
                   <div className="aspect-ratio aspect-ratio-8x5">
                     <Link

@@ -47,11 +47,12 @@ const query = graphql`
 `;
 
 const CitySelector = injectIntl(
-  ({ className, location, intl: { formatMessage }, variant }) => {
+  ({ children, className, location, intl: { formatMessage }, variant }) => {
     const [, setCitySelection] = useLocalStorage('citySelection');
     const data = useStaticQuery(query);
     const [isModalOpen, setModalOpen] = useState(false);
     const langKey = parseLangFromURL(location.pathname);
+
     if (variant === 'grid') {
       return (
         <div className={cx(className, styles.grid, 'grid')}>
@@ -81,41 +82,14 @@ const CitySelector = injectIntl(
         </div>
       );
     }
-    if (variant === 'thumbnails') {
-      return (
-        <div className={cx(className, styles.thumbnails, 'flex overflow-auto')}>
-          {data.cities.edges.map(({ node: { data: city } }) => (
-            <Link
-              className="relative db mr2 flex-shrink-0"
-              key={city.Name}
-              onClick={() => setCitySelection(city.Name)}
-              to={getLocalizedURL(`/${city.Name.toLowerCase()}`, langKey)}>
-              <Img
-                alt="logo"
-                className="br2"
-                fixed={city.Cover.localFiles[0].childImageSharp.fixed}
-                objectFit="contain"
-                title={city.Name}
-              />
-              <div
-                className={cx(
-                  styles.text,
-                  'absolute top0 bottom0 right0 left0 tp-title-4 white flex items-center justify-center',
-                )}>
-                <FormattedMessage id={city.Name} />
-              </div>
-            </Link>
-          ))}
-        </div>
-      );
-    }
+
     if (variant === 'modal') {
       return (
         <div className={className}>
           <TextButton
             onClick={() => setModalOpen(!isModalOpen)}
             iconLeft={<ContentModifierMapPinSmall />}>
-            <FormattedMessage id="change_location_label" />
+            {children}
           </TextButton>
           <ModalDefault isOpen={isModalOpen} onCloseClick={() => setModalOpen(false)}>
             <ModalDefaultHeader>
