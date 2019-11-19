@@ -1,8 +1,8 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
-import { ModalCurtain, TextButton } from '@cocolist/thumbprint-react';
-import { NavigationCloseSmall } from '@thumbtack/thumbprint-icons';
+import { LoaderDots, ModalCurtain, TextButton } from '@cocolist/thumbprint-react';
+import { NavigationCloseMedium } from '@thumbtack/thumbprint-icons';
 import styles from './AirtableFormModal.module.scss';
 
 const AirtableFormModal = ({ formId, isOpen, onCloseClick, prefill }) => {
@@ -23,18 +23,23 @@ const AirtableFormModal = ({ formId, isOpen, onCloseClick, prefill }) => {
           <div
             className="relative bg-white w-100 h-100 s_h-auto center flex s_db flex-column s_br2 s_overflow-hidden"
             style={{ maxWidth: '600px' }}>
-            <div className="s_absolute flex items-center justify-end top0 right0 bg-white pa3 bb b-gray-300 s_bn">
+            <div className="s_absolute z-1 flex items-center justify-end top0 right0 pa2 bb b-gray-300 s_bn">
               <TextButton
                 accessibilityLabel="Close modal"
-                iconLeft={<NavigationCloseSmall />}
+                iconLeft={<NavigationCloseMedium />}
                 onClick={onCloseClick}
                 theme="inherit"
               />
             </div>
-            <div className={cx(styles.iframeContainer, 'flex-auto')}>
+            <div
+              className={cx(
+                styles.iframeContainer,
+                'relative flex-auto flex justify-center items-center',
+              )}>
+              <LoaderDots />
               <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js" />
               <iframe
-                className="airtable-embed airtable-dynamic-height"
+                className="airtable-embed airtable-dynamic-height absolute top0 left0 w-100 h-100"
                 data-src={`https://airtable.com/embed/${formId}?${prefill || ''}`}
                 frameBorder="0"
                 width="100%"
