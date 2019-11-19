@@ -16,6 +16,7 @@ import Categories from '../components/Categories';
 import Header from '../components/Header';
 import SurveyView from '../components/SurveyView';
 import BusinessRenderData from '../lib/BusinessRenderData';
+import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
 
 export const query = graphql`
@@ -99,6 +100,30 @@ export const query = graphql`
     Neighborhood {
       data {
         Name
+        Name_VI
+        City {
+          data {
+            Name
+            Name_VI
+          }
+        }
+      }
+    }
+    Locations {
+      data {
+        Name
+        Neighborhood {
+          data {
+            Name
+            Name_VI
+            City {
+              data {
+                Name
+                Name_VI
+              }
+            }
+          }
+        }
       }
     }
     Profile_photo {
@@ -137,6 +162,7 @@ const BusinessPage = props => {
 
   const biz = new BusinessRenderData(bizData, langKey);
   const [showEditModal, toggleEditModal] = useState(false);
+  const [citySelection] = useLocalStorage('citySelection');
 
   return (
     <div className="bg-gray-200">
@@ -196,14 +222,25 @@ const BusinessPage = props => {
               </div>
               <div className="flex items-center mv1">
                 <ContentModifierMapPinSmall className="w1 mr2" />
-                <div>
-                  {biz.neighborhoods.map((name, index) => (
-                    <React.Fragment key={index}>
-                      <FormattedMessage id={name} />
-                      {index === biz.neighborhoods.length - 1 ? '' : ', '}
-                    </React.Fragment>
-                  ))}
-                </div>
+                {citySelection ? (
+                  <div>
+                    {biz.neighborhoods.map((hood, index) => (
+                      <React.Fragment key={index}>
+                        <FormattedMessage id={hood.Name} />
+                        {index === biz.neighborhoods.length - 1 ? '' : ', '}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                ) : (
+                  <div>
+                    {biz.cities.map((city, index) => (
+                      <React.Fragment key={index}>
+                        <FormattedMessage id={city.Name} />
+                        {index === biz.cities.length - 1 ? '' : ', '}
+                      </React.Fragment>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
             <div className="tp-body-2 mv1">

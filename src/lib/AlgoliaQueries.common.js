@@ -105,6 +105,7 @@ function flatten(data) {
       .find(({ Status }) => Status === 'Published');
     const badges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
     // First check for location data, and fall back to static neighborhoods field.
+    // TODO: Replace this logic with the helper code in BusinessRenderData
     let hoods = _uniqBy(
       data.Locations.map(({ data }) => data.Neighborhood[0].data),
       'Name',

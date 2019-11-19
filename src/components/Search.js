@@ -82,13 +82,9 @@ const SearchInput = connectSearchBox(
                   }}
                 />
               )}
-              {size === 'small' && (
+              {size === 'small' && citySelection && (
                 <CitySelector className="tp-body-2" location={location} variant="modal">
-                  {citySelection ? (
-                    <FormattedMessage id={citySelection} />
-                  ) : (
-                    <FormattedMessage id="change_location_label" />
-                  )}
+                  <FormattedMessage id={citySelection} />
                 </CitySelector>
               )}
             </div>

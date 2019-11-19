@@ -1,4 +1,5 @@
 import _get from 'lodash/get';
+import _uniqBy from 'lodash/uniqBy';
 import React from 'react';
 import { SocialFacebookSmall } from '@thumbtack/thumbprint-icons';
 import messengerLogo from '../assets/messenger-logo.svg';
@@ -41,8 +42,23 @@ class BusinessRenderData {
     return [];
   }
 
+  get cities() {
+    const cities = _uniqBy(
+      this.neighborhoods.map(hood => hood.City[0].data),
+      'Name',
+    );
+    return cities;
+  }
+
   get neighborhoods() {
-    return this.data.Neighborhood.map(({ data }) => data.Name).reverse();
+    let hoods = _uniqBy(
+      this.data.Locations.map(({ data }) => data.Neighborhood[0].data),
+      'Name',
+    );
+    if (hoods.length === 0) {
+      hoods = this.data.Neighborhood.map(hood => hood.data);
+    }
+    return hoods;
   }
 
   get categories() {
@@ -58,6 +74,8 @@ class BusinessRenderData {
       .reverse();
   }
 
+  // TODO: Refactor business page to use action buttons and remove this code.
+  // Once JSX is gone this can be common and the logic can be reused on the Algolia queries
   get links() {
     const links = [];
     if (this.data.Facebook_link) {
