@@ -224,12 +224,10 @@ const BusinessPage = props => {
                 <ContentModifierMapPinSmall className="w1 mr2" />
                 {citySelection ? (
                   <div>
-                    {biz.neighborhoods.map((hood, index) => (
-                      <React.Fragment key={index}>
-                        <FormattedMessage id={hood.Name} />
-                        {index === biz.neighborhoods.length - 1 ? '' : ', '}
-                      </React.Fragment>
-                    ))}
+                    {biz.neighborhoods
+                      .filter(hood => hood.City[0].data.Name === citySelection)
+                      .map(hood => formatMessage({ id: hood.Name }))
+                      .join(', ')}
                   </div>
                 ) : (
                   <div>
