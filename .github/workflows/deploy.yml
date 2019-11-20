@@ -4,9 +4,9 @@ on:
   push:
     branches:
       - master
-  schedule:
-    # Cron syntax cheat sheet: https://devhints.io/cron
-    - cron: '0 0 * * *' # Every midnight GMT
+  # schedule:
+  #   # Cron syntax cheat sheet: https://devhints.io/cron
+  #   - cron: '0 0 * * *' # Every midnight GMT
 
 jobs:
   deploy:
@@ -26,7 +26,7 @@ jobs:
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_FIREBASE_API_KEY: ${{ secrets.GATSBY_FIREBASE_API_KEY }}
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@master
+        uses: w9jds/firebase-action@v1.1.0
         with:
           args: deploy --only hosting
         env:
