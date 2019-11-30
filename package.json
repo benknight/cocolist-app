@@ -17,11 +17,11 @@
     "not IE 11"
   ],
   "dependencies": {
-    "@cocolist/thumbprint-atomic": "^3.2.8",
-    "@cocolist/thumbprint-global-css": "^0.1.9-0",
-    "@cocolist/thumbprint-react": "^3.1.0-0",
-    "@cocolist/thumbprint-scss": "^1.0.5",
-    "@cocolist/thumbprint-tokens": "^8.0.2-2",
+    "@cocolist/thumbprint-atomic": "^0.0.1",
+    "@cocolist/thumbprint-global-css": "^0.0.1",
+    "@cocolist/thumbprint-react": "^0.0.1",
+    "@cocolist/thumbprint-scss": "^0.0.1",
+    "@cocolist/thumbprint-tokens": "^0.0.1",
     "@thumbtack/thumbprint-icons": "^2.19.0",
     "algoliasearch": "^3.35.1",
     "axios": "^0.19.0",
@@ -44,7 +44,6 @@
     "gatsby-source-airtable": "^2.0.10",
     "gatsby-source-filesystem": "^2.1.36",
     "gatsby-transformer-sharp": "^2.3.3",
-    "identity-obj-proxy": "^3.0.0",
     "lodash": "^4.17.15",
     "node-sass": "^4.13.0",
     "prop-types": "^15.7.2",
@@ -54,7 +53,6 @@
     "react-helmet": "^5.2.1",
     "react-instantsearch-dom": "^6.0.0",
     "react-intl": "^2.9.0",
-    "sharp": "^0.23.2",
     "shuffle-seed": "^1.1.6",
     "url-parse": "^1.4.7",
     "xstate": "^4.6.7"
