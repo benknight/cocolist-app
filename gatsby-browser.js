@@ -29,12 +29,12 @@ export const onClientEntry = () => {
   }
 
   // If the user has selected a city, redirect them to the city page
-  const citySelection = localStorage.getItem('citySelection');
+  /* const citySelection = localStorage.getItem('citySelection');
 
   if (citySelection && (location.pathname === '/' || location.pathname === '/vi/')) {
     location.assign(location.pathname + JSON.parse(citySelection).toLowerCase());
     return;
-  }
+  } */
 };
 
 export const wrapPageElement = ({ element, props }) => (
