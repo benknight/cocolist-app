@@ -7,6 +7,28 @@ import { Button, ButtonRow, Input, Label, Select } from '@cocolist/thumbprint-re
 import getCookieValue from '../lib/getCookieValue';
 import { parseLangFromURL } from '../lib/i18n';
 
+const query = graphql`
+{
+  districts: allAirtable(
+    filter: { table: { eq: "Neighborhoods" } }
+    sort: { fields: data___City___data___Name, order: DESC }
+  ) {
+    edges {
+      node {
+        data {
+          City {
+            data {
+              Name
+            }
+          }
+          Name
+        }
+      }
+    }
+  }
+}
+`;
+
 function createHubspotContact(formData) {
   const formId = process.env.GATSBY_HUBSPOT_BETA_FORM_GUID;
   const portalId = process.env.GATSBY_HUBSPOT_PORTAL_ID;
@@ -52,29 +74,7 @@ function Signup({ intl: { formatMessage }, isPopup }) {
     lastName: '',
     district: '',
   });
-  const {
-    districts: { edges },
-  } = useStaticQuery(graphql`
-    {
-      districts: allAirtable(
-        filter: { table: { eq: "Neighborhoods" } }
-        sort: { fields: data___City___data___Name, order: DESC }
-      ) {
-        edges {
-          node {
-            data {
-              City {
-                data {
-                  Name
-                }
-              }
-              Name
-            }
-          }
-        }
-      }
-    }
-  `);
+  const { districts: { edges } } = useStaticQuery(query);
   if (isSuccess) {
     return <FormattedMessage id="signup_thanks" />;
   }
