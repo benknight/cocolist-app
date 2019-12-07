@@ -73,7 +73,7 @@ const SearchInput = connectSearchBox(
             </InputIcon>
           }
           innerRight={
-            <div className="flex items-center h-100 pr3">
+            <div className="flex items-center h-100">
               {value.length > 0 && (
                 <InputClearButton
                   onClick={() => {
@@ -83,7 +83,10 @@ const SearchInput = connectSearchBox(
                 />
               )}
               {size === 'small' && citySelection && (
-                <CitySelector className="tp-body-2" location={location} variant="modal">
+                <CitySelector
+                  className="tp-body-2 pr3"
+                  location={location}
+                  variant="modal">
                   <FormattedMessage id={citySelection} />
                 </CitySelector>
               )}
@@ -166,7 +169,7 @@ function Search({ className, location, size, ...props }) {
     <InstantSearch
       searchClient={searchClient}
       indexName={indexName}
-      onSearchStateChange={({ query }) => setQuery(query)}
+      onSearchStateChange={({ query }) => setQuery(query || '')}
       root={{ Root, props: { ref } }}>
       {city && <Configure filters={`cities_en:${city}`} />}
       <div className={cx(className, { [styles.large]: size === 'large' })}>
