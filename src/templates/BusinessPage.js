@@ -163,6 +163,9 @@ const BusinessPage = props => {
   const biz = new BusinessRenderData(bizData, langKey);
   const [showEditModal, toggleEditModal] = useState(false);
   const [citySelection] = useLocalStorage('citySelection');
+  const localNeighborhoods = biz.neighborhoods
+    .filter(hood => hood.City[0].data.Name === citySelection)
+    .map(hood => formatMessage({ id: hood.Name }));
 
   return (
     <div className="bg-gray-200">
@@ -222,13 +225,8 @@ const BusinessPage = props => {
               </div>
               <div className="flex items-center mv1">
                 <ContentModifierMapPinSmall className="w1 mr2" />
-                {citySelection ? (
-                  <div>
-                    {biz.neighborhoods
-                      .filter(hood => hood.City[0].data.Name === citySelection)
-                      .map(hood => formatMessage({ id: hood.Name }))
-                      .join(', ')}
-                  </div>
+                {localNeighborhoods.length > 0 ? (
+                  <div>{localNeighborhoods.join(', ')}</div>
                 ) : (
                   <div>
                     {biz.cities.map((city, index) => (
