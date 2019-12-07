@@ -109,7 +109,7 @@ const ListPage = ({
           {formatMessage(
             { id: 'business_list_heading' },
             {
-              city: formatMessage({ id: 'Vietnam' }),
+              city: formatMessage({ id: city }),
               thing: formatMessage({ id: navOptions[slug] }).toLowerCase(),
             },
           )}

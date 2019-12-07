@@ -86,7 +86,7 @@ const CityPage = ({
     {
       id: 'find_businesses_headline',
     },
-    { city: formatMessage({ id: 'Vietnam' }) },
+    { city: formatMessage({ id: city }) },
   );
 
   const addBizPromo = (
@@ -165,7 +165,7 @@ const CityPage = ({
               );
             }),
           badge.key + (process.env.GATSBY_BUILD_TIMESTAMP || Date.now()),
-        ).slice(0, 8);
+        );
 
         const listPageLink = `/${slug}/${badge.linkSlug}`;
 
@@ -178,7 +178,7 @@ const CityPage = ({
             className="flex flex-column l_flex-row items-center justify-end m_items-start mv4"
             key={badge.key}>
             <div className="l_mw7">
-              <div className="m_flex items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl6 tc m_tl">
+              <div className="m_flex flex-shrink-0 items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl6 tc m_tl">
                 <img
                   alt={formatMessage({ id: badge.title })}
                   className={cx(styles.badge, 'mb1 self-start')}
@@ -213,7 +213,7 @@ const CityPage = ({
             <div
               className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
-              {surveys.map((survey, index) => {
+              {surveys.slice(0, 8).map((survey, index) => {
                 return survey.Business_record_match.map(
                   ({ data }) => new BusinessRenderData(data, langKey),
                 ).map(biz => (
@@ -235,7 +235,7 @@ const CityPage = ({
                   </Link>
                 ));
               })}
-              {data.surveys.edges.length > 8 && (
+              {surveys.length > 8 && (
                 <div className="pv4 flex-shrink-0 w6 pr1">
                   <div className="aspect-ratio aspect-ratio-8x5">
                     <Link
