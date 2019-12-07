@@ -73,7 +73,7 @@ const SurveyView = ({ onClickEdit, biz }) => {
   const items =
     biz.survey &&
     getSurveyItems(biz.survey).filter(item => item[1] && item[1].length > 0);
-  if (!biz.survey || items.length === 0) {
+  if (!biz.survey) {
     return (
       <div className="lh-copy bt b-gray-300 pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
         <NotificationAlertsWarningMedium />
@@ -96,6 +96,11 @@ const SurveyView = ({ onClickEdit, biz }) => {
       </div>
     );
   }
+
+  if (items.length === 0) {
+    return null;
+  }
+
   return (
     <div className={cx(styles.container)}>
       <div className="mt0 mb4 flex items-baseline justify-between">
