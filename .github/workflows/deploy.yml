@@ -26,6 +26,8 @@ jobs:
           GATSBY_ALGOLIA_APP_ID: ${{ secrets.GATSBY_ALGOLIA_APP_ID }}
           GATSBY_ALGOLIA_SEARCH_KEY: ${{ secrets.GATSBY_ALGOLIA_SEARCH_KEY }}
           GATSBY_FIREBASE_API_KEY: ${{ secrets.GATSBY_FIREBASE_API_KEY }}
+          GATSBY_HUBSPOT_BETA_FORM_GUID: ${{ secrets.GATSBY_HUBSPOT_BETA_FORM_GUID }}
+          GATSBY_HUBSPOT_PORTAL_ID: ${{ secrets.GATSBY_HUBSPOT_PORTAL_ID }}
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@v1.1.0
         with:
