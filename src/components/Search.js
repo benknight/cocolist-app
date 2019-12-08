@@ -84,7 +84,7 @@ const SearchInput = connectSearchBox(
               )}
               {size === 'small' && citySelection && (
                 <CitySelector
-                  className="tp-body-2 pr3"
+                  className="dn m_db tp-body-2 pr3"
                   location={location}
                   variant="modal">
                   <FormattedMessage id={citySelection} />
