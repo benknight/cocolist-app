@@ -10,7 +10,7 @@ import {
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
 } from '@thumbtack/thumbprint-icons';
-import { Link as TPLink, TextButton } from '@cocolist/thumbprint-react';
+import { Link as TPLink, TextButton } from '@thumbtack/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Categories from '../components/Categories';
 import Header from '../components/Header';

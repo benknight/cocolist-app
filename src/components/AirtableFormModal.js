@@ -1,8 +1,9 @@
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useEffect, useRef } from 'react';
-import { LoaderDots, ModalCurtain, TextButton } from '@cocolist/thumbprint-react';
+import { ModalCurtain, TextButton } from '@thumbtack/thumbprint-react';
 import { NavigationCloseMedium } from '@thumbtack/thumbprint-icons';
+import Loader from './Loader';
 import styles from './AirtableFormModal.module.scss';
 
 const AirtableFormModal = ({ formId, isOpen, onCloseClick, prefill }) => {
@@ -36,7 +37,7 @@ const AirtableFormModal = ({ formId, isOpen, onCloseClick, prefill }) => {
                 styles.iframeContainer,
                 'relative flex-auto flex justify-center items-center',
               )}>
-              <LoaderDots />
+              <Loader />
               <script src="https://static.airtable.com/js/embed/embed_snippet_v1.js" />
               <iframe
                 className="airtable-embed airtable-dynamic-height absolute top0 left0 w-100 h-100"

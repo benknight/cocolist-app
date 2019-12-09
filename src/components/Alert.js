@@ -2,7 +2,7 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React, { useState, useEffect } from 'react';
 import { injectIntl } from 'react-intl';
-import { TextButton } from '@cocolist/thumbprint-react';
+import { TextButton } from '@thumbtack/thumbprint-react';
 import { NavigationCloseSmall } from '@thumbtack/thumbprint-icons';
 import useLocalStorage from '../lib/useLocalStorage';
 

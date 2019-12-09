@@ -3,7 +3,7 @@ import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { TextButton } from '@cocolist/thumbprint-react';
+import { TextButton } from '@thumbtack/thumbprint-react';
 import {
   NavigationCaretDownTiny,
   NavigationCaretUpTiny,

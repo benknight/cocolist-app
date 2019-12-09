@@ -3,7 +3,7 @@ import {
   tpBreakpointLargeValue,
   tpBreakpointMediumValue,
   tpBreakpointSmallValue,
-} from '@cocolist/thumbprint-tokens';
+} from '@thumbtack/thumbprint-tokens';
 
 export default function useBreakpoint() {
   const [breakpoint, setBreakpoint] = useState('xs');

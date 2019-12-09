@@ -10,7 +10,7 @@ import {
   ModalDefaultTitle,
   ModalDefaultContent,
   TextButton,
-} from '@cocolist/thumbprint-react';
+} from '@thumbtack/thumbprint-react';
 import { ContentModifierMapPinSmall } from '@thumbtack/thumbprint-icons';
 
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';

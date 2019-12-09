@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Wrap } from '@cocolist/thumbprint-react';
+import { Wrap } from '@thumbtack/thumbprint-react';
 import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
 import Categories from '../components/Categories';
 import Header from '../components/Header';

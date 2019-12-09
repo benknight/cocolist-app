@@ -17,12 +17,12 @@
     "not IE 11"
   ],
   "dependencies": {
-    "@cocolist/thumbprint-atomic": "^0.0.1",
-    "@cocolist/thumbprint-global-css": "^0.0.1",
-    "@cocolist/thumbprint-react": "^0.0.1",
-    "@cocolist/thumbprint-scss": "^0.0.1",
-    "@cocolist/thumbprint-tokens": "^0.0.1",
+    "@thumbtack/thumbprint-atomic": "^3.4.3",
+    "@thumbtack/thumbprint-global-css": "^0.1.16",
     "@thumbtack/thumbprint-icons": "^2.19.0",
+    "@thumbtack/thumbprint-react": "^11.1.0",
+    "@thumbtack/thumbprint-scss": "^4.0.0",
+    "@thumbtack/thumbprint-tokens": "^10.0.0",
     "algoliasearch": "^3.35.1",
     "axios": "^0.19.0",
     "babel-jest": "^24.9.0",

@@ -1,7 +1,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Wrap } from '@cocolist/thumbprint-react';
+import { Wrap } from '@thumbtack/thumbprint-react';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import CitySelector from '../components/CitySelector';
 import Header from '../components/Header';

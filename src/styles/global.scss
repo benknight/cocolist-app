@@ -1,8 +1,31 @@
 @import url('//fonts.googleapis.com/css?family=Montserrat:400,500,700');
-@import '~@cocolist/thumbprint-tokens/dist/scss/_index.scss';
+@import '~@thumbtack/thumbprint-tokens/dist/scss/_index.scss';
+
+:root {
+  --brand-green-100: #e2fdea;
+  --brand-green-200: #c5f7d3;
+  --brand-green-300: #72e492;
+      --brand-green: #4bbf6b;
+  --brand-green-500: #109e38;
+  --brand-green-600: #0f6628;
+  --brand-pale-green-100: #EFFDE2;
+  --brand-pale-green-200: #DEF7C5;
+  --brand-pale-green-300: #ABE472;
+      --brand-pale-green: #85BF4B;
+  --brand-pale-green-500: #579E10;
+  --brand-pale-green-600: #3A660F;
+}
+
+body {
+  font-family: Montserrat, sans-serif;
+}
+
+input {
+  font-family: inherit !important;
+}
 
 mark {
-  background-color: $tp-color__green-100;
+  background-color: var(--brand-green-100);
 }
 
 .firebaseui-email-sent {
@@ -36,4 +59,22 @@ sup {
 
 .react-hot-loader-error-overlay {
   z-index: 100;
+}
+
+.green {
+  color: var(--brand-green) !important;
+}
+
+.bg-green {
+  background-color: var(--brand-green) !important;
+}
+
+.tp-button {
+  background-color: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.tp-button:focus, {
+  background-color: var(--brand-green-500);
+  border-color: var(--brand-green-500);
 }

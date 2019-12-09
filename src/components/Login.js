@@ -3,14 +3,14 @@ import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Machine, interpret } from 'xstate';
 import {
-  Button,
   ButtonRow,
   Input,
   Label,
   Link as TPLink,
   TextButton,
-} from '@cocolist/thumbprint-react';
+} from '@thumbtack/thumbprint-react';
 import { MetaCategoryEventsMedium } from '@thumbtack/thumbprint-icons';
+import Button from './Button';
 
 export const loginMachine = Machine({
   id: 'login',

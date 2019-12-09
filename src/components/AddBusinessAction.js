@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Button, TextButton } from '@cocolist/thumbprint-react';
+import { TextButton } from '@thumbtack/thumbprint-react';
 import AirtableFormModal from './AirtableFormModal';
+import Button from './Button';
 
 const AddBusinessAction = ({ intl: { formatMessage }, variant, size }) => {
   const [isOpen, setIsOpen] = useState(false);

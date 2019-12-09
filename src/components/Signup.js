@@ -3,30 +3,31 @@ import { graphql, useStaticQuery } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Button, ButtonRow, Input, Label, Select } from '@cocolist/thumbprint-react';
+import { ButtonRow, Input, Label, Select } from '@thumbtack/thumbprint-react';
 import getCookieValue from '../lib/getCookieValue';
 import { parseLangFromURL } from '../lib/i18n';
+import Button from './Button';
 
 const query = graphql`
-{
-  districts: allAirtable(
-    filter: { table: { eq: "Neighborhoods" } }
-    sort: { fields: data___City___data___Name, order: DESC }
-  ) {
-    edges {
-      node {
-        data {
-          City {
-            data {
-              Name
+  {
+    districts: allAirtable(
+      filter: { table: { eq: "Neighborhoods" } }
+      sort: { fields: data___City___data___Name, order: DESC }
+    ) {
+      edges {
+        node {
+          data {
+            City {
+              data {
+                Name
+              }
             }
+            Name
           }
-          Name
         }
       }
     }
   }
-}
 `;
 
 function createHubspotContact(formData) {
@@ -74,7 +75,9 @@ function Signup({ intl: { formatMessage }, isPopup }) {
     lastName: '',
     district: '',
   });
-  const { districts: { edges } } = useStaticQuery(query);
+  const {
+    districts: { edges },
+  } = useStaticQuery(query);
   if (isSuccess) {
     return <FormattedMessage id="signup_thanks" />;
   }

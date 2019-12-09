@@ -1,0 +1,9 @@
+.wrapper button {
+  background-color: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.wrapper button:focus, {
+  background-color: var(--brand-green-500);
+  border-color: var(--brand-green-500);
+}

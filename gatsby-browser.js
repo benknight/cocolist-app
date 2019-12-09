@@ -4,9 +4,9 @@
  * See: https://www.gatsbyjs.org/docs/browser-apis/
  */
 // import firebase from 'firebase/app';
-import '@cocolist/thumbprint-global-css';
-import '@cocolist/thumbprint-atomic';
-import '@cocolist/thumbprint-scss';
+import '@thumbtack/thumbprint-global-css';
+import '@thumbtack/thumbprint-atomic';
+import '@thumbtack/thumbprint-scss';
 import './src/styles/global.scss';
 import React from 'react';
 import IntlProvider from './src/components/IntlProvider';

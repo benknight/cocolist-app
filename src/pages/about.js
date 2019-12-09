@@ -2,7 +2,7 @@ import cx from 'classnames';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { Link as TPLink, Wrap } from '@cocolist/thumbprint-react';
+import { Link as TPLink, Wrap } from '@thumbtack/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
 import { badges } from '../lib/Badges.common';

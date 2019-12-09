@@ -2,11 +2,12 @@ import cx from 'classnames';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Button, TextButton } from '@cocolist/thumbprint-react';
+import { TextButton } from '@thumbtack/thumbprint-react';
 import {
   ContentActionsEditSmall,
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
+import Button from './Button';
 import styles from './SurveyView.module.scss';
 
 function getSurveyItems(survey) {

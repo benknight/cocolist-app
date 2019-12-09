@@ -4,7 +4,7 @@ import _get from 'lodash/get';
 import PropTypes from 'prop-types';
 import React, { useEffect } from 'react';
 import { injectIntl } from 'react-intl';
-import { tpBreakpointLargeValue } from '@cocolist/thumbprint-tokens';
+import { tpBreakpointLargeValue } from '@thumbtack/thumbprint-tokens';
 import mapStyles from '../assets/map-styles.json';
 import markerGreen from '../assets/marker-green.png';
 import { getBadgesFromSurvey } from '../lib/Badges.common';

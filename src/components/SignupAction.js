@@ -6,7 +6,7 @@ import {
   ModalDefaultTitle,
   ModalDefaultContent,
   TextButton,
-} from '@cocolist/thumbprint-react';
+} from '@thumbtack/thumbprint-react';
 import Signup from './Signup';
 
 const SignupAction = ({ intl: { formatMessage } }) => {

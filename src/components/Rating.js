@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
-import { tpColorGray300, tpColorPaleGreen300 } from '@cocolist/thumbprint-tokens';
+import { tpColorGray300, tpColorPaleGreen300 } from '@thumbtack/thumbprint-tokens';
 import { InputsStarFilledSmall, InputsStarFilledTiny } from '@thumbtack/thumbprint-icons';
 import styles from './Rating.module.scss';
 
