@@ -171,7 +171,7 @@ function Search({ className, location, size, ...props }) {
       indexName={indexName}
       onSearchStateChange={({ query }) => setQuery(query || '')}
       root={{ Root, props: { ref } }}>
-      {city && <Configure filters={`cities_en:${city}`} />}
+      {size === 'large' && city && <Configure filters={`cities_en:${city}`} />}
       <div className={cx(className, { [styles.large]: size === 'large' })}>
         <div className="relative z-1">
           <SearchInput location={location} size={size} />
