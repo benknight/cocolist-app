@@ -23,7 +23,8 @@ const LangSwitch = props => {
       className={cx(
         styles.lang,
         { [styles.truncate]: props.truncate },
-        'dib br1 bg-gray-300 pv1 ph2',
+        'dib br1 pv1 ph2',
+        // 'bg-gray-300',
       )}>
       {props.lang === 'en' ? (
         <Link
@@ -103,7 +104,7 @@ const Header = ({ location, showSearch, ...props }) => {
           </div>
           <div className="flex-auto">
             {showSearch && (
-              <div className={cx(styles.searchWrapper, 'm_ml4')}>
+              <div className={styles.searchWrapper}>
                 <Search className="m_relative" location={location} size="small" />
               </div>
             )}
@@ -111,6 +112,14 @@ const Header = ({ location, showSearch, ...props }) => {
           <div className="flex items-baseline b nowrap">
             <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
               <AddBusinessAction variant="text" />
+            </div>
+            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
+              <Link
+                activeClassName="tp-link--inherit"
+                className="tp-link"
+                to={getLocalizedURL('/about', lang)}>
+                <FormattedMessage id="header_link_about" />
+              </Link>
             </div>
             {props.showLangSwitch && (
               <div className="ml3 m_ml4 l_ml5">

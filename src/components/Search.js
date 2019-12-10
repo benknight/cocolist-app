@@ -60,7 +60,6 @@ const Root = React.forwardRef((props, ref) => <div ref={ref} {...props} />);
 const SearchInput = connectSearchBox(
   injectIntl(({ refine, intl: { formatMessage }, location, size, ...props }) => {
     const [value, setValue] = useState('');
-    const [citySelection] = useLocalStorage('citySelection');
     return (
       <form>
         <Input
@@ -81,14 +80,6 @@ const SearchInput = connectSearchBox(
                     refine('');
                   }}
                 />
-              )}
-              {size === 'small' && citySelection && (
-                <CitySelector
-                  className="dn m_db tp-body-2 pr3"
-                  location={location}
-                  variant="modal">
-                  <FormattedMessage id={citySelection} />
-                </CitySelector>
               )}
             </div>
           }
