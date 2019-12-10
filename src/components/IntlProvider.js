@@ -1,12 +1,20 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
-import { IntlProvider as ReactIntlProvider, addLocaleData } from 'react-intl';
-import en from 'react-intl/locale-data/en';
-import vi from 'react-intl/locale-data/vi';
+import { IntlProvider as ReactIntlProvider } from 'react-intl';
 import { parseLangFromURL } from '../lib/i18n';
 
-addLocaleData([...en, ...vi]);
+if (!Intl.PluralRules) {
+  require('@formatjs/intl-pluralrules/polyfill');
+  require('@formatjs/intl-pluralrules/dist/locale-data/en');
+  require('@formatjs/intl-pluralrules/dist/locale-data/vi');
+}
+
+if (!Intl.RelativeTimeFormat) {
+  require('@formatjs/intl-relativetimeformat/polyfill');
+  require('@formatjs/intl-relativetimeformat/dist/locale-data/en');
+  require('@formatjs/intl-relativetimeformat/dist/locale-data/vi');
+}
 
 const IntlProvider = props => {
   const { categories, cities, hoods, tx } = useStaticQuery(graphql`

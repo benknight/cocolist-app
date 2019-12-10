@@ -17,6 +17,8 @@
     "not IE 11"
   ],
   "dependencies": {
+    "@formatjs/intl-pluralrules": "^1.3.9",
+    "@formatjs/intl-relativetimeformat": "^4.5.1",
     "@thumbtack/thumbprint-atomic": "^3.4.3",
     "@thumbtack/thumbprint-global-css": "^0.1.16",
     "@thumbtack/thumbprint-icons": "^3.0.0",
@@ -40,7 +42,6 @@
     "gatsby-plugin-sass": "^2.1.21",
     "gatsby-plugin-sharp": "^2.3.5",
     "gatsby-plugin-sitemap": "^2.2.20",
-    "gatsby-plugin-typography": "^2.3.16",
     "gatsby-source-airtable": "^2.0.10",
     "gatsby-source-filesystem": "^2.1.40",
     "gatsby-transformer-sharp": "^2.3.7",
@@ -52,7 +53,7 @@
     "react-dom": "^16.11.0",
     "react-helmet": "^5.2.1",
     "react-instantsearch-dom": "^6.0.0",
-    "react-intl": "^2.9.0",
+    "react-intl": "^3.9.1",
     "shuffle-seed": "^1.1.6",
     "url-parse": "^1.4.7",
     "xstate": "^4.7.2"
