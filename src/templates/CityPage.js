@@ -59,6 +59,7 @@ export const query = graphql`
           Business_record_match: {
             elemMatch: { data: { Record_ID: { ne: null }, Cities: { in: [$city] } } }
           }
+          Status: { eq: "Published" }
         }
       }
       sort: {

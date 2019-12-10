@@ -17,7 +17,18 @@ const mapsScriptURL = `https://maps.googleapis.com/maps/api/js?key=${process.env
 
 const query = graphql`
   {
-    locations: allAirtable(filter: { table: { eq: "Locations" } }) {
+    locations: allAirtable(
+      filter: {
+        table: { eq: "Locations" }
+        data: {
+          Business: {
+            elemMatch: {
+              data: { Survey: { elemMatch: { data: { Status: { eq: "Published" } } } } }
+            }
+          }
+        }
+      }
+    ) {
       edges {
         node {
           data {
