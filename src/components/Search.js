@@ -140,6 +140,9 @@ const BusinessHit = ({ hit }) => {
       <div className="nowrap">
         {hit.badges.map(key => {
           const badge = badgesByKey[key];
+          if (!badge) {
+            return null;
+          }
           return (
             <img
               alt=""
