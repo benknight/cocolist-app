@@ -84,7 +84,6 @@ exports.createPages = async ({ graphql, actions }) => {
     'green-delivery',
     'food-waste',
     'vegetarian',
-    'green-kitchen',
     'no-plastic-bags',
     'no-plastic-bottles',
     'no-plastic-straws',
