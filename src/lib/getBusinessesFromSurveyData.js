@@ -1,6 +1,6 @@
 import _flatten from 'lodash/flatten';
 import { getBadgesFromSurvey } from './common/Badges';
-import { BusinessRenderData } from './common/BusinessRenderData';
+import BusinessRenderData from './common/BusinessRenderData';
 
 function sortBusinesses(a, b) {
   const dataA = new BusinessRenderData(a);
