@@ -1,29 +1,23 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { TextButton } from '@thumbtack/thumbprint-react';
-import AirtableFormModal from './AirtableFormModal';
 import Button from './Button';
 
 const AddBusinessAction = ({ intl: { formatMessage }, variant, size }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const onClick = () => window.open('https://airtable.com/shrw4zfDcry512acj');
   return (
     <>
       {variant === 'button' && (
-        <Button onClick={() => setIsOpen(!isOpen)} size={size}>
+        <Button onClick={onClick} size={size}>
           <FormattedMessage id="add_business_button_label" />
         </Button>
       )}
       {variant === 'text' && (
-        <TextButton onClick={() => setIsOpen(!isOpen)}>
+        <TextButton onClick={onClick}>
           <FormattedMessage id="add_business_button_label" />
         </TextButton>
       )}
-      <AirtableFormModal
-        formId="shrw4zfDcry512acj"
-        isOpen={isOpen}
-        onCloseClick={() => setIsOpen(false)}
-      />
     </>
   );
 };
