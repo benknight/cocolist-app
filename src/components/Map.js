@@ -8,7 +8,7 @@ import { tpBreakpointLargeValue } from '@thumbtack/thumbprint-tokens';
 import mapStyles from '../assets/map-styles.json';
 import markerGreen from '../assets/marker-green.png';
 import { getBadgesFromSurvey } from '../lib/common/Badges';
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useBreakpoint from '../lib/useBreakpoint';
 import useScript from '../lib/useScript';
 import styles from './Map.module.scss';

@@ -1,6 +1,6 @@
 const _get = require('lodash/get');
 const _uniqBy = require('lodash/uniqBy');
-const { getLocalizedURL } = require('../i18n');
+const { getLocalizedURL } = require('./i18n');
 const { getBadgesFromSurvey } = require('./Badges');
 
 class BusinessRenderData {

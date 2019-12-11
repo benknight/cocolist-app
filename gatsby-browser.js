@@ -10,7 +10,7 @@ import '@thumbtack/thumbprint-scss';
 import './src/styles/global.scss';
 import React from 'react';
 import IntlProvider from './src/components/IntlProvider';
-import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/i18n';
+import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/common/i18n';
 
 export const onClientEntry = () => {
   const { location, localStorage, navigator } = window;

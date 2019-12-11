@@ -5,7 +5,7 @@ import { Wrap } from '@thumbtack/thumbprint-react';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import CitySelector from '../components/CitySelector';
 import Header from '../components/Header';
-import { getLocalizedURL } from '../lib/i18n';
+import { getLocalizedURL } from '../lib/common/i18n';
 
 const metaDescription = `Find restaurants in Vietnam with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water.`;
 

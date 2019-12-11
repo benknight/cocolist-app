@@ -14,7 +14,7 @@ import Search from '../components/Search';
 import Signup from '../components/Signup';
 import { badges } from '../lib/common/Badges';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
-import { getLocalizedURL } from '../lib/i18n';
+import { getLocalizedURL } from '../lib/common/i18n';
 import styles from './CityPage.module.scss';
 
 // TODO: Update meta tags for city

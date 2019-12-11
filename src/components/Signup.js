@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { ButtonRow, Input, Label, Select } from '@thumbtack/thumbprint-react';
 import getCookieValue from '../lib/getCookieValue';
-import { parseLangFromURL } from '../lib/i18n';
+import { parseLangFromURL } from '../lib/common/i18n';
 import Button from './Button';
 
 const query = graphql`

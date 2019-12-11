@@ -11,7 +11,7 @@ import Categories from '../components/Categories';
 import Header from '../components/Header';
 import { badges } from '../lib/common/Badges';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 export const query = graphql`

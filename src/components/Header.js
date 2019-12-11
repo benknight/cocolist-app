@@ -9,7 +9,7 @@ import {
   NavigationCaretUpTiny,
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
 import Search from './Search';

@@ -1,15 +1,15 @@
-import parse from 'url-parse';
+const parse = require('url-parse');
 
-export const langs = ['en', 'vi'];
-export const defaultLang = 'en';
+const langs = ['en', 'vi'];
+const defaultLang = 'en';
 
 // TODO: Write tests
 
-export function isValidLang(string) {
+function isValidLang(string) {
   return langs.indexOf(string) !== -1;
 }
 
-export function parseLangFromURL(url) {
+function parseLangFromURL(url) {
   if (!url.startsWith('/')) {
     throw new Error('Invalid URL.');
   }
@@ -17,7 +17,7 @@ export function parseLangFromURL(url) {
   return isValidLang(firstToken) ? firstToken : defaultLang;
 }
 
-export function getLocalizedURL(url, lang) {
+function getLocalizedURL(url, lang) {
   if (!url.startsWith('/')) {
     throw new Error('Invalid URL.');
   }
@@ -31,7 +31,7 @@ export function getLocalizedURL(url, lang) {
   return `/${lang}${url}`;
 }
 
-export function getLocalizedVNMMURL(url, lang) {
+function getLocalizedVNMMURL(url, lang) {
   const parsedUrl = parse(url);
   if (parsedUrl.hostname.indexOf('vietnammm.com') === -1) {
     throw new Error(`The url provided is not a valid VietnamMM url: ${url}`);
@@ -52,3 +52,12 @@ export function getLocalizedVNMMURL(url, lang) {
   }
   return url.replace('/en/', '/');
 }
+
+module.exports = {
+  langs,
+  defaultLang,
+  isValidLang,
+  parseLangFromURL,
+  getLocalizedURL,
+  getLocalizedVNMMURL,
+};

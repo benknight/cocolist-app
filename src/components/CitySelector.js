@@ -13,7 +13,7 @@ import {
 } from '@thumbtack/thumbprint-react';
 import { ContentModifierMapPinSmall } from '@thumbtack/thumbprint-icons';
 
-import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
+import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './CitySelector.module.scss';
 

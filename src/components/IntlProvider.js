@@ -2,7 +2,7 @@ import { graphql, useStaticQuery } from 'gatsby';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { IntlProvider as ReactIntlProvider } from 'react-intl';
-import { parseLangFromURL } from '../lib/i18n';
+import { parseLangFromURL } from '../lib/common/i18n';
 
 if (!Intl.PluralRules) {
   require('@formatjs/intl-pluralrules/polyfill');
