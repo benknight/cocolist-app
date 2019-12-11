@@ -25,7 +25,7 @@ import {
   InputIcon,
   Link as TPLink,
 } from '@thumbtack/thumbprint-react';
-import { badges } from '../lib/Badges.common';
+import { badges } from '../lib/common/Badges';
 import { parseLangFromURL, getLocalizedURL } from '../lib/i18n';
 import useLocalStorage from '../lib/useLocalStorage';
 import CitySelector from './CitySelector';

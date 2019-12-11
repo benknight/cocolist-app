@@ -10,12 +10,12 @@ import {
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
 } from '@thumbtack/thumbprint-icons';
-import { Link as TPLink, TextButton } from '@thumbtack/thumbprint-react';
+import { TextButton } from '@thumbtack/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
 import SurveyView from '../components/SurveyView';
-import BusinessRenderData from '../lib/BusinessRenderData';
+import BusinessRenderData from '../lib/common/BusinessRenderData';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
 
@@ -196,25 +196,6 @@ const BusinessPage = props => {
           <div className="relative ph3 s_ph5 order-0">
             <div className="flex items-end mb2 mt3 s_mt4">
               <h1 className="tp-title-1 flex-auto">{biz.name}</h1>
-              {biz.links.length > 0 && (
-                <div className="flex flex-wrap flex-shrink-0 self-start ml4">
-                  {biz.links.map(([link, url, icon], index) => (
-                    <div
-                      key={link}
-                      className="inline-flex items-center bg-gray-300 br2 ml1 pa2 m_w-auto"
-                      title={formatMessage({ id: link.toLowerCase() })}>
-                      <TPLink
-                        accessibilityLabel={formatMessage({ id: link.toLowerCase() })}
-                        iconLeft={icon}
-                        shouldOpenInNewTab
-                        theme="inherit"
-                        to={url}
-                        size="small"
-                      />
-                    </div>
-                  ))}
-                </div>
-              )}
             </div>
             <div className="tp-body-2">
               <div className="flex items-start">

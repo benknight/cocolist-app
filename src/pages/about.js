@@ -5,7 +5,7 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Link as TPLink, Wrap } from '@thumbtack/thumbprint-react';
 import { ContentActionsCheckSmall } from '@thumbtack/thumbprint-icons';
 import Header from '../components/Header';
-import { badges } from '../lib/Badges.common';
+import { badges } from '../lib/common/Badges';
 
 const urls = {
   dineGreen: 'http://www.dinegreen.com/certification-standards',

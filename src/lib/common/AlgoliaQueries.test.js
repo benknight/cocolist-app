@@ -1,5 +1,5 @@
-import { flatten } from './AlgoliaQueries.common';
-import mock from './AlgoliaQueries.mock.json';
+import { flatten } from './AlgoliaQueries';
+import mock from './AlgoliaQueries.json';
 
 describe('AlgoliaQueries', () => {
   let flattenedData;

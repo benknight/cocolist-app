@@ -1,6 +1,6 @@
-const _flatten = require('lodash/flatten');
-const { getBadgesFromSurvey } = require('./Badges.common');
-const BusinessRenderData = require('./BusinessRenderData').default;
+import _flatten from 'lodash/flatten';
+import { getBadgesFromSurvey } from './common/Badges';
+import { BusinessRenderData } from './common/BusinessRenderData';
 
 function sortBusinesses(a, b) {
   const dataA = new BusinessRenderData(a);

@@ -2,7 +2,7 @@ const _get = require('lodash/get');
 const _groupBy = require('lodash/groupBy');
 const _keyBy = require('lodash/keyBy');
 const _uniqBy = require('lodash/uniqBy');
-const { getBadgesFromSurvey } = require('./Badges.common');
+const BusinessRenderData = require('./BusinessRenderData');
 
 const businessQuery = `
 {
@@ -100,34 +100,22 @@ function flatten(data) {
     'Key',
   );
   return data.businesses.edges.map(({ node: { data } }) => {
-    const fbSurvey = (data.Survey || [])
-      .map(({ data }) => data)
-      .find(({ Status }) => Status === 'Published');
-    const badges = fbSurvey ? getBadgesFromSurvey(fbSurvey) : [];
-    // First check for location data, and fall back to static neighborhoods field.
-    // TODO: Replace this logic with the helper code in BusinessRenderData
-    let hoods = _uniqBy(
-      data.Locations.map(({ data }) => data.Neighborhood[0].data),
-      'Name',
-    );
-    if (hoods.length === 0) {
-      hoods = data.Neighborhood.map(hood => hood.data);
-    }
-    const hoodsByCity = _groupBy(hoods, 'City[0].data.Name');
+    const biz = new BusinessRenderData(data);
+    const hoodsByCity = _groupBy(biz.neighborhoods, 'City[0].data.Name');
     const cities = _uniqBy(
-      hoods.map(hood => hood.City[0].data),
+      biz.neighborhoods.map(hood => hood.City[0].data),
       'Name',
     );
     return {
       objectID: data.Record_ID,
       slug: data.URL_key,
       name: data.Name,
-      coco_points: _get(fbSurvey, 'Coco_points') || 0,
+      coco_points: _get(biz.survey, 'Coco_points') || 0,
       vnmm_rating_count: data.VNMM_rating_count || 0,
-      badges: badges.map(badge => badge.key),
-      badge_count: badges.length,
-      badges_en: badges.map(badge => tx[badge.title].en),
-      badges_vi: badges.map(badge => tx[badge.title].vi),
+      badges: biz.badges.map(badge => badge.key),
+      badge_count: biz.badges.length,
+      badges_en: biz.badges.map(badge => tx[badge.title].en),
+      badges_vi: biz.badges.map(badge => tx[badge.title].vi),
       category_en: data.Category.map(cat => cat.data.Name),
       category_vi: data.Category.map(cat => cat.data.Name_VI),
       cities_en: cities.map(city => city.Name),

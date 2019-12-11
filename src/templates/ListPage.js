@@ -9,8 +9,8 @@ import { Wrap } from '@thumbtack/thumbprint-react';
 import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
-import { badges } from '../lib/Badges.common';
-import BusinessRenderData from '../lib/BusinessRenderData';
+import { badges } from '../lib/common/Badges';
+import BusinessRenderData from '../lib/common/BusinessRenderData';
 import { getLocalizedURL, parseLangFromURL } from '../lib/i18n';
 import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
