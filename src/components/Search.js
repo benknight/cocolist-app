@@ -148,7 +148,7 @@ const BusinessHit = ({ hit }) => {
   );
 };
 
-function Search({ className, location, size, ...props }) {
+function Search({ city, className, location, size, ...props }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
@@ -157,8 +157,6 @@ function Search({ className, location, size, ...props }) {
     process.env.GATSBY_ALGOLIA_SEARCH_KEY,
   );
   const showResults = query.length > 0;
-  const [citySelection] = useLocalStorage('citySelection');
-  const city = props.city || citySelection;
   return (
     <InstantSearch
       searchClient={searchClient}
@@ -191,10 +189,18 @@ function Search({ className, location, size, ...props }) {
                 attribute={`badges_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
               /> */}
-              <RefinementList
-                attribute={`neighborhoods_${lang}.${city}`}
-                transformItems={items => items.sort((a, b) => b.count - a.count)}
-              />
+              {!city && (
+                <RefinementList
+                  attribute={`cities_${lang}`}
+                  transformItems={items => items.sort((a, b) => b.count - a.count)}
+                />
+              )}
+              {city && (
+                <RefinementList
+                  attribute={`neighborhoods_${lang}.${city}`}
+                  transformItems={items => items.sort((a, b) => b.count - a.count)}
+                />
+              )}
               {/* <RefinementList attribute={`category_${lang}`} /> */}
             </div>
             <div
