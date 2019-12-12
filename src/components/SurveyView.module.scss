@@ -1,9 +1,0 @@
-@import '../styles/mixins';
-
-.itemValue {
-  display: inline;
-}
-
-.itemValue + .itemValue::before {
-  content: ', ';
-}

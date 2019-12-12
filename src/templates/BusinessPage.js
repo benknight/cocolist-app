@@ -9,13 +9,15 @@ import {
   ContentActionsEditSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
+  NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { TextButton } from '@thumbtack/thumbprint-react';
 import AirtableFormModal from '../components/AirtableFormModal';
+import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
-import SurveyView from '../components/SurveyView';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
+import getSurveyDetails from '../lib/getSurveyDetails';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
 
@@ -166,6 +168,7 @@ const BusinessPage = props => {
   const localNeighborhoods = biz.neighborhoods
     .filter(hood => hood.City[0].data.Name === citySelection)
     .map(hood => formatMessage({ id: hood.Name }));
+  const details = biz.survey ? getSurveyDetails(biz.survey) : [];
 
   return (
     <div className="bg-gray-200">
@@ -316,8 +319,74 @@ const BusinessPage = props => {
                 </div>
               </div>
             )}
+
+            {/* No survey */}
+
+            {!biz.survey && (
+              <div className="lh-copy bt b-gray-300 pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
+                <NotificationAlertsWarningMedium />
+                <h3 className="tp-title-4 mt3 mb2">
+                  <FormattedMessage id="business_no_data_title" />
+                </h3>
+                <p className="tp-body-2 mb3 mw7">
+                  <FormattedMessage
+                    id="business_no_data_description"
+                    values={{ business: biz.name }}
+                  />
+                </p>
+                <Button
+                  icon={<ContentActionsEditSmall />}
+                  onClick={() => toggleEditModal(true)}
+                  size="small"
+                  theme="primary">
+                  <FormattedMessage id="edit_business_action_label" />
+                </Button>
+              </div>
+            )}
+
+            {/* Survey details */}
+
+            {details.length > 0 && (
+              <>
+                <div className="mt0 mb4 flex items-baseline justify-between">
+                  <h3 className="tp-title-4">
+                    <FormattedMessage id="business_survey_heading" />
+                  </h3>
+                  <div className="ml2 tp-body-2">
+                    <TextButton
+                      onClick={() => toggleEditModal(true)}
+                      iconLeft={<ContentActionsEditSmall className="w1" />}
+                      theme="inherit">
+                      <FormattedMessage id="edit_action_label" />
+                    </TextButton>
+                  </div>
+                </div>
+                <ul className="tp-body-3 ph0">
+                  {details.map(([key, values]) => (
+                    <li key={key} className="bb b-gray-300 mb2">
+                      <div className="flex justify-between items-end">
+                        <div className="b mr4">
+                          <FormattedMessage id={key} />
+                        </div>
+                        <div className="tr flex items-center">
+                          <div className="mr1 mw6">
+                            {values &&
+                              values.map((value, index) => (
+                                <React.Fragment key={`${key}-${index}`}>
+                                  <div className={styles.detailsValue}>
+                                    <FormattedMessage id={value} />
+                                  </div>
+                                </React.Fragment>
+                              ))}
+                          </div>
+                        </div>
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </>
+            )}
           </div>
-          <SurveyView biz={biz} onClickEdit={() => toggleEditModal(true)} />
         </div>
       </div>
       <AirtableFormModal

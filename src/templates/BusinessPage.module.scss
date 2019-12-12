@@ -20,3 +20,11 @@
 .container {
   max-width: 600px;
 }
+
+.detailsValue {
+  display: inline;
+}
+
+.detailsValue + .detailsValue::before {
+  content: ', ';
+}
