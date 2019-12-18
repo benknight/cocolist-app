@@ -1,6 +1,7 @@
+import algoliasearch from 'algoliasearch/lite';
 import cx from 'classnames';
-import _keyBy from 'lodash/keyBy';
 import { Link } from 'gatsby';
+import _keyBy from 'lodash/keyBy';
 import PropTypes from 'prop-types';
 import React, { useState, createRef } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -14,7 +15,6 @@ import {
   connectStateResults,
   connectSearchBox,
 } from 'react-instantsearch-dom';
-import algoliasearch from 'algoliasearch/lite';
 import {
   NavigationSearchMedium,
   NavigationSearchSmall,
@@ -27,12 +27,36 @@ import {
 } from '@thumbtack/thumbprint-react';
 import { badges } from '../lib/common/Badges';
 import { parseLangFromURL, getLocalizedURL } from '../lib/common/i18n';
-import useLocalStorage from '../lib/useLocalStorage';
 import CitySelector from './CitySelector';
 import styles from './Search.module.scss';
 
 const badgesByKey = _keyBy(badges, 'key');
+
 const indexName = 'Businesses';
+
+// Conditional requests implementation
+// From: https://github.com/algolia/doc-code-samples/tree/master/React%20InstantSearch/conditional-request
+const algoliaClient = algoliasearch(
+  process.env.GATSBY_ALGOLIA_APP_ID,
+  process.env.GATSBY_ALGOLIA_SEARCH_KEY,
+);
+
+const searchClient = {
+  search(requests) {
+    if (requests.every(({ params }) => !params.query)) {
+      return Promise.resolve({
+        results: requests.map(() => ({
+          hits: [],
+          nbHits: 0,
+          nbPages: 0,
+          processingTimeMS: 0,
+        })),
+      });
+    }
+
+    return algoliaClient.search(requests);
+  },
+};
 
 const Results = connectStateResults(
   ({ searchState: state, searchResults: res, children }) =>
@@ -85,9 +109,7 @@ const SearchInput = connectSearchBox(
           }
           onChange={value => {
             setValue(value);
-            // if (value.length === 0 || value.length > 2) {
             refine(value);
-            // }
           }}
           size={size}
           value={value}
@@ -152,10 +174,6 @@ function Search({ city, className, location, size, ...props }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
-  const searchClient = algoliasearch(
-    process.env.GATSBY_ALGOLIA_APP_ID,
-    process.env.GATSBY_ALGOLIA_SEARCH_KEY,
-  );
   const showResults = query.length > 0;
   return (
     <InstantSearch
