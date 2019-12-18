@@ -55,5 +55,5 @@ export default function getSurveyItems(survey) {
       survey.Menu.indexOf('Kitchen garden') !== -1 ? ['Yes'] : null,
     ],
   ];
-  return items;
+  return items.filter(item => item[1] && item[1].length > 0);
 }
