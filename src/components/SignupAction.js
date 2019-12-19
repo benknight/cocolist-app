@@ -7,7 +7,7 @@ import {
   ModalDefaultContent,
   TextButton,
 } from '@thumbtack/thumbprint-react';
-import Signup from './Signup';
+import SignupForm from './SignupForm';
 
 const SignupAction = ({ intl: { formatMessage } }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +21,7 @@ const SignupAction = ({ intl: { formatMessage } }) => {
           <ModalDefaultTitle>{formatMessage({ id: 'signup_heading' })}</ModalDefaultTitle>
         </ModalDefaultHeader>
         <ModalDefaultContent>
-          <Signup isPopup />
+          <SignupForm />
         </ModalDefaultContent>
       </ModalDefault>
     </>

@@ -11,10 +11,11 @@ import AddBusinessAction from '../components/AddBusinessAction';
 import Header from '../components/Header';
 import Map from '../components/Map';
 import Search from '../components/Search';
-import Signup from '../components/Signup';
+import SignupForm from '../components/SignupForm';
 import { badges } from '../lib/common/Badges';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
 import { getLocalizedURL } from '../lib/common/i18n';
+import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
 
 // TODO: Update meta tags for city
@@ -83,6 +84,7 @@ const CityPage = ({
   location,
   pageContext: { city, langKey, slug },
 }) => {
+  const auth = useAuth();
   const pageTitle = formatMessage(
     {
       id: 'find_businesses_headline',
@@ -257,14 +259,17 @@ const CityPage = ({
         );
       })}
       {!pushAddBizPromoToTop && addBizPromo}
-      <div className={cx('ph4 m_ph6 l_ph7 pv6', { 'bg-gray-200': pushAddBizPromoToTop })}>
-        <div className="tp-title-3 mb5 mw7">
-          <FormattedMessage id="signup_heading" />
+      {!auth.user && (
+        <div
+          className={cx('ph4 m_ph6 l_ph7 pv6', { 'bg-gray-200': pushAddBizPromoToTop })}>
+          <div className="tp-title-3 mb5 mw7">
+            <FormattedMessage id="signup_heading" />
+          </div>
+          <div className="mw7">
+            <SignupForm useProgressiveDisclosure />
+          </div>
         </div>
-        <div className="mw7">
-          <Signup />
-        </div>
-      </div>
+      )}
     </>
   );
 };

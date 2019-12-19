@@ -10,6 +10,7 @@ import {
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
+import useAuth from '../lib/useAuth';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
 import Search from './Search';
@@ -54,6 +55,7 @@ const LangSwitch = props => {
 };
 
 const Header = ({ location, showSearch, ...props }) => {
+  const auth = useAuth();
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
@@ -139,7 +141,7 @@ const Header = ({ location, showSearch, ...props }) => {
             <FormattedMessage id="header_link_about" />
           </Link>
           <AddBusinessAction variant="text" />
-          <SignupAction />
+          {auth.user === false && <SignupAction />}
         </div>
       </header>
     </>

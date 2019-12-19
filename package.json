@@ -25,6 +25,7 @@
     "@thumbtack/thumbprint-react": "^11.1.1",
     "@thumbtack/thumbprint-scss": "^4.0.0",
     "@thumbtack/thumbprint-tokens": "^10.1.4",
+    "@xstate/react": "^0.8.1",
     "algoliasearch": "^3.35.1",
     "axios": "^0.19.0",
     "babel-jest": "^24.9.0",

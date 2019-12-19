@@ -10,6 +10,7 @@ import './src/styles/global.scss';
 import React from 'react';
 import IntlProvider from './src/components/IntlProvider';
 import { isValidLang, getLocalizedURL, parseLangFromURL } from './src/lib/common/i18n';
+import { AuthProvider } from './src/lib/useAuth';
 
 export const onClientEntry = () => {
   const { location, localStorage, navigator } = window;
@@ -29,5 +30,7 @@ export const onClientEntry = () => {
 };
 
 export const wrapPageElement = ({ element, props }) => (
-  <IntlProvider location={props.location}>{element}</IntlProvider>
+  <IntlProvider location={props.location}>
+    <AuthProvider>{element}</AuthProvider>
+  </IntlProvider>
 );
