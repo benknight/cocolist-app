@@ -421,7 +421,7 @@ const BusinessPage = props => {
 
             {details.length > 0 && (
               <>
-                <div className="mt0 mb4 flex items-baseline justify-between">
+                <div className="mt0 mb3 flex items-baseline justify-between">
                   <h3 className="tp-title-4">
                     <FormattedMessage id="business_survey_heading" />
                   </h3>
