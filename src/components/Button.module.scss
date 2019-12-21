@@ -19,4 +19,10 @@
     background-color: white;
     color: var(--brand-green);
   }
+
+  button[class*='Tertiary'],
+  button[class*='Tertiary']:hover {
+    background-color: white;
+    color: var(--brand-green);
+  }
 }
