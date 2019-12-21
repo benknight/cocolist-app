@@ -24,7 +24,7 @@ const LangSwitch = props => {
       className={cx(
         styles.lang,
         { [styles.truncate]: props.truncate },
-        'dib br1 pv1 ph2',
+        'dib br1 pv1 ph2 m_ph0',
         // 'bg-gray-300',
       )}>
       {props.lang === 'en' ? (
@@ -32,14 +32,14 @@ const LangSwitch = props => {
           onClick={() => setLangSelection('vi')}
           title="Tiếng Việt"
           to={getLocalizedURL(props.location.pathname, 'vi')}>
+          <span className={styles.langLong}>Tiếng Việt</span>
+          <span className={styles.langShort}>VI</span>
           <span
             aria-label="Tiếng Việt"
-            className={cx(styles.langEmoji, 'ph1 dib')}
+            className={cx(styles.langEmoji, 'dib ml2')}
             role="img">
             🇻🇳
           </span>
-          <span className={styles.langLong}>Tiếng Việt</span>
-          <span className={styles.langShort}>VI</span>
         </Link>
       ) : (
         <Link
