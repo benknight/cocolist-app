@@ -1,9 +1,22 @@
-.wrapper button {
-  background-color: var(--brand-green);
-  border-color: var(--brand-green);
-}
+.wrapper {
+  button {
+    background-color: var(--brand-green);
+    border-color: var(--brand-green);
+  }
 
-.wrapper button:focus {
-  background-color: var(--brand-green-500);
-  border-color: var(--brand-green-500);
+  button:focus {
+    background-color: var(--brand-green-500);
+    border-color: var(--brand-green-500);
+  }
+
+  button:disabled {
+    background-color: var(--brand-green-300);
+    border-color: var(--brand-green-300);
+  }
+
+  button[class*='Secondary'],
+  button[class*='Secondary']:hover {
+    background-color: white;
+    color: var(--brand-green);
+  }
 }
