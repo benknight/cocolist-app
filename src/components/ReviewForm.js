@@ -14,23 +14,23 @@ import {
   ModalDescription,
 } from '@thumbtack/thumbprint-react';
 import useAuth from '../lib/useAuth';
-import Firebase from '../lib/Firebase';
+import useFirebase from '../lib/useFirebase';
 import { parseLangFromURL, getLocalizedURL } from '../lib/common/i18n';
 import Button from './Button';
 import LoginForm from './LoginForm';
 import SignupForm from './SignupForm';
 import StarRating from './StarRating';
 
-const db = Firebase.firestore();
-
 const ReviewForm = ({ biz, location }) => {
   const auth = useAuth();
   const { formatMessage } = useIntl();
+  const firebase = useFirebase();
   const [isModalOpen, openModal] = useState(location.hash === '#add-review');
   const [rating, setRating] = useState(0);
   const [description, setDescription] = useState('');
   const [isSaving, setSaving] = useState(false);
   const langKey = parseLangFromURL(location.pathname);
+
   const onStarClick = value => {
     setRating(value);
     openModal(true);
@@ -44,7 +44,8 @@ const ReviewForm = ({ biz, location }) => {
     }
     setSaving(true);
     try {
-      await db
+      await firebase
+        .firestore()
         .collection('reviewsPending')
         .doc(`user-${auth.user.uid}-biz-${biz.id}`)
         .set({

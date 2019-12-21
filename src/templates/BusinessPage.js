@@ -21,12 +21,10 @@ import Loader from '../components/Loader';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
-import Firebase from '../lib/Firebase';
 import getSurveyDetails from '../lib/getSurveyDetails';
+import useFirebase from '../lib/useFirebase';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
-
-const db = Firebase.firestore();
 
 export const query = graphql`
   fragment FBSurveyDataFragment on AirtableData {
@@ -168,6 +166,7 @@ const BusinessPage = props => {
     pageContext: { langKey },
   } = props;
 
+  const firebase = useFirebase();
   const { formatMessage } = useIntl();
   const biz = new BusinessRenderData(bizData, langKey);
   const [showEditModal, toggleEditModal] = useState(false);
@@ -182,7 +181,9 @@ const BusinessPage = props => {
 
   useEffect(() => {
     let isMounted = true;
-    db.collection('reviews')
+    firebase
+      .firestore()
+      .collection('reviews')
       .where('business.id', '==', biz.id)
       .get()
       .then(snapshot => {

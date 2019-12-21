@@ -1,11 +1,9 @@
 import { navigate } from 'gatsby';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import Firebase from './Firebase';
+import useFirebase from './useFirebase';
 import useLocalStorage from './useLocalStorage';
 import createHubspotContact from './createHubspotContact';
-
-const auth = Firebase.auth();
 
 const AuthContext = createContext();
 
@@ -20,6 +18,7 @@ export default () => {
 
 // Provider hook that creates auth object and handles state
 function useProvideAuth() {
+  const firebase = useFirebase();
   const [user, setUser] = useState(null);
   const [isBusy, setBusy] = useState(true);
   const [invalidLink, setInvalidLink] = useState(false);
@@ -28,7 +27,7 @@ function useProvideAuth() {
 
   const signIn = async (email, returnTo = window.location.href) => {
     setInvalidLink(false);
-    await auth.sendSignInLinkToEmail(email, {
+    await firebase.auth().sendSignInLinkToEmail(email, {
       handleCodeInApp: true,
       url: returnTo,
     });
@@ -41,18 +40,20 @@ function useProvideAuth() {
       .toString(36)
       .slice(-8),
   ) => {
-    const { user } = await auth.createUserWithEmailAndPassword(email, password);
+    const { user } = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password);
     setUser(user);
   };
 
   const signOut = async () => {
-    await auth.signOut();
+    await firebase.auth().signOut();
     setUser(false);
   };
 
   const updateUser = async data => {
-    await auth.currentUser.updateProfile(data);
-    setUser({ ...auth.currentUser });
+    await firebase.auth().currentUser.updateProfile(data);
+    setUser({ ...firebase.auth().currentUser });
   };
 
   const saveProfile = async data => {
@@ -82,6 +83,7 @@ function useProvideAuth() {
   // };
 
   useEffect(() => {
+    const auth = firebase.auth();
     const unsubscribe = auth.onAuthStateChanged(user => {
       if (user) {
         setUser(user);
@@ -115,7 +117,7 @@ function useProvideAuth() {
     }
 
     return () => unsubscribe();
-  }, [intl, signInEmail]);
+  }, [firebase, intl, signInEmail]);
 
   return {
     invalidLink,
