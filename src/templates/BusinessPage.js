@@ -2,9 +2,10 @@ import cx from 'classnames';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import _get from 'lodash/get';
-import React, { useState } from 'react';
+import _mean from 'lodash/mean';
+import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
-import { FormattedMessage, injectIntl } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import {
   ContentActionsEditSmall,
   ContentModifierMapPinSmall,
@@ -16,10 +17,16 @@ import AirtableFormModal from '../components/AirtableFormModal';
 import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
+import Loader from '../components/Loader';
+import ReviewForm from '../components/ReviewForm';
+import StarRating from '../components/StarRating';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
+import Firebase from '../lib/Firebase';
 import getSurveyDetails from '../lib/getSurveyDetails';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
+
+const db = Firebase.firestore();
 
 export const query = graphql`
   fragment FBSurveyDataFragment on AirtableData {
@@ -158,10 +165,10 @@ const BusinessPage = props => {
     data: {
       airtable: { data: bizData },
     },
-    intl: { formatMessage },
     pageContext: { langKey },
   } = props;
 
+  const { formatMessage } = useIntl();
   const biz = new BusinessRenderData(bizData, langKey);
   const [showEditModal, toggleEditModal] = useState(false);
   const [citySelection] = useLocalStorage('citySelection');
@@ -169,6 +176,30 @@ const BusinessPage = props => {
     .filter(hood => hood.City[0].data.Name === citySelection)
     .map(hood => formatMessage({ id: hood.Name }));
   const details = biz.survey ? getSurveyDetails(biz.survey) : [];
+  const [reviews, setReviews] = useState(null);
+  const reviewsMean =
+    reviews && reviews.length > 0 ? _mean(reviews.map(r => r.rating)).toFixed(1) : null;
+
+  useEffect(() => {
+    let isMounted = true;
+    db.collection('reviews')
+      .where('business.id', '==', biz.id)
+      .get()
+      .then(snapshot => {
+        if (isMounted) {
+          const reviews = [];
+          snapshot.forEach(doc => reviews.push({ id: doc.id, ...doc.data() }));
+          setReviews(reviews);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+        if (isMounted) {
+          setReviews(false);
+        }
+      });
+    return () => (isMounted = false);
+  }, [biz.id]);
 
   return (
     <div className="bg-gray-200">
@@ -201,6 +232,14 @@ const BusinessPage = props => {
               <h1 className="tp-title-1 flex-auto">{biz.name}</h1>
             </div>
             <div className="tp-body-2">
+              {reviews && reviews.length > 0 && (
+                <div className="flex items-center mb2">
+                  <StarRating rating={reviewsMean} size="small" />
+                  <span className="ml1 black-300">
+                    {reviewsMean} ({reviews.length})
+                  </span>
+                </div>
+              )}
               <div className="flex items-start">
                 <ContentModifierListSmall className="w1 mr2" />
                 <div>
@@ -320,6 +359,40 @@ const BusinessPage = props => {
               </div>
             )}
 
+            {/* Reviews */}
+
+            <div className="mb5">
+              <div className="tp-title-4 mb3">
+                <FormattedMessage id="reviews_title" />
+              </div>
+              <div className="measure mb5" style={{ whiteSpace: 'pre-line' }}>
+                {reviews === null && <Loader size="small" />}
+                {reviews &&
+                  reviews.length > 0 &&
+                  reviews.map(review => (
+                    <div key={review.id}>
+                      <div className="flex items-center tp-body-3 black-300">
+                        <StarRating rating={review.rating} />
+                        <span className="ml2">
+                          {review.created.toDate().toLocaleDateString()}
+                        </span>
+                      </div>
+                      <div className="tp-body-2 mt1 mb4">
+                        <FormattedMessage
+                          id="review_comment"
+                          values={{
+                            b: (...args) => <b>{args}</b>,
+                            name: review.user.name,
+                            comment: review.comment,
+                          }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+              </div>
+              <ReviewForm biz={biz} location={props.location} />
+            </div>
+
             {/* No survey */}
 
             {!biz.survey && (
@@ -399,4 +472,4 @@ const BusinessPage = props => {
   );
 };
 
-export default injectIntl(BusinessPage);
+export default BusinessPage;

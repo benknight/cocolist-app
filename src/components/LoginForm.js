@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Machine } from 'xstate';
@@ -51,7 +52,7 @@ export const loginMachine = Machine({
   },
 });
 
-const LoginForm = props => {
+const LoginForm = ({ returnTo }) => {
   const auth = useAuth();
   const [email, setEmail] = useState('');
   const [loginState, send] = useMachine(loginMachine, { devTools: true });
@@ -59,7 +60,7 @@ const LoginForm = props => {
   const onSubmit = async email => {
     send('SUBMIT');
     try {
-      await auth.signIn(email);
+      await auth.signIn(email, returnTo);
       send('AFTER_SUBMIT');
     } catch (error) {
       send('ERROR');
@@ -164,6 +165,10 @@ const LoginForm = props => {
   }
 
   return <div className="tp-body-1">{content}</div>;
+};
+
+LoginForm.propTypes = {
+  returnTo: PropTypes.string,
 };
 
 export default LoginForm;

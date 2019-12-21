@@ -26,11 +26,11 @@ function useProvideAuth() {
   const [signInEmail, setSignInEmail] = useLocalStorage('signInEmail');
   const intl = useIntl();
 
-  const signIn = async email => {
+  const signIn = async (email, returnTo = window.location.href) => {
     setInvalidLink(false);
     await auth.sendSignInLinkToEmail(email, {
       handleCodeInApp: true,
-      url: window.location.href,
+      url: returnTo,
     });
     setSignInEmail(email);
   };
