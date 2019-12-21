@@ -20,8 +20,12 @@ body {
   font-family: Montserrat, sans-serif;
 }
 
-input {
+input, textarea, select {
   font-family: inherit !important;
+  &:focus,
+  &:focus + div {
+    border-color: var(--brand-green) !important;
+  }
 }
 
 mark {
