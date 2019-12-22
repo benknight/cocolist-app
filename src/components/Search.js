@@ -186,11 +186,6 @@ function Search({ city, className, location, size, ...props }) {
         <div className="relative z-1">
           <SearchInput location={location} size={size} />
         </div>
-        {size === 'large' && (
-          <CitySelector className="mt3 tp-body-2" location={location} variant="modal">
-            <FormattedMessage id="change_location_label" />
-          </CitySelector>
-        )}
         <div
           className={cx(
             styles.results,
@@ -233,6 +228,11 @@ function Search({ city, className, location, size, ...props }) {
           </div>
         </div>
       </div>
+      {size === 'large' && (
+        <CitySelector className="mt3 tp-body-2" location={location} variant="modal">
+          <FormattedMessage id="change_location_label" />
+        </CitySelector>
+      )}
     </InstantSearch>
   );
 }

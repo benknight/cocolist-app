@@ -24,7 +24,7 @@ const LangSwitch = props => {
       className={cx(
         styles.lang,
         { [styles.truncate]: props.truncate },
-        'dib br1 pv1 ph2 m_ph0',
+        'dib br1 pv1',
         // 'bg-gray-300',
       )}>
       {props.lang === 'en' ? (
@@ -84,9 +84,9 @@ const Header = ({ location, showSearch, ...props }) => {
           [styles.hasShadow]: isScrolled,
           [styles.noSearch]: !showSearch,
         })}>
-        <div className="relative z-1 flex items-center pb2 pt3 ph3">
+        <div className="relative z-1 flex items-center">
           <Link
-            className="inline-flex mb1 pr3"
+            className="inline-flex mb1 pr2"
             onClick={event => {
               setNavExpanded(!isNavExpanded);
               event.preventDefault();
@@ -94,7 +94,7 @@ const Header = ({ location, showSearch, ...props }) => {
             to={homeLink}>
             <img alt="logo" className={styles.logo} src={logo} />
           </Link>
-          <div className="mr3">
+          <div className="mr2 m_mr3">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
@@ -112,7 +112,7 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
           <div className="flex items-baseline b nowrap">
-            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
+            <div className={cx('dn ml3 m_ml4 l_ml5', { m_db: showSearch })}>
               <AddBusinessAction variant="text" />
             </div>
             <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>

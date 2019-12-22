@@ -5,6 +5,13 @@
   position: sticky;
   top: 0;
   font-size: $tp-font__body__2__size;
+
+  > div { 
+    padding: $tp-space__2;
+    @include respond-above(small) {
+      padding: $tp-space__3 $tp-space__3 $tp-space__2 $tp-space__3;
+    }
+  }
 }
 
 .container.hasShadow {
