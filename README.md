@@ -1,6 +1,6 @@
 # Cocolist
 
-Cocolist is an directory of eco-conscious businesses in your city.
+Cocolist is a directory of eco-conscious businesses in your city.
 
 Find more details about this project's mission here: https://cocolist.vn/about
 
