@@ -29,6 +29,7 @@ const query = graphql`
 
 const SignupForm = props => {
   const auth = useAuth();
+  const { formatMessage } = useIntl();
   const [isSaving, setSaving] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [hasError, setError] = useState(false);
@@ -41,7 +42,6 @@ const SignupForm = props => {
   const {
     districts: { edges },
   } = useStaticQuery(query);
-  const { formatMessage } = useIntl();
   if (isSuccess) {
     return <FormattedMessage id="signup_thanks" />;
   }
@@ -54,13 +54,11 @@ const SignupForm = props => {
         setSuccess(false);
         try {
           await auth.saveProfile(formData);
-          window.alert(
-            'Your Cocolist account has been created and you are now logged in. Thank you for signing up!',
-          );
+          window.alert(formatMessage({ id: 'signup_success' }));
         } catch (error) {
           console.log(error);
           if (error.code === 'auth/email-already-in-use') {
-            window.alert('You’ve already signed up!');
+            window.alert(formatMessage({ id: 'signup_existing' }));
           } else {
             setError(true);
           }

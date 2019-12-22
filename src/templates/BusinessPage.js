@@ -366,8 +366,8 @@ const BusinessPage = props => {
               <div className="tp-title-4 mb3">
                 <FormattedMessage id="reviews_title" />
               </div>
+              {reviews === null && <Loader />}
               <div className="measure mb5" style={{ whiteSpace: 'pre-line' }}>
-                {reviews === null && <Loader size="small" />}
                 {reviews &&
                   reviews.length > 0 &&
                   reviews.map(review => (

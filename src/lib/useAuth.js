@@ -1,9 +1,10 @@
 import { navigate } from 'gatsby';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
+import createHubspotContact from './createHubspotContact';
+import { parseLangFromURL } from './common/i18n';
 import useFirebase from './useFirebase';
 import useLocalStorage from './useLocalStorage';
-import createHubspotContact from './createHubspotContact';
 
 const AuthContext = createContext();
 
@@ -27,6 +28,8 @@ function useProvideAuth() {
 
   const signIn = async (email, returnTo = window.location.href) => {
     setInvalidLink(false);
+    const langKey = parseLangFromURL(window.location.pathname);
+    firebase.auth().languageCode = langKey;
     await firebase.auth().sendSignInLinkToEmail(email, {
       handleCodeInApp: true,
       url: returnTo,
@@ -59,6 +62,8 @@ function useProvideAuth() {
   const saveProfile = async data => {
     if (!user) {
       await signUp(data.email);
+    } else {
+      data.email = user.email;
     }
     return Promise.all([
       updateUser({ displayName: data.firstName }),
