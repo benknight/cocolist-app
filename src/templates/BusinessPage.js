@@ -13,7 +13,6 @@ import {
   NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { TextButton } from '@thumbtack/thumbprint-react';
-import AirtableFormModal from '../components/AirtableFormModal';
 import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
@@ -169,7 +168,6 @@ const BusinessPage = props => {
   const firebase = useFirebase();
   const { formatMessage } = useIntl();
   const biz = new BusinessRenderData(bizData, langKey);
-  const [showEditModal, toggleEditModal] = useState(false);
   const [citySelection] = useLocalStorage('citySelection');
   const localNeighborhoods = biz.neighborhoods
     .filter(hood => hood.City[0].data.Name === citySelection)
@@ -200,7 +198,13 @@ const BusinessPage = props => {
         }
       });
     return () => (isMounted = false);
-  }, [biz.id]);
+  }, [firebase, biz.id]);
+
+  const airtableForm = `https://airtable.com/shrw4zfDcry512acj?${_get(
+    biz.survey,
+    'Survey_prefill_query_string',
+    '',
+  )}`;
 
   return (
     <div className="bg-gray-200">
@@ -266,7 +270,7 @@ const BusinessPage = props => {
             <div className="tp-body-2 mv1">
               <TextButton
                 accessibilityLabel={formatMessage({ id: 'edit_business_action_label' })}
-                onClick={() => toggleEditModal(true)}
+                onClick={() => window.open(airtableForm)}
                 iconLeft={<ContentActionsEditSmall className="w1" />}
                 theme="inherit">
                 <FormattedMessage id="edit_business_action_label" />
@@ -410,7 +414,7 @@ const BusinessPage = props => {
                 </p>
                 <Button
                   icon={<ContentActionsEditSmall />}
-                  onClick={() => toggleEditModal(true)}
+                  onClick={() => window.open(airtableForm)}
                   size="small"
                   theme="primary">
                   <FormattedMessage id="edit_business_action_label" />
@@ -428,7 +432,7 @@ const BusinessPage = props => {
                   </h3>
                   <div className="ml2 tp-body-2">
                     <TextButton
-                      onClick={() => toggleEditModal(true)}
+                      onClick={() => window.open(airtableForm)}
                       iconLeft={<ContentActionsEditSmall className="w1" />}
                       theme="inherit">
                       <FormattedMessage id="edit_action_label" />
@@ -463,12 +467,6 @@ const BusinessPage = props => {
           </div>
         </div>
       </div>
-      <AirtableFormModal
-        formId="shrw4zfDcry512acj"
-        isOpen={showEditModal}
-        onCloseClick={() => toggleEditModal(false)}
-        prefill={_get(biz.survey, 'Survey_prefill_query_string', '')}
-      />
     </div>
   );
 };
