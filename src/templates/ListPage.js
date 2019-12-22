@@ -66,7 +66,6 @@ const ListPage = ({
     'no-plastic-bottles': 'no_plastic_bottles_label',
     'no-plastic-straws': 'no_plastic_straws_label',
     'free-drinking-water': 'refill_my_bottle_label',
-    'top-ten': 'top_ten_businesses_heading',
   };
 
   const nav = (
