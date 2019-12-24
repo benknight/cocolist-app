@@ -16,7 +16,6 @@ import { TextButton } from '@thumbtack/thumbprint-react';
 import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
-import Loader from '../components/Loader';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
 import BusinessRenderData from '../lib/common/BusinessRenderData';
@@ -370,7 +369,6 @@ const BusinessPage = props => {
               <div className="tp-title-4 mb3">
                 <FormattedMessage id="reviews_title" />
               </div>
-              {reviews === null && <Loader />}
               <div className="measure mb5" style={{ whiteSpace: 'pre-line' }}>
                 {reviews &&
                   reviews.length > 0 &&
