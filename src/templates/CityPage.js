@@ -186,6 +186,8 @@ const CityPage = ({
                   alt={formatMessage({ id: badge.title })}
                   className={cx(styles.badge, 'mb1 self-start')}
                   src={require(`../assets/badges/${badge.imageLarge}`)}
+                  width="110"
+                  height="110"
                 />
                 <div className="m_ml3 l_ml4 m_pr7 l_pr0 m_mw7 flex-auto">
                   <h2 className="tp-title-4">
