@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import { Link, graphql, navigate } from 'gatsby';
 import Img from 'gatsby-image';
-import PropTypes from 'prop-types';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
@@ -48,8 +47,6 @@ const ListPage = ({
   data,
   intl: { formatMessage },
   location,
-  maxColumns,
-  title,
   pageContext: { city, langKey, slug },
 }) => {
   const badge = badges.find(b => b.linkSlug === slug);
@@ -129,13 +126,15 @@ const ListPage = ({
         <div className="grid grid-wide l_mb6">
           {businesses
             .map(biz => new BusinessRenderData(biz, parseLangFromURL(location.pathname)))
+            .filter(biz => {
+              if (!biz.thumbnail) {
+                console.error(`No thumbnail found for ${biz.name}`);
+                return false;
+              }
+              return true;
+            })
             .map((biz, index) => (
-              <div
-                className={cx('m_col-6', {
-                  'l_col-4': maxColumns === 3,
-                  'l_col-6': maxColumns === 2,
-                })}
-                key={biz.id}>
+              <div className="m_col-6 l_col-4" key={biz.id}>
                 <Link className="db black" to={biz.url}>
                   <div className="mb3 m_mb5 pa2 m_pa0">
                     <div className="w-100">
@@ -162,24 +161,6 @@ const ListPage = ({
       </Wrap>
     </>
   );
-};
-
-ListPage.propTypes = {
-  businesses: PropTypes.arrayOf(
-    PropTypes.shape({
-      Name: PropTypes.string.isRequired,
-      Profile_photo: PropTypes.object.isRequired,
-      Record_ID: PropTypes.string.isRequired,
-      URL_key: PropTypes.string.isRequired,
-    }),
-  ).isRequired,
-  location: PropTypes.object.isRequired,
-  maxColumns: PropTypes.oneOf([2, 3]),
-  title: PropTypes.node.isRequired,
-};
-
-ListPage.defaultProps = {
-  maxColumns: 3,
 };
 
 export default injectIntl(ListPage);
