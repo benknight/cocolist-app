@@ -53,6 +53,9 @@ exports.approveReview = functions.https.onRequest(async (req, res) => {
   try {
     const docRef = db.collection('reviewsPending').doc(req.query.id);
     const doc = await docRef.get();
+    if (!doc.exists) {
+      throw new Error(`Document ${req.query.id} no longer exists`);
+    }
     const data = doc.data();
     await db
       .collection('reviews')
