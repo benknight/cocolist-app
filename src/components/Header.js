@@ -112,7 +112,7 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
           <div className="flex items-baseline b nowrap">
-            <div className={cx('dn ml3 m_ml4 l_ml5', { m_db: showSearch })}>
+            <div className="dn ml3 m_ml4 l_ml5 m_db">
               <AddBusinessAction variant="text" />
             </div>
             <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
