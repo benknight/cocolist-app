@@ -17,6 +17,8 @@ import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
 
+const feedbackMailto = 'mailto:feedback@cocolist.vn?subject=Cocolist%20Feedback';
+
 const LangSwitch = props => {
   const [, setLangSelection] = useLocalStorage('langSelection');
   return (
@@ -115,6 +117,11 @@ const Header = ({ location, showSearch, ...props }) => {
             <div className="dn ml3 m_ml4 l_ml5 m_db">
               <AddBusinessAction variant="text" />
             </div>
+            <div className="db ml3 m_ml4 l_ml5">
+              <a className="tp-link" href={feedbackMailto}>
+                <FormattedMessage id="header_link_feedback" />
+              </a>
+            </div>
             <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
               <Link
                 activeClassName="tp-link--inherit"
@@ -134,6 +141,9 @@ const Header = ({ location, showSearch, ...props }) => {
           <Link className="tp-link" to={homeLink}>
             <FormattedMessage id="header_link_home" />
           </Link>
+          <a className="tp-link" href={feedbackMailto}>
+            <FormattedMessage id="header_link_feedback" />
+          </a>
           <Link
             activeClassName="tp-link--inherit"
             className="tp-link"
