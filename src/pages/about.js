@@ -34,7 +34,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
   <>
     <Helmet>
       <title>
-        Cocolist {formatMessage({ id: 'Vietnam' })} &ndash;{' '}
+        Cocolist &ndash;{' '}
         {formatMessage({
           id: 'header_link_about',
         })}
