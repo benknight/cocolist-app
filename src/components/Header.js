@@ -117,7 +117,7 @@ const Header = ({ location, showSearch, ...props }) => {
             <div className="dn ml3 m_ml4 l_ml5 m_db">
               <AddBusinessAction variant="text" />
             </div>
-            <div className="db ml3 m_ml4 l_ml5">
+            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
               <a className="tp-link" href={feedbackMailto}>
                 <FormattedMessage id="header_link_feedback" />
               </a>
