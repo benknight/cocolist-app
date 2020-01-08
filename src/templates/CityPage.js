@@ -18,9 +18,6 @@ import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
 
-// TODO: Update meta tags for city
-const metaDescription = `Find restaurants in Vietnam with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water.`;
-
 export const query = graphql`
   fragment CityPageSurveyFragment on AirtableEdge {
     node {
@@ -85,7 +82,7 @@ const CityPage = ({
   pageContext: { city, langKey, slug },
 }) => {
   const auth = useAuth();
-  const pageTitle = formatMessage(
+  const metaDescription = formatMessage(
     {
       id: 'find_businesses_headline',
     },
@@ -112,16 +109,19 @@ const CityPage = ({
   return (
     <>
       <Helmet>
-        <title>Cocolist &ndash; {pageTitle}</title>
+        <title>Cocolist – {formatMessage({ id: city })}</title>
         <meta name="description" content={metaDescription} />
         <meta property="fb:app_id" content="375503033345734" />
-        <meta property="og:title" content={`Cocolist – ${pageTitle}`} />
+        <meta property="og:title" content={`Cocolist – ${formatMessage({ id: city })}`} />
         <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
         <meta
           property="og:url"
           content={`https://cocolist.vn${getLocalizedURL('/', langKey)}`}
         />
-        <meta property="og:description" content={metaDescription} />
+        <meta
+          property="og:description"
+          content="Find restaurants with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water."
+        />
         <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
       </Helmet>
       <Header location={location} showSearch={false} />
