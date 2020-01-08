@@ -2,7 +2,7 @@ import cx from 'classnames';
 import { Link } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { FormattedMessage } from 'react-intl';
+import { FormattedMessage, useIntl } from 'react-intl';
 import { TextButton } from '@thumbtack/thumbprint-react';
 import {
   NavigationCaretDownTiny,
@@ -16,8 +16,6 @@ import AddBusinessAction from './AddBusinessAction';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
-
-const feedbackMailto = 'mailto:feedback@cocolist.vn?subject=Cocolist%20Feedback';
 
 const LangSwitch = props => {
   const [, setLangSelection] = useLocalStorage('langSelection');
@@ -58,10 +56,14 @@ const LangSwitch = props => {
 
 const Header = ({ location, showSearch, ...props }) => {
   const auth = useAuth();
+  const { formatMessage } = useIntl();
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
   const homeLink = getLocalizedURL('/', lang);
+  const feedbackMailto = `mailto:feedback@cocolist.vn?subject=${formatMessage({
+    id: 'header_link_feedback',
+  })}`;
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
