@@ -38,7 +38,7 @@ const LangSwitch = props => {
           <span className={styles.langShort}>VI</span>
           <span
             aria-label="Tiếng Việt"
-            className={cx(styles.langEmoji, 'dib ml2')}
+            className={cx(styles.langEmoji, 'dib ml2 mr1 m_mr0 l_mr0')}
             role="img">
             🇻🇳
           </span>
@@ -61,8 +61,7 @@ const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
-  const [citySelection] = useLocalStorage('citySelection');
-  const homeLink = getLocalizedURL(`/${(citySelection || '').toLowerCase()}`, lang);
+  const homeLink = getLocalizedURL('/', lang);
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
