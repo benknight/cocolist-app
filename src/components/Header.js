@@ -97,7 +97,7 @@ const Header = ({ location, showSearch, ...props }) => {
             to={homeLink}>
             <img alt="logo" className={styles.logo} src={logo} />
           </Link>
-          <div className="mr2 m_mr3">
+          <div className="m_dn l_dn">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
@@ -107,7 +107,7 @@ const Header = ({ location, showSearch, ...props }) => {
               theme="inherit"
             />
           </div>
-          <div className="flex-auto">
+          <div className="flex-auto ml2 m_ml3">
             {showSearch && (
               <div className={styles.searchWrapper}>
                 <Search className="m_relative" location={location} size="small" />
