@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Link } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -16,6 +16,7 @@ import AddBusinessAction from './AddBusinessAction';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
+import useBreakpoint from '../lib/useBreakpoint';
 
 const LangSwitch = props => {
   const [, setLangSelection] = useLocalStorage('langSelection');
@@ -56,6 +57,7 @@ const LangSwitch = props => {
 
 const Header = ({ location, showSearch, ...props }) => {
   const auth = useAuth();
+  const breakpoint = useBreakpoint();
   const { formatMessage } = useIntl();
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
@@ -91,8 +93,10 @@ const Header = ({ location, showSearch, ...props }) => {
           <Link
             className="inline-flex mb1 pr2"
             onClick={event => {
-              setNavExpanded(!isNavExpanded);
-              event.preventDefault();
+              if (breakpoint !== 'large') {
+                setNavExpanded(!isNavExpanded);
+                event.preventDefault();
+              }
             }}
             to={homeLink}>
             <img alt="logo" className={styles.logo} src={logo} />
