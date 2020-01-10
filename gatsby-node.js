@@ -27,6 +27,7 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             data {
               Name
+              Slug
             }
           }
         }
@@ -91,46 +92,47 @@ exports.createPages = async ({ graphql, actions }) => {
   ];
 
   data.cities.edges.forEach(({ node: { data: city } }) => {
-    const citySlug = city.Name.toLowerCase();
-
     createPage({
-      path: citySlug,
+      path: city.Slug,
       component: CityPage,
       context: {
         langKey: 'en',
         city: city.Name,
-        slug: citySlug,
+        slug: city.Slug,
       },
     });
 
     createPage({
-      path: `vi/${citySlug}`,
+      path: `vi/${city.Slug}`,
       component: CityPage,
       context: {
         langKey: 'vi',
         city: city.Name,
-        slug: citySlug,
+        slug: city.Slug,
       },
     });
 
     // Create list pages for city
     listPages.forEach(listSlug => {
+      const context = {
+        city: city.Name,
+        citySlug: city.Slug,
+        slug: listSlug,
+      };
       createPage({
-        path: `${citySlug}/${listSlug}`,
+        path: `${city.Slug}/${listSlug}`,
         component: ListPage,
         context: {
+          ...context,
           langKey: 'en',
-          city: city.Name,
-          slug: listSlug,
         },
       });
       createPage({
-        path: `vi/${citySlug}/${listSlug}`,
+        path: `vi/${city.Slug}/${listSlug}`,
         component: ListPage,
         context: {
+          ...context,
           langKey: 'vi',
-          city: city.Name,
-          slug: listSlug,
         },
       });
     });

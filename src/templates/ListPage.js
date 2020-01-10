@@ -47,7 +47,7 @@ const ListPage = ({
   data,
   intl: { formatMessage },
   location,
-  pageContext: { city, langKey, slug },
+  pageContext: { city, citySlug, langKey, slug },
 }) => {
   const badge = badges.find(b => b.linkSlug === slug);
   const businesses = getBusinessesFromSurveyData(
@@ -71,9 +71,7 @@ const ListPage = ({
         className="tp-body-1 absolute top-0 left-0 w-100 h-100"
         defaultValue={slug}
         onChange={event =>
-          navigate(
-            getLocalizedURL(`/${city.toLowerCase()}/${event.target.value}`, langKey),
-          )
+          navigate(getLocalizedURL(`/${citySlug}/${event.target.value}`, langKey))
         }
         style={{ opacity: 0 }}>
         {Object.keys(navOptions).map(key => (

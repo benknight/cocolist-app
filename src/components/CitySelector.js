@@ -27,6 +27,7 @@ const query = graphql`
         node {
           data {
             Name
+            Slug
             Cover {
               localFiles {
                 childImageSharp {
@@ -61,7 +62,7 @@ const CitySelector = injectIntl(
               <Link
                 className="relative db mr2 flex-shrink-0"
                 onClick={() => setCitySelection(city.Name)}
-                to={getLocalizedURL(`/${city.Name.toLowerCase()}`, langKey)}>
+                to={getLocalizedURL(`/${city.Slug}`, langKey)}>
                 <Img
                   alt="logo"
                   className="br2"
