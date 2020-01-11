@@ -151,6 +151,7 @@ module.exports = {
         fonts: [
           {
             family: 'Montserrat',
+            subsets: ['vietnamese'],
             variants: ['400', '500', '700'],
           },
         ],
