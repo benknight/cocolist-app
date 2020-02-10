@@ -20,7 +20,7 @@ import styles from './CitySelector.module.scss';
 const query = graphql`
   {
     cities: allAirtable(
-      filter: { table: { eq: "Cities" } }
+      filter: { table: { eq: "Cities" }, data: { Published: { eq: true } } }
       sort: { fields: data___Location_count, order: DESC }
     ) {
       edges {

@@ -48,7 +48,9 @@ class BusinessRenderData {
 
   get neighborhoods() {
     let hoods = _uniqBy(
-      this.data.Locations.map(({ data }) => data.Neighborhood[0].data),
+      this.data.Locations.filter(
+        ({ data }) => !!_get(data, 'Neighborhood[0].data.Name'),
+      ).map(({ data }) => data.Neighborhood[0].data),
       'Name',
     );
     if (hoods.length === 0) {
@@ -62,7 +64,7 @@ class BusinessRenderData {
   }
 
   get photos() {
-    return _get(this.survey, 'Attachments.localFiles', [])
+    return (_get(this.survey, 'Attachments.localFiles') || [])
       .map((photo, index) => ({
         fixed: photo.childImageSharp.fixed,
         raw: this.survey.Attachments.raw[index],
