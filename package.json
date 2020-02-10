@@ -5,12 +5,11 @@
     "build": "GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
     "build-algolia": "BUILD_ALGOLIA=true npm run build",
     "build-dev": "DEV=true npm run build",
-    "deploy": "firebase deploy",
-    "deploy-functions": "firebase deploy --only functions",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "start": "gatsby develop -H 0.0.0.0 -p 8000",
     "serve": "gatsby serve",
-    "test": "jest --watch"
+    "test": "jest --watch",
+    "clean": "gatsby clean"
   },
   "browserslist": [
     "> 1%",
