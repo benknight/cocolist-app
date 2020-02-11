@@ -7,14 +7,14 @@ import CitySelector from '../components/CitySelector';
 import Header from '../components/Header';
 import { getLocalizedURL } from '../lib/common/i18n';
 
-const metaDescription = `Find restaurants in Vietnam with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water.`;
+const metaDescription = `Find restaurants in your city with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water.`;
 
 const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) => {
   const pageTitle = formatMessage(
     {
       id: 'find_businesses_headline',
     },
-    { city: formatMessage({ id: 'Vietnam' }) },
+    { city: formatMessage({ id: 'your_city' }) },
   );
   return (
     <>
@@ -23,13 +23,16 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
         <meta name="description" content={metaDescription} />
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`Cocolist – ${pageTitle}`} />
-        <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
+        <meta property="og:image" content={`https://cocolist.app${OPGPreviewImage}`} />
         <meta
           property="og:url"
-          content={`https://cocolist.vn${getLocalizedURL('/', langKey)}`}
+          content={`https://cocolist.app${getLocalizedURL('/', langKey)}`}
         />
         <meta property="og:description" content={metaDescription} />
-        <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
+        <meta
+          property="twitter:card"
+          content={`https://cocolist.app${OPGPreviewImage}`}
+        />
       </Helmet>
       <Header location={location} showSearch={false} />
       <Wrap>

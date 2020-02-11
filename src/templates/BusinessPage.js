@@ -105,11 +105,9 @@ export const query = graphql`
     Neighborhood {
       data {
         Name
-        Name_VI
         City {
           data {
             Name
-            Name_VI
           }
         }
       }
@@ -120,11 +118,9 @@ export const query = graphql`
         Neighborhood {
           data {
             Name
-            Name_VI
             City {
               data {
                 Name
-                Name_VI
               }
             }
           }
@@ -210,12 +206,9 @@ const BusinessPage = props => {
       <Helmet>
         <title>
           {biz.name} &ndash;{' '}
-          {formatMessage(
-            {
-              id: 'eco_friendly_biz_in_vn',
-            },
-            { city: formatMessage({ id: 'Vietnam' }) },
-          )}
+          {formatMessage({
+            id: 'eco_friendly_biz',
+          })}
         </title>
         {/* TODO: Add social meta tags */}
       </Helmet>
@@ -302,7 +295,7 @@ const BusinessPage = props => {
                             id={badge.description}
                             values={{
                               business: biz.name,
-                              byoc_percent: biz.survey.BYOC_discount_amount
+                              byoc_discount: biz.survey.BYOC_discount_amount
                                 ? `${biz.survey.BYOC_discount_amount * 100}%`
                                 : '',
                             }}

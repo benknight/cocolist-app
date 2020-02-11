@@ -48,19 +48,19 @@ class BusinessRenderData {
 
   get neighborhoods() {
     let hoods = _uniqBy(
-      this.data.Locations.filter(
-        ({ data }) => !!_get(data, 'Neighborhood[0].data.Name'),
-      ).map(({ data }) => data.Neighborhood[0].data),
+      (this.data.Locations || [])
+        .filter(({ data }) => !!_get(data, 'Neighborhood[0].data.Name'))
+        .map(({ data }) => data.Neighborhood[0].data),
       'Name',
     );
     if (hoods.length === 0) {
-      hoods = this.data.Neighborhood.map(hood => hood.data);
+      hoods = (this.data.Neighborhood || []).map(hood => hood.data);
     }
     return hoods;
   }
 
   get categories() {
-    return this.data.Category.map(({ data }) => data.Name).reverse();
+    return (this.data.Category || []).map(({ data }) => data.Name).reverse();
   }
 
   get photos() {

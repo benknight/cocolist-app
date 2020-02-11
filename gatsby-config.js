@@ -1,7 +1,5 @@
 require('dotenv').config();
 
-const baseId = 'appYMPFmCnV9M4Szq';
-
 module.exports = {
   siteMetadata: {
     author: 'Benjamin Knight',
@@ -67,56 +65,53 @@ module.exports = {
         tables: [
           // in alphabetical order:
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Businesses',
             tableLinks: ['Survey', 'Neighborhood', 'Category', 'Locations'],
-            defaultValues: {
-              // TODO: don't rely on this
-              Category: [],
-              Neighborhood: [],
-              Locations: [],
-            },
             mapping: {
               Profile_photo: 'fileNode',
             },
           },
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Categories',
           },
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Cities',
             mapping: {
               Cover: 'fileNode',
             },
           },
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Locations',
             tableLinks: ['Business', 'City', 'Neighborhood'],
           },
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Neighborhoods',
             tableLinks: ['City'],
           },
           {
-            baseId,
+            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Survey',
             tableLinks: ['Business_record_match'],
-            defaultValues: {
-              Food_waste_programs: [],
-              Menu: [],
-              Kitchen_waste_management: [],
-            },
             mapping: {
               Attachments: 'fileNode',
             },
           },
           {
-            baseId,
-            tableName: 'Translations',
+            baseId: process.env.AIRTABLE_BASE_APP,
+            tableName: 'Partners',
+            tableLinks: ['City'],
+            mapping: {
+              Logo: 'fileNode',
+            },
+          },
+          {
+            baseId: process.env.AIRTABLE_BASE_TRANSLATIONS,
+            tableName: 'Messages',
           },
         ],
       },

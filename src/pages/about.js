@@ -414,7 +414,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                       id={badge.description}
                       values={{
                         business: formatMessage({ id: 'generic_business_name' }),
-                        byoc_percent: '',
+                        byoc_discount: '',
                       }}
                     />
                   </div>

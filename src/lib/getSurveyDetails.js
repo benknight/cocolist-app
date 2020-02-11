@@ -26,33 +26,35 @@ export default function getSurveyItems(survey) {
     ['kitchen_food_freeze_packaging_label', survey.Kitchen_food_freeze_packaging],
     [
       'waste_separation',
-      survey.Kitchen_waste_management.indexOf('Waste separation') !== -1 ? ['Yes'] : null,
+      (survey.Kitchen_waste_management || []).indexOf('Waste separation') !== -1
+        ? ['Yes']
+        : null,
     ],
     [
       'sink_grease_traps',
-      survey.Kitchen_waste_management.indexOf('Grease traps on sinks') !== -1
+      (survey.Kitchen_waste_management || []).indexOf('Grease traps on sinks') !== -1
         ? ['Yes']
         : null,
     ],
     [
       'menu_plant_based_label',
-      survey.Menu.indexOf('Plant-based menu') !== -1 ? ['Yes'] : null,
+      (survey.Menu || []).indexOf('Plant-based menu') !== -1 ? ['Yes'] : null,
     ],
     [
       'menu_vegetarian_label',
-      survey.Menu.indexOf('Vegetarian menu') !== -1 ? ['Yes'] : null,
+      (survey.Menu || []).indexOf('Vegetarian menu') !== -1 ? ['Yes'] : null,
     ],
     [
       'menu_plant_based_options_label',
-      survey.Menu.indexOf('Plant-based options') !== -1 ? ['Yes'] : null,
+      (survey.Menu || []).indexOf('Plant-based options') !== -1 ? ['Yes'] : null,
     ],
     [
       'menu_vegetarian_options_label',
-      survey.Menu.indexOf('Vegetarian options') !== -1 ? ['Yes'] : null,
+      (survey.Menu || []).indexOf('Vegetarian options') !== -1 ? ['Yes'] : null,
     ],
     [
       'menu_kitchen_garden_label',
-      survey.Menu.indexOf('Kitchen garden') !== -1 ? ['Yes'] : null,
+      (survey.Menu || []).indexOf('Kitchen garden') !== -1 ? ['Yes'] : null,
     ],
   ];
   return items.filter(item => item[1] && item[1].length > 0);

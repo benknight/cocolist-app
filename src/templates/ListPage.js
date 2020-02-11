@@ -76,10 +76,7 @@ const ListPage = ({
         style={{ opacity: 0 }}>
         {Object.keys(navOptions).map(key => (
           <option key={key} value={key}>
-            {formatMessage(
-              { id: navOptions[key] },
-              { city: formatMessage({ id: 'Vietnam' }) },
-            )}
+            {formatMessage({ id: navOptions[key] })}
           </option>
         ))}
       </select>

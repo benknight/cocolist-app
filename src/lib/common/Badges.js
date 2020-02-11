@@ -34,7 +34,7 @@ const badges = [
     title: 'menu_vegetarian_label',
     description: 'menu_vegetarian_description',
     test: survey => {
-      const menu = _get(survey, 'Menu', []);
+      const menu = survey.Menu || [];
       return (
         menu.indexOf('Vegetarian menu') !== -1 || menu.indexOf('Plant-based menu') !== -1
       );
@@ -58,7 +58,7 @@ const badges = [
     imageLargeAlt: 'food-waste-mgmt-alt.svg',
     title: 'food_waste_program_label',
     description: 'food_waste_program_description',
-    test: survey => _get(survey, 'Food_waste_programs', []).length > 0,
+    test: survey => (survey.Food_waste_programs || []).length > 0,
     linkSlug: 'food-waste',
   },
   // {

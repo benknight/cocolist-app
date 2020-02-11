@@ -17,17 +17,14 @@ const businessQuery = `
           Category {
             data {
               Name
-              Name_VI
             }
           }
           Neighborhood {
             data {
               Name
-              Name_VI
               City {
                 data {
                   Name
-                  Name_VI
                 }
               }
             }
@@ -38,11 +35,9 @@ const businessQuery = `
               Neighborhood {
                 data {
                   Name
-                  Name_VI
                   City {
                     data {
                       Name
-                      Name_VI
                     }
                   }
                 }
@@ -67,7 +62,7 @@ const businessQuery = `
       }
     }
   }
-  translations: allAirtable(filter: { table: { eq: "Translations" } }) {
+  translations: allAirtable(filter: { table: { eq: "Messages" } }) {
     edges {
       node {
         data {
@@ -116,16 +111,16 @@ function flatten(data) {
       badge_count: biz.badges.length,
       badges_en: biz.badges.map(badge => tx[badge.title].en),
       badges_vi: biz.badges.map(badge => tx[badge.title].vi),
-      category_en: data.Category.map(cat => cat.data.Name),
-      category_vi: data.Category.map(cat => cat.data.Name_VI),
-      cities_en: cities.map(city => city.Name),
-      cities_vi: cities.map(city => city.Name_VI),
+      category_en: data.Category.map(cat => tx[cat.data.Name].en),
+      category_vi: data.Category.map(cat => tx[cat.data.Name].vi),
+      cities_en: cities.map(city => tx[city.Name].en),
+      cities_vi: cities.map(city => tx[city.Name].vi),
       neighborhoods_en: Object.keys(hoodsByCity).reduce((result, city) => {
-        result[city] = hoodsByCity[city].map(hood => hood.Name);
+        result[city] = hoodsByCity[city].map(hood => tx[hood.Name].en);
         return result;
       }, {}),
       neighborhoods_vi: Object.keys(hoodsByCity).reduce((result, city) => {
-        result[city] = hoodsByCity[city].map(hood => hood.Name_VI);
+        result[city] = hoodsByCity[city].map(hood => tx[hood.Name].vi);
         return result;
       }, {}),
     };

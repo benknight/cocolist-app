@@ -184,7 +184,7 @@ const CityPage = ({
               <div className="m_flex flex-shrink-0 items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl6 tc m_tl">
                 <img
                   alt={formatMessage({ id: badge.title })}
-                  className={cx(styles.badge, 'mb1 self-start')}
+                  className={cx(styles.badge, 'block mb1 self-start')}
                   src={require(`../assets/badges/${badge.imageLarge}`)}
                   width="110"
                   height="110"
@@ -198,7 +198,7 @@ const CityPage = ({
                       id={badge.description}
                       values={{
                         business: formatMessage({ id: 'generic_business_name' }),
-                        byoc_percent: '',
+                        byoc_discount: '',
                       }}
                     />
                     <div className="mt1 tp-body-2">

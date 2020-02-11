@@ -17,9 +17,9 @@ if (!Intl.RelativeTimeFormat) {
 }
 
 const IntlProvider = props => {
-  const { categories, cities, hoods, tx } = useStaticQuery(graphql`
+  const { tx } = useStaticQuery(graphql`
     {
-      tx: allAirtable(filter: { table: { eq: "Translations" } }) {
+      tx: allAirtable(filter: { table: { eq: "Messages" } }) {
         edges {
           node {
             data {
@@ -30,48 +30,10 @@ const IntlProvider = props => {
           }
         }
       }
-      hoods: allAirtable(filter: { table: { eq: "Neighborhoods" } }) {
-        edges {
-          node {
-            data {
-              key: Name
-              en: Name
-              vi: Name_VI
-            }
-          }
-        }
-      }
-      cities: allAirtable(filter: { table: { eq: "Cities" } }) {
-        edges {
-          node {
-            data {
-              key: Name
-              en: Name
-              vi: Name_VI
-            }
-          }
-        }
-      }
-      categories: allAirtable(filter: { table: { eq: "Categories" } }) {
-        edges {
-          node {
-            data {
-              key: Name
-              en: Name
-              vi: Name_VI
-            }
-          }
-        }
-      }
     }
   `);
   const lang = parseLangFromURL(props.location.pathname);
-  const messages = [
-    ...tx.edges,
-    ...hoods.edges,
-    ...cities.edges,
-    ...categories.edges,
-  ].reduce((values, currentValue) => {
+  const messages = tx.edges.reduce((values, currentValue) => {
     const {
       node: { data },
     } = currentValue;
