@@ -16,7 +16,7 @@
 .mapGradientOverlay {
   background: white;
   @include respond-above(large) {
-    background: linear-gradient(to right, white, rgba(255, 255, 255, 0.8) 25%, transparent);
+    background: linear-gradient(to right, white, rgba(255, 255, 255, 0.8) 50%, transparent);
   }
 }
 

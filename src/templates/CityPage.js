@@ -17,6 +17,7 @@ import BusinessRenderData from '../lib/common/BusinessRenderData';
 import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
+import { EntityAvatar } from '@thumbtack/thumbprint-react';
 
 export const query = graphql`
   fragment CityPageSurveyFragment on AirtableEdge {
@@ -48,6 +49,19 @@ export const query = graphql`
         Name
         Map_center
         Map_zoom
+        Partners {
+          data {
+            Name
+            Link
+            Logo {
+              thumbnails {
+                large {
+                  url
+                }
+              }
+            }
+          }
+        }
       }
     }
     surveys: allAirtable(
@@ -105,6 +119,7 @@ const CityPage = ({
   );
 
   const pushAddBizPromoToTop = data.surveys.edges.length < 30;
+  const partner = _get(data, 'city.data.Partners[0]');
 
   return (
     <>
@@ -135,10 +150,10 @@ const CityPage = ({
         <div
           className={cx(
             styles.mapGradientOverlay,
-            'relative ph4 l_pr0 m_pl6 m_mr6 l_pl7 l_mr7 pv4 l_pv7 mw8',
+            'relative ph4 l_pr0 m_pl6 m_mr6 l_pl7 l_mr7 pv4 l_pv6 mw8',
           )}>
           <div className="pv4 l_pv6">
-            <div className="s_pr6 m_pr0 mw7">
+            <div className="s_pr6 m_pr0">
               <h1 className="tp-title-1 mb3">
                 <FormattedMessage
                   id="find_businesses_headline"
@@ -152,9 +167,40 @@ const CityPage = ({
               location={location}
               size="large"
             />
+            {partner && (
+              <div className="flex items-center mt6">
+                <a className="tp-link b" href={partner.data.Link}>
+                  <EntityAvatar
+                    imageUrl={partner.data.Logo[0].thumbnails.large.url}
+                    size="medium"
+                  />
+                </a>
+                <div className="ml3">
+                  <FormattedMessage
+                    id="partnership_with"
+                    values={{
+                      partner: (
+                        <a className="tp-link b nowrap" href={partner.data.Link}>
+                          {partner.data.Name}
+                        </a>
+                      ),
+                    }}
+                  />
+                  <div className="tp-body-3 mt1">
+                    <FormattedMessage
+                      id="partnership_learn_more"
+                      values={{
+                        a: (...args) => <Link to="/about#partnerships">{args}</Link>,
+                      }}
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
+
       {pushAddBizPromoToTop && addBizPromo}
       {badges.map(badge => {
         const surveys = shuffle(
@@ -184,7 +230,7 @@ const CityPage = ({
               <div className="m_flex flex-shrink-0 items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl6 tc m_tl">
                 <img
                   alt={formatMessage({ id: badge.title })}
-                  className={cx(styles.badge, 'block mb1 self-start')}
+                  className={cx(styles.badge, 'flex-shrink-0 mb1 self-start')}
                   src={require(`../assets/badges/${badge.imageLarge}`)}
                   width="110"
                   height="110"
@@ -223,7 +269,7 @@ const CityPage = ({
                   ({ data }) => new BusinessRenderData(data, langKey),
                 ).map(biz => (
                   <Link
-                    className="db pr1 pv4 w6 flex-shrink-0"
+                    className="db pr2 pv4 w6 flex-shrink-0"
                     key={biz.name}
                     to={biz.url}>
                     {biz.thumbnail && (
@@ -234,7 +280,7 @@ const CityPage = ({
                         objectFit="contain"
                       />
                     )}
-                    <div className="tp-body-2 black mt1">
+                    <div className="tp-body-2 black mt1 mr3">
                       <div className="b">{biz.name}</div>
                     </div>
                   </Link>

@@ -79,6 +79,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Cities',
+            tableLinks: ['Partners'],
             mapping: {
               Cover: 'fileNode',
             },
@@ -104,10 +105,6 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Partners',
-            tableLinks: ['City'],
-            mapping: {
-              Logo: 'fileNode',
-            },
           },
           {
             baseId: process.env.AIRTABLE_BASE_TRANSLATIONS,

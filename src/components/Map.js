@@ -6,7 +6,7 @@ import React, { useEffect } from 'react';
 import { injectIntl } from 'react-intl';
 import { tpBreakpointLargeValue } from '@thumbtack/thumbprint-tokens';
 import mapStyles from '../assets/map-styles.json';
-import markerGreen from '../assets/marker-green.png';
+import markerIcon from '../assets/marker.png';
 import { getBadgesFromSurvey } from '../lib/common/Badges';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useBreakpoint from '../lib/useBreakpoint';
@@ -144,7 +144,7 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
             lng = loc.LatLng.split(',')[1].trim(),
             marker = new maps.Marker({
               // icon: badges.length > 2 ? markerGreen : markerPaleGreen,
-              icon: markerGreen,
+              icon: markerIcon,
               map,
               position: new maps.LatLng(lat, lng),
             }),

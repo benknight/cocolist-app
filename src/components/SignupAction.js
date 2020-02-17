@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import {
-  ModalDefault,
-  ModalDefaultHeader,
-  ModalDefaultTitle,
-  ModalDefaultContent,
+  Modal,
+  ModalHeader,
+  ModalTitle,
+  ModalContent,
   TextButton,
 } from '@thumbtack/thumbprint-react';
 import SignupForm from './SignupForm';
@@ -16,14 +16,14 @@ const SignupAction = ({ intl: { formatMessage } }) => {
       <TextButton onClick={() => setIsOpen(!isOpen)}>
         <FormattedMessage id="header_link_signup" />
       </TextButton>
-      <ModalDefault isOpen={isOpen} onCloseClick={() => setIsOpen(false)}>
-        <ModalDefaultHeader>
-          <ModalDefaultTitle>{formatMessage({ id: 'signup_heading' })}</ModalDefaultTitle>
-        </ModalDefaultHeader>
-        <ModalDefaultContent>
+      <Modal isOpen={isOpen} onCloseClick={() => setIsOpen(false)}>
+        <ModalHeader>
+          <ModalTitle>{formatMessage({ id: 'signup_heading' })}</ModalTitle>
+        </ModalHeader>
+        <ModalContent>
           <SignupForm />
-        </ModalDefaultContent>
-      </ModalDefault>
+        </ModalContent>
+      </Modal>
     </>
   );
 };

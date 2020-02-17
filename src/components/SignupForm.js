@@ -1,7 +1,7 @@
 import { graphql, useStaticQuery } from 'gatsby';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { ButtonRow, Input, Label, Select } from '@thumbtack/thumbprint-react';
+import { ButtonRow, Dropdown, Label, TextInput } from '@thumbtack/thumbprint-react';
 import useAuth from '../lib/useAuth';
 import Button from './Button';
 
@@ -70,7 +70,7 @@ const SignupForm = props => {
           <Label for="email">
             <FormattedMessage id="signin_email_label" />
           </Label>
-          <Input
+          <TextInput
             id="email"
             isRequired
             onChange={email => {
@@ -85,7 +85,7 @@ const SignupForm = props => {
         <Label for="firstName">
           <FormattedMessage id="signup_first_name_label" />
         </Label>
-        <Input
+        <TextInput
           id="firstName"
           isRequired
           onChange={firstName => setFormData({ ...formData, firstName })}
@@ -97,7 +97,7 @@ const SignupForm = props => {
         <Label for="lastName">
           <FormattedMessage id="signup_last_name_label" />
         </Label>
-        <Input
+        <TextInput
           id="lastName"
           onChange={lastName => setFormData({ ...formData, lastName })}
           type="text"
@@ -108,7 +108,7 @@ const SignupForm = props => {
         <Label for="district">
           <FormattedMessage id="signup_district_label" />
         </Label>
-        <Select
+        <Dropdown
           id="district"
           isFullWidth
           onChange={district => setFormData({ ...formData, district })}
@@ -120,7 +120,7 @@ const SignupForm = props => {
               {formatMessage({ id: City[0].data.Name })} – {formatMessage({ id: Name })}
             </option>
           ))}
-        </Select>
+        </Dropdown>
       </div>
       {hasError && (
         <div className="red mv2">

@@ -40,7 +40,7 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
           <div className="tp-title-2 tc">
             <FormattedMessage id="select_city_label" />
           </div>
-          <CitySelector location={location} variant="grid" />
+          <CitySelector location={location} />
         </div>
       </Wrap>
     </>

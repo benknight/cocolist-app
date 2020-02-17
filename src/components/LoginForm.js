@@ -5,10 +5,10 @@ import { Machine } from 'xstate';
 import { useMachine } from '@xstate/react';
 import {
   ButtonRow,
-  Input,
   InPageAlert,
   Label,
   TextButton,
+  TextInput,
 } from '@thumbtack/thumbprint-react';
 import useAuth from '../lib/useAuth';
 import Button from './Button';
@@ -99,7 +99,7 @@ const LoginForm = ({ returnTo }) => {
             <Label for="loginEmail">
               <FormattedMessage id="signin_email_label" />
             </Label>
-            <Input
+            <TextInput
               id="loginEmail"
               onChange={email => setEmail(email)}
               type="email"

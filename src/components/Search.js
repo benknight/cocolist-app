@@ -20,14 +20,13 @@ import {
   NavigationSearchSmall,
 } from '@thumbtack/thumbprint-icons';
 import {
-  Input,
-  InputClearButton,
-  InputIcon,
   Link as TPLink,
+  TextInput,
+  TextInputIcon,
+  TextInputClearButton,
 } from '@thumbtack/thumbprint-react';
 import { badges } from '../lib/common/Badges';
 import { parseLangFromURL, getLocalizedURL } from '../lib/common/i18n';
-import CitySelector from './CitySelector';
 import styles from './Search.module.scss';
 
 const badgesByKey = _keyBy(badges, 'key');
@@ -86,19 +85,19 @@ const SearchInput = connectSearchBox(
     const [value, setValue] = useState('');
     return (
       <form>
-        <Input
+        <TextInput
           type="search"
           placeholder={formatMessage({ id: 'search_placeholder' })}
           aria-label={formatMessage({ id: 'search_placeholder' })}
           innerLeft={
-            <InputIcon>
+            <TextInputIcon>
               {size === 'large' ? <NavigationSearchMedium /> : <NavigationSearchSmall />}
-            </InputIcon>
+            </TextInputIcon>
           }
           innerRight={
             <div className="flex items-center h-100">
               {value.length > 0 && (
-                <InputClearButton
+                <TextInputClearButton
                   onClick={() => {
                     setValue('');
                     refine('');
@@ -228,11 +227,6 @@ function Search({ city, className, location, size, ...props }) {
           </div>
         </div>
       </div>
-      {size === 'large' && (
-        <CitySelector className="mt3 tp-body-2" location={location} variant="modal">
-          <FormattedMessage id="change_location_label" />
-        </CitySelector>
-      )}
     </InstantSearch>
   );
 }

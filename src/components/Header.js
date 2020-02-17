@@ -3,69 +3,39 @@ import { Link, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
-import { TextButton } from '@thumbtack/thumbprint-react';
+import { TextButton, Tooltip } from '@thumbtack/thumbprint-react';
 import {
   NavigationCaretDownTiny,
   NavigationCaretUpTiny,
+  ContentModifierMapPinSmall,
 } from '@thumbtack/thumbprint-icons';
 import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
+import useBreakpoint from '../lib/useBreakpoint';
 import useLocalStorage from '../lib/useLocalStorage';
 import AddBusinessAction from './AddBusinessAction';
+import LangSwitch from './LangSwitch';
 import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
-import useBreakpoint from '../lib/useBreakpoint';
-
-const LangSwitch = props => {
-  const [, setLangSelection] = useLocalStorage('langSelection');
-  return (
-    <div
-      className={cx(
-        styles.lang,
-        { [styles.truncate]: props.truncate },
-        'dib br1 pv1',
-        // 'bg-gray-300',
-      )}>
-      {props.lang === 'en' ? (
-        <Link
-          onClick={() => setLangSelection('vi')}
-          title="Tiếng Việt"
-          to={getLocalizedURL(props.location.pathname, 'vi')}>
-          <span className={styles.langLong}>Tiếng Việt</span>
-          <span className={styles.langShort}>VI</span>
-          <span
-            aria-label="Tiếng Việt"
-            className={cx(styles.langEmoji, 'dib ml2 mr1 m_mr0 l_mr0')}
-            role="img">
-            🇻🇳
-          </span>
-        </Link>
-      ) : (
-        <Link
-          onClick={() => setLangSelection('en')}
-          to={getLocalizedURL(props.location.pathname, 'en')}
-          title="Switch to English">
-          <span className={styles.langLong}>English</span>
-          <span className={styles.langShort}>EN</span>
-        </Link>
-      )}
-    </div>
-  );
-};
 
 const Header = ({ location, showSearch, ...props }) => {
   const auth = useAuth();
   const breakpoint = useBreakpoint();
+  const [citySelection] = useLocalStorage('citySelection');
   const { formatMessage } = useIntl();
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
-  const homeLink = getLocalizedURL('/', lang);
+  const indexURL = getLocalizedURL('/', lang);
+  const homeURL = citySelection
+    ? getLocalizedURL(`/${citySelection.toLowerCase().replace(' ', '')}`, lang)
+    : indexURL;
   const feedbackMailto = `mailto:feedback@cocolist.vn?subject=${formatMessage({
     id: 'header_link_feedback',
   })}`;
+
   useEffect(() => {
     let ticking = false;
     let scrollPos = 0;
@@ -82,6 +52,7 @@ const Header = ({ location, showSearch, ...props }) => {
     window.addEventListener('scroll', listener);
     return () => window.removeEventListener('scroll', listener);
   });
+
   return (
     <>
       <header
@@ -98,36 +69,71 @@ const Header = ({ location, showSearch, ...props }) => {
                 event.preventDefault();
               }
             }}
-            to={homeLink}>
+            to={homeURL}>
             <img alt="logo" className={styles.logo} src={logo} />
           </Link>
-          <div className="m_dn l_dn">
+
+          <div className="m_dn l_dn inline-flex">
             <TextButton
               accessibilityLabel="Open Cocolist navigation"
               iconLeft={
                 isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
               }
               onClick={() => setNavExpanded(!isNavExpanded)}
+              title="Change city"
               theme="inherit"
             />
           </div>
-          <div className="flex-auto ml2 m_ml3">
-            {showSearch && (
+
+          {showSearch && (
+            <div className="ml2 m_ml3 l_w-33">
               <div className={styles.searchWrapper}>
                 <Search className="m_relative" location={location} size="small" />
               </div>
-            )}
-          </div>
-          <div className="flex items-baseline b nowrap">
+            </div>
+          )}
+
+          {citySelection && location.pathname !== indexURL && (
+            <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
+              {({
+                ref,
+                onMouseEnter,
+                onClick,
+                onFocus,
+                onMouseLeave,
+                onBlur,
+                ariaLabel,
+              }) => (
+                <div className="ml3">
+                  <TextButton
+                    accessibilityLabel={ariaLabel}
+                    onMouseEnter={onMouseEnter}
+                    onFocus={onFocus}
+                    onMouseLeave={onMouseLeave}
+                    onBlur={onBlur}
+                    ref={ref}
+                    iconLeft={<ContentModifierMapPinSmall />}
+                    onClick={() => {
+                      navigate(indexURL);
+                      onClick();
+                    }}>
+                    <FormattedMessage id={citySelection} />
+                  </TextButton>
+                </div>
+              )}
+            </Tooltip>
+          )}
+
+          <div className="flex flex-auto justify-end items-center b nowrap">
             <div className="dn ml3 m_ml4 l_ml5 m_db">
               <AddBusinessAction variant="text" />
             </div>
-            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
+            <div className="dn m_db ml3 m_ml4 l_ml5">
               <a className="tp-link" href={feedbackMailto}>
                 <FormattedMessage id="header_link_feedback" />
               </a>
             </div>
-            <div className={cx('ml3 m_ml4 l_ml5', { 'dn m_db': showSearch })}>
+            <div className="dn m_db ml3 m_ml4 l_ml5">
               <Link
                 activeClassName="tp-link--inherit"
                 className="tp-link"
@@ -142,10 +148,8 @@ const Header = ({ location, showSearch, ...props }) => {
             )}
           </div>
         </div>
+
         <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
-          <Link className="tp-link" to={homeLink}>
-            <FormattedMessage id="header_link_home" />
-          </Link>
           <a className="tp-link" href={feedbackMailto}>
             <FormattedMessage id="header_link_feedback" />
           </a>

@@ -48,12 +48,12 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             {langKey === 'vi' ? (
               <div>
                 Giới thiệu về <span className="green">Cocolist</span>, ứng dụng tìm kiếm
-                các doanh nghiệp có ý thức bảo vệ môi trường tại Việt Nam.
+                các doanh nghiệp có ý thức bảo vệ môi trường tại thành phố của bạn.
               </div>
             ) : (
               <div>
                 Introducing <span className="green">Cocolist</span>, an app for finding{' '}
-                <nobr>eco-conscious</nobr> businesses in Vietnam.
+                <nobr>eco-conscious</nobr> businesses in Southeast Asia.
               </div>
             )}
           </h1>
@@ -231,43 +231,24 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
 
         <section className="tp-body-1">
           <h3 className="tp-title-4 mt5 mb3">
-            {langKey === 'vi' ? `Nguồn mở` : `Open source`}
+            {langKey === 'vi' ? `Sự hợp tác` : `Partnerships`}
           </h3>
-          <Text>
+          <Text id="partnerships">
             {langKey === 'vi' ? (
               <p>
-                Chúng tôi tin rằng cách tốt nhất để khuyến khích nhiều người tham gia là
-                càng minh bạch càng tốt. Đó là tại sao chúng tôi tạo ra bộ dữ liệu đầy đủ
-                với website có nguồn mở và rộng cửa cho tất cả mọi người cùng đóng góp và
-                phát triển nó. Ngoài ra, việc được lên danh sách của Cocolist là luôn luôn
-                miễn phí. Chúng tôi không mong muốn thu lợi từ các chủ doanh nghiệp đã
-                phải chi trả thêm chi phí để thay thế sử dụng nhựa.
+                Cocolist partners with local organizations in order to source content,
+                ensure data accuracy, and help support those organizations. If you're
+                interested in adding data for your city, please contact us at{' '}
+                <a href="mailto:partners@cocolist.vn">partners@cocolist.vn</a>. We’re
+                currently looking for a partners in Chiang Mai and Bali.
               </p>
             ) : (
               <p>
-                We believe that the best way to encourage participation is to be as
-                transparent as possible. That's why we've made our full data set and
-                website open source and open for anyone to contribute and improve. In
-                addition, it will always be free for businesses to have a listing on
-                Cocolist. We don't believe in profiting off business owners that are
-                already footing the additional costs of replacing plastic.
-              </p>
-            )}
-          </Text>
-          <Text>
-            {langKey === 'vi' ? (
-              <p>
-                Nếu bạn quan tâm đến việc đóng góp cho chúng tôi,{' '}
-                <TPLink to="https://github.com/benknight/cocolist" shouldOpenInNewTab>
-                  hãy tìm hiểu trên Github để biết thêm chi tiết nhé.
-                </TPLink>
-              </p>
-            ) : (
-              <p>
-                If you're interested in contributing,{' '}
-                <TPLink to="https://github.com/benknight/cocolist" shouldOpenInNewTab>
-                  find more details on Github.
-                </TPLink>
+                Cocolist partners with local organizations in order to source content,
+                ensure data accuracy, and help support those organizations. If you're
+                interested in adding data for your city, please contact us at{' '}
+                <a href="mailto:partners@cocolist.vn">partners@cocolist.vn</a>. We’re
+                currently looking for a partners in Chiang Mai and Bali.
               </p>
             )}
           </Text>
@@ -291,8 +272,8 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               </p>
             ) : (
               <p>
-                For the initial data gathering and research phase, Cocolist is using the
-                Green Restaurant Association’s Green Restaurant Certification Standards
+                Cocolist is using the Green Restaurant Association’s Green Restaurant
+                Certification Standards
                 <Footnote index={4} /> as a guide for choosing what data points to collect
                 and how to evaluate each business's environmental accomplishments. These
                 accomplishments are then grouped into categories with a number of
