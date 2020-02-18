@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Link, navigate } from 'gatsby';
+import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -28,9 +28,31 @@ const Header = ({ location, showSearch, ...props }) => {
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
+  const { cities } = useStaticQuery(graphql`
+    {
+      cities: allAirtable(
+        filter: { table: { eq: "Cities" }, data: { Published: { eq: true } } }
+      ) {
+        edges {
+          node {
+            data {
+              Name
+              Slug
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  const selectedCity =
+    citySelection &&
+    cities.edges.map(edge => edge.node.data).find(data => data.Name === citySelection);
+
+  // URLs
   const indexURL = getLocalizedURL('/', lang);
   const homeURL = citySelection
-    ? getLocalizedURL(`/${citySelection.toLowerCase().replace(' ', '')}`, lang)
+    ? getLocalizedURL(`/${selectedCity.Slug}`, lang)
     : indexURL;
   const feedbackMailto = `mailto:feedback@cocolist.vn?subject=${formatMessage({
     id: 'header_link_feedback',
@@ -92,26 +114,12 @@ const Header = ({ location, showSearch, ...props }) => {
               </div>
             </div>
           )}
-
-          {citySelection && location.pathname !== indexURL && (
-            <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
-              {({
-                ref,
-                onMouseEnter,
-                onClick,
-                onFocus,
-                onMouseLeave,
-                onBlur,
-                ariaLabel,
-              }) => (
-                <div className="ml3">
+          <div className="mh2 s_mh3 nowrap">
+            {citySelection && location.pathname !== indexURL && (
+              <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
+                {({ onClick, ...tooltipProps }) => (
                   <TextButton
-                    accessibilityLabel={ariaLabel}
-                    onMouseEnter={onMouseEnter}
-                    onFocus={onFocus}
-                    onMouseLeave={onMouseLeave}
-                    onBlur={onBlur}
-                    ref={ref}
+                    {...tooltipProps}
                     iconLeft={<ContentModifierMapPinSmall />}
                     onClick={() => {
                       navigate(indexURL);
@@ -119,11 +127,10 @@ const Header = ({ location, showSearch, ...props }) => {
                     }}>
                     <FormattedMessage id={citySelection} />
                   </TextButton>
-                </div>
-              )}
-            </Tooltip>
-          )}
-
+                )}
+              </Tooltip>
+            )}
+          </div>
           <div className="flex flex-auto justify-end items-center b nowrap">
             <div className="dn ml3 m_ml4 l_ml5 m_db">
               <AddBusinessAction variant="text" />
@@ -150,6 +157,9 @@ const Header = ({ location, showSearch, ...props }) => {
         </div>
 
         <div className={cx(styles.nav, 'bg-white pa3 z-0 b', { dn: !isNavExpanded })}>
+          <Link to={homeURL}>
+            <FormattedMessage id="header_link_home" />
+          </Link>
           <a className="tp-link" href={feedbackMailto}>
             <FormattedMessage id="header_link_feedback" />
           </a>
