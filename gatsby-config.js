@@ -69,6 +69,7 @@ module.exports = {
             tableName: 'Businesses',
             tableLinks: ['Survey', 'Neighborhood', 'Category', 'Locations'],
             mapping: {
+              Cover_photo: 'fileNode',
               Profile_photo: 'fileNode',
             },
           },

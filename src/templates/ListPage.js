@@ -1,11 +1,10 @@
-import cx from 'classnames';
 import { Link, graphql, navigate } from 'gatsby';
-import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Wrap } from '@thumbtack/thumbprint-react';
 import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
+import BusinessCard from '../components/BusinessCard';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
 import { badges } from '../lib/common/Badges';
@@ -107,7 +106,7 @@ const ListPage = ({
       </Helmet>
       <Header location={location} />
       <Wrap>
-        <h1 className="tp-title-1 mv5 l_mv6 w-80 l_w-75 pt4">
+        <h1 className="tp-title-1 mv5 l_mv6 m_w-80 l_w-75 pt4">
           <FormattedMessage
             id="business_list_heading"
             values={{
@@ -122,7 +121,7 @@ const ListPage = ({
           {businesses
             .map(biz => new BusinessRenderData(biz, parseLangFromURL(location.pathname)))
             .filter(biz => {
-              if (!biz.thumbnail) {
+              if (!biz.coverPhoto) {
                 console.error(`No thumbnail found for ${biz.name}`);
                 return false;
               }
@@ -133,12 +132,7 @@ const ListPage = ({
                 <Link className="db black" to={biz.url}>
                   <div className="mb3 m_mb5 pa2 m_pa0">
                     <div className="w-100">
-                      <Img
-                        alt="logo"
-                        className="br2"
-                        fluid={biz.thumbnail}
-                        objectFit="contain"
-                      />
+                      <BusinessCard biz={biz} />
                     </div>
                     <div className="pv2 ph2 m_ph0">
                       <div>

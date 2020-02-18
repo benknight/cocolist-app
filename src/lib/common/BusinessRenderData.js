@@ -17,7 +17,11 @@ class BusinessRenderData {
     return getLocalizedURL(`/${this.data.URL_key}`, this.langKey);
   }
 
-  get thumbnail() {
+  get coverPhoto() {
+    return _get(this.data, 'Cover_photo.localFiles[0].childImageSharp.fluid');
+  }
+
+  get profilePhoto() {
     return _get(this.data, 'Profile_photo.localFiles[0].childImageSharp.fluid');
   }
 

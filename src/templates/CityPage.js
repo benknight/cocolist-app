@@ -1,13 +1,14 @@
 import cx from 'classnames';
 import _get from 'lodash/get';
 import { Link, graphql } from 'gatsby';
-import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import { EntityAvatar } from '@thumbtack/thumbprint-react';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import AddBusinessAction from '../components/AddBusinessAction';
+import BusinessCard from '../components/BusinessCard';
 import Header from '../components/Header';
 import Map from '../components/Map';
 import Search from '../components/Search';
@@ -17,7 +18,6 @@ import BusinessRenderData from '../lib/common/BusinessRenderData';
 import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
-import { EntityAvatar } from '@thumbtack/thumbprint-react';
 
 export const query = graphql`
   fragment CityPageSurveyFragment on AirtableEdge {
@@ -29,10 +29,19 @@ export const query = graphql`
             Name
             VNMM_rating_count
             URL_key
+            Cover_photo {
+              localFiles {
+                childImageSharp {
+                  fluid(maxWidth: 800, maxHeight: 500, cropFocus: CENTER) {
+                    ...GatsbyImageSharpFluid_noBase64
+                  }
+                }
+              }
+            }
             Profile_photo {
               localFiles {
                 childImageSharp {
-                  fluid(maxWidth: 400, maxHeight: 250, cropFocus: CENTER) {
+                  fluid(maxWidth: 200, maxHeight: 200, cropFocus: CENTER) {
                     ...GatsbyImageSharpFluid_noBase64
                   }
                 }
@@ -210,7 +219,7 @@ const CityPage = ({
             .filter(survey => {
               return !!_get(
                 survey,
-                'Business_record_match[0].data.Profile_photo.localFiles[0].childImageSharp.fluid',
+                'Business_record_match[0].data.Cover_photo.localFiles[0].childImageSharp.fluid',
               );
             }),
           badge.key + (process.env.GATSBY_BUILD_TIMESTAMP || Date.now()),
@@ -272,14 +281,7 @@ const CityPage = ({
                     className="db pr2 pv4 w6 flex-shrink-0"
                     key={biz.name}
                     to={biz.url}>
-                    {biz.thumbnail && (
-                      <Img
-                        alt=""
-                        className="br2 overflow-hidden"
-                        fluid={biz.thumbnail}
-                        objectFit="contain"
-                      />
-                    )}
+                    <BusinessCard biz={biz} />
                     <div className="tp-body-2 black mt1 mr3">
                       <div className="b">{biz.name}</div>
                     </div>

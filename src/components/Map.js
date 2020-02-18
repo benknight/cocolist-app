@@ -95,6 +95,12 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
         zoom,
       });
 
+      if (process.env.NODE_ENV === 'development') {
+        map.addListener('center_changed', function() {
+          console.log(map.getCenter().lat(), map.getCenter().lng());
+        });
+      }
+
       if (breakpoint === 'large') {
         window.google.maps.event.addListenerOnce(map, 'projection_changed', () => {
           // latlng is the apparent centre-point

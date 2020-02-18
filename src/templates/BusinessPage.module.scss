@@ -28,3 +28,12 @@
 .detailsValue + .detailsValue::before {
   content: ', ';
 }
+
+.profilePhoto {
+  float: right;
+  position: relative;
+  top: -0.5rem;
+  @include respond-above(large) {
+    right: -0.5rem;
+  }
+}

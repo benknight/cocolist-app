@@ -127,10 +127,19 @@ export const query = graphql`
         }
       }
     }
-    Profile_photo {
+    Cover_photo {
       localFiles {
         childImageSharp {
           fluid(maxWidth: 800, maxHeight: 480, cropFocus: CENTER) {
+            ...GatsbyImageSharpFluid_noBase64
+          }
+        }
+      }
+    }
+    Profile_photo {
+      localFiles {
+        childImageSharp {
+          fluid(maxWidth: 480, maxHeight: 480, cropFocus: CENTER) {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
@@ -218,13 +227,24 @@ const BusinessPage = props => {
       <div className={cx(styles.container, 'shadow-1 center bg-white')}>
         <div className="mb4">
           <div className={cx(styles.sidebar, 'flex-shrink-0 order-1 self-end')}>
-            {biz.thumbnail && (
+            {biz.coverPhoto && (
               <div className={styles.thumbnailWrapper}>
-                <Img alt="logo" fluid={biz.thumbnail} objectFit="contain" />
+                <Img alt="logo" fluid={biz.coverPhoto} objectFit="contain" />
               </div>
             )}
           </div>
           <div className="relative ph3 s_ph5 order-0">
+            {biz.profilePhoto && (
+              <Img
+                alt={formatMessage(
+                  { id: 'profile_photo_alt_text' },
+                  { values: { biz: biz.name } },
+                )}
+                className={cx(styles.profilePhoto, 'br2 overflow-hidden w-25 mt2 ml2')}
+                fluid={biz.profilePhoto}
+                objectFit="contain"
+              />
+            )}
             <div className="flex items-end mb2 mt3 s_mt4">
               <h1 className="tp-title-1 flex-auto">{biz.name}</h1>
             </div>
@@ -295,9 +315,7 @@ const BusinessPage = props => {
                             id={badge.description}
                             values={{
                               business: biz.name,
-                              byoc_discount: biz.survey.BYOC_discount_amount
-                                ? `${biz.survey.BYOC_discount_amount * 100}%`
-                                : '',
+                              byoc_discount: biz.survey.BYOC_discount_amount || '',
                             }}
                           />
                         </div>
