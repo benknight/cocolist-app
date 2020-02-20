@@ -3,13 +3,29 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
+require('dotenv').config();
 const path = require('path');
 const _ = require('lodash');
-
-require('dotenv').config();
+const { langs, defaultLang } = require('./src/lib/common/i18n');
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions;
+  const createPagesLangs = (component, slug, context) => {
+    langs.forEach(lang => {
+      // Only build pages for defaultLang in development to cut down build time
+      if (process.env.NODE_ENV === 'development' && lang !== defaultLang) {
+        return;
+      }
+      createPage({
+        path: lang === defaultLang ? slug : `${lang}/${slug}`,
+        component,
+        context: {
+          ...context,
+          langKey: lang,
+        },
+      });
+    });
+  };
 
   const { data } = await graphql(`
     {
@@ -41,6 +57,8 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL_key');
 
+  console.log('Checking for URL key duplicates in business data...');
+
   let hasDuplicates = false;
 
   Object.keys(bizGrouped).forEach(key => {
@@ -54,31 +72,16 @@ exports.createPages = async ({ graphql, actions }) => {
     process.exit(1);
   }
 
+  console.log('Building business pages...');
+
+  // Load templates
   const BusinessPage = path.resolve('./src/templates/BusinessPage.js');
-
-  bizFiltered.forEach(({ node }) => {
-    // English
-    createPage({
-      path: node.data.URL_key,
-      component: BusinessPage,
-      context: {
-        langKey: 'en',
-        slug: node.data.URL_key,
-      },
-    });
-    // Vietnamese
-    createPage({
-      path: `vi/${node.data.URL_key}`,
-      component: BusinessPage,
-      context: {
-        langKey: 'vi',
-        slug: node.data.URL_key,
-      },
-    });
-  });
-
   const CityPage = path.resolve('./src/templates/CityPage.js');
   const ListPage = path.resolve('./src/templates/ListPage.js');
+
+  bizFiltered.forEach(({ node }) => {
+    createPagesLangs(BusinessPage, node.data.URL_key, { slug: node.data.URL_key });
+  });
 
   const listPages = [
     'byoc',
@@ -91,26 +94,12 @@ exports.createPages = async ({ graphql, actions }) => {
     'free-drinking-water',
   ];
 
-  data.cities.edges.forEach(({ node: { data: city } }) => {
-    createPage({
-      path: city.Slug,
-      component: CityPage,
-      context: {
-        langKey: 'en',
-        city: city.Name,
-        slug: city.Slug,
-      },
-    });
+  console.log('Building city pages...');
 
-    createPage({
-      path: `vi/${city.Slug}`,
-      component: CityPage,
-      context: {
-        langKey: 'vi',
-        city: city.Name,
-        slug: city.Slug,
-      },
-    });
+  data.cities.edges.forEach(({ node: { data: city } }) => {
+    createPagesLangs(CityPage, city.Slug, { city: city.Name, slug: city.Slug });
+
+    console.log(`Building list pages for ${city.Name}...`);
 
     // Create list pages for city
     listPages.forEach(listSlug => {
@@ -119,22 +108,7 @@ exports.createPages = async ({ graphql, actions }) => {
         citySlug: city.Slug,
         slug: listSlug,
       };
-      createPage({
-        path: `${city.Slug}/${listSlug}`,
-        component: ListPage,
-        context: {
-          ...context,
-          langKey: 'en',
-        },
-      });
-      createPage({
-        path: `vi/${city.Slug}/${listSlug}`,
-        component: ListPage,
-        context: {
-          ...context,
-          langKey: 'vi',
-        },
-      });
+      createPagesLangs(ListPage, `${city.Slug}/${listSlug}`, context);
     });
   });
 };
@@ -142,22 +116,15 @@ exports.createPages = async ({ graphql, actions }) => {
 exports.onCreatePage = ({ page, actions }) => {
   const { createPage, deletePage } = actions;
   deletePage(page);
-  const enPage = {
-    ...page,
-    context: {
-      ...page.context,
-      langKey: 'en',
-    },
-  };
-  const viPage = {
-    ...page,
-    path: `/vi${page.path}`,
-    context: {
-      ...page.context,
-      langKey: 'vi',
-    },
-  };
-  // console.log(enPage, viPage);
-  createPage(enPage);
-  createPage(viPage);
+  langs.forEach(lang => {
+    const langPage = {
+      ...page,
+      path: lang === defaultLang ? page.path : `/${lang}${page.path}`,
+      context: {
+        ...page.context,
+        langKey: lang,
+      },
+    };
+    createPage(langPage);
+  });
 };

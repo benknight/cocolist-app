@@ -8,12 +8,16 @@ if (!Intl.PluralRules) {
   require('@formatjs/intl-pluralrules/polyfill');
   require('@formatjs/intl-pluralrules/dist/locale-data/en');
   require('@formatjs/intl-pluralrules/dist/locale-data/vi');
+  require('@formatjs/intl-pluralrules/dist/locale-data/km');
 }
 
 if (!Intl.RelativeTimeFormat) {
   require('@formatjs/intl-relativetimeformat/polyfill');
   require('@formatjs/intl-relativetimeformat/dist/locale-data/en');
   require('@formatjs/intl-relativetimeformat/dist/locale-data/vi');
+  require('@formatjs/intl-relativetimeformat/dist/locale-data/km');
+}
+
 function onError(err) {
   if (process.env.NODE_ENV === 'production') {
     console.warn(err);
@@ -30,6 +34,7 @@ const IntlProvider = props => {
               key: Key
               en
               vi
+              km
             }
           }
         }

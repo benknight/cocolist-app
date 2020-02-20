@@ -67,6 +67,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Businesses',
+            tableView: process.env.NODE_ENV === 'development' ? 'Dev data' : undefined,
             tableLinks: ['Survey', 'Neighborhood', 'Category', 'Locations'],
             mapping: {
               Cover_photo: 'fileNode',
@@ -106,6 +107,9 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Partners',
+            mapping: {
+              Logo: 'fileNode',
+            },
           },
           {
             baseId: process.env.AIRTABLE_BASE_TRANSLATIONS,

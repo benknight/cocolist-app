@@ -26,6 +26,7 @@ export default function LangSwitch({ lang, location, truncate }) {
         value={lang}>
         <option value="en">English</option>
         <option value="vi">Tiếng Việt</option>
+        <option value="km">ភាសាខ្មែរ</option>
       </select>
     </div>
   );

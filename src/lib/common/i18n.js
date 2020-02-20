@@ -1,6 +1,6 @@
 const parse = require('url-parse');
 
-const langs = ['en', 'vi'];
+const langs = ['en', 'vi', 'km'];
 const defaultLang = 'en';
 
 // TODO: Write tests
