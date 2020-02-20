@@ -96,8 +96,16 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
       });
 
       if (process.env.NODE_ENV === 'development') {
-        map.addListener('center_changed', function() {
-          console.log(map.getCenter().lat(), map.getCenter().lng());
+        map.addListener('dragend', function() {
+          console.log(
+            `New map center: ${map
+              .getCenter()
+              .lat()
+              .toFixed(5)}, ${map
+              .getCenter()
+              .lng()
+              .toFixed(5)}`,
+          );
         });
       }
 
