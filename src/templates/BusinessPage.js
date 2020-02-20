@@ -236,10 +236,7 @@ const BusinessPage = props => {
           <div className="relative ph3 s_ph5 order-0">
             {biz.profilePhoto && (
               <Img
-                alt={formatMessage(
-                  { id: 'profile_photo_alt_text' },
-                  { values: { biz: biz.name } },
-                )}
+                alt={formatMessage({ id: 'profile_photo_alt_text' }, { biz: biz.name })}
                 className={cx(styles.profilePhoto, 'br2 overflow-hidden w-25 mt2 ml2')}
                 fluid={biz.profilePhoto}
                 objectFit="contain"

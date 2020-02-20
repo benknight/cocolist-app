@@ -14,6 +14,10 @@ if (!Intl.RelativeTimeFormat) {
   require('@formatjs/intl-relativetimeformat/polyfill');
   require('@formatjs/intl-relativetimeformat/dist/locale-data/en');
   require('@formatjs/intl-relativetimeformat/dist/locale-data/vi');
+function onError(err) {
+  if (process.env.NODE_ENV === 'production') {
+    console.warn(err);
+  }
 }
 
 const IntlProvider = props => {
@@ -41,7 +45,7 @@ const IntlProvider = props => {
     return values;
   }, {});
   return (
-    <ReactIntlProvider locale={lang} messages={messages}>
+    <ReactIntlProvider locale={lang} messages={messages} onError={onError}>
       <>
         <Helmet htmlAttributes={{ lang }} />
         {props.children}
