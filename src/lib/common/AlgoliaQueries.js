@@ -68,6 +68,7 @@ const businessQuery = `
           Key
           en
           vi
+          km
         }
       }
     }
@@ -109,16 +110,23 @@ function flatten(data) {
       badge_count: biz.badges.length,
       badges_en: biz.badges.map(badge => tx[badge.title].en),
       badges_vi: biz.badges.map(badge => tx[badge.title].vi),
+      badges_km: biz.badges.map(badge => tx[badge.title].km),
       category_en: data.Category.map(cat => tx[cat.data.Name].en),
       category_vi: data.Category.map(cat => tx[cat.data.Name].vi),
+      category_km: data.Category.map(cat => tx[cat.data.Name].km),
       cities_en: cities.map(city => tx[city.Name].en),
       cities_vi: cities.map(city => tx[city.Name].vi),
+      cities_km: cities.map(city => tx[city.Name].km),
       neighborhoods_en: Object.keys(hoodsByCity).reduce((result, city) => {
         result[city] = hoodsByCity[city].map(hood => tx[hood.Name].en);
         return result;
       }, {}),
       neighborhoods_vi: Object.keys(hoodsByCity).reduce((result, city) => {
         result[city] = hoodsByCity[city].map(hood => tx[hood.Name].vi);
+        return result;
+      }, {}),
+      neighborhoods_km: Object.keys(hoodsByCity).reduce((result, city) => {
+        result[city] = hoodsByCity[city].map(hood => tx[hood.Name].km);
         return result;
       }, {}),
     };
