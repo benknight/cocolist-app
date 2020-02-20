@@ -1,11 +1,11 @@
 import cx from 'classnames';
 import _get from 'lodash/get';
 import { Link, graphql } from 'gatsby';
+import Img from 'gatsby-image';
 import React from 'react';
 import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
 import { FormattedMessage, injectIntl } from 'react-intl';
-import { EntityAvatar } from '@thumbtack/thumbprint-react';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import AddBusinessAction from '../components/AddBusinessAction';
 import BusinessCard from '../components/BusinessCard';
@@ -27,7 +27,6 @@ export const query = graphql`
         Business_record_match {
           data {
             Name
-            VNMM_rating_count
             URL_key
             Cover_photo {
               localFiles {
@@ -63,9 +62,11 @@ export const query = graphql`
             Name
             Link
             Logo {
-              thumbnails {
-                large {
-                  url
+              localFiles {
+                childImageSharp {
+                  fixed(width: 200, height: 200, cropFocus: CENTER) {
+                    ...GatsbyImageSharpFixed_noBase64
+                  }
                 }
               }
             }
@@ -173,12 +174,14 @@ const CityPage = ({
             {partner && (
               <div className="flex items-center mt6">
                 <a className="tp-link b" href={partner.data.Link}>
-                  <EntityAvatar
-                    imageUrl={partner.data.Logo[0].thumbnails.large.url}
-                    size="medium"
+                  <Img
+                    alt=""
+                    className="br2 w4 h4"
+                    fixed={_get(partner.data, 'Logo.localFiles[0].childImageSharp.fixed')}
+                    objectFit="contain"
                   />
                 </a>
-                <div className="ml3">
+                <div className="ml3 tp-body-2">
                   <FormattedMessage
                     id="partnership_with"
                     values={{
