@@ -94,7 +94,6 @@ export const query = graphql`
     Record_ID
     Name
     Facebook_link
-    VNMM_link
     URL_key
     Category {
       data {

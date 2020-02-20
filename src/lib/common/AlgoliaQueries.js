@@ -13,7 +13,6 @@ const businessQuery = `
           Record_ID
           Name
           URL_key
-          VNMM_rating_count
           Category {
             data {
               Name
@@ -106,7 +105,6 @@ function flatten(data) {
       slug: data.URL_key,
       name: data.Name,
       coco_points: _get(biz.survey, 'Coco_points') || 0,
-      vnmm_rating_count: data.VNMM_rating_count || 0,
       badges: biz.badges.map(badge => badge.key),
       badge_count: biz.badges.length,
       badges_en: biz.badges.map(badge => tx[badge.title].en),

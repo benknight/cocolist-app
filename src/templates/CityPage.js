@@ -83,13 +83,7 @@ export const query = graphql`
           Status: { eq: "Published" }
         }
       }
-      sort: {
-        fields: [
-          data___Coco_points
-          data___Business_record_match___data___VNMM_rating_count
-        ]
-        order: DESC
-      }
+      sort: { fields: [data___Coco_points], order: DESC }
     ) {
       edges {
         ...CityPageSurveyFragment
