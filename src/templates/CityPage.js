@@ -100,7 +100,7 @@ const CityPage = ({
   pageContext: { city, langKey, slug },
 }) => {
   const auth = useAuth();
-  const metaDescription = formatMessage(
+  const title = formatMessage(
     {
       id: 'find_businesses_headline',
     },
@@ -128,8 +128,7 @@ const CityPage = ({
   return (
     <>
       <Helmet>
-        <title>Cocolist – {formatMessage({ id: city })}</title>
-        <meta name="description" content={metaDescription} />
+        <title>{title} - Cocolist</title>
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`Cocolist – ${formatMessage({ id: city })}`} />
         <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
