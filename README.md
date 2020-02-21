@@ -6,4 +6,4 @@ Find more details about this project's mission here: https://cocolist.vn/about
 
 ## Contributing
 
-If you're interested in contributing code, please send an email to ben@cocolist.vn
+If you're interested in contributing code, please send an email to ben@cocolist.app

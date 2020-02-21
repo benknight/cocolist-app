@@ -54,7 +54,7 @@ const Header = ({ location, showSearch, ...props }) => {
   const homeURL = citySelection
     ? getLocalizedURL(`/${selectedCity.Slug}`, lang)
     : indexURL;
-  const feedbackMailto = `mailto:feedback@cocolist.vn?subject=${formatMessage({
+  const feedbackMailto = `mailto:feedback@cocolist.app?subject=${formatMessage({
     id: 'header_link_feedback',
   })}`;
 

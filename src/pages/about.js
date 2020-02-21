@@ -239,7 +239,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                 Cocolist partners with local organizations in order to source content,
                 ensure data accuracy, and help support those organizations. If you're
                 interested in adding data for your city, please contact us at{' '}
-                <a href="mailto:partners@cocolist.vn">partners@cocolist.vn</a>. We’re
+                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>. We’re
                 currently looking for a partners in Chiang Mai and Bali.
               </p>
             ) : (
@@ -247,7 +247,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                 Cocolist partners with local organizations in order to source content,
                 ensure data accuracy, and help support those organizations. If you're
                 interested in adding data for your city, please contact us at{' '}
-                <a href="mailto:partners@cocolist.vn">partners@cocolist.vn</a>. We’re
+                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>. We’re
                 currently looking for a partners in Chiang Mai and Bali.
               </p>
             )}
@@ -442,8 +442,8 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
           <p className="mt5 mb0 b tp-body-3">
             Inquiries
             <br />
-            <a className="link" href="mailto:xinchao@cocolist.vn">
-              xinchao@cocolist.vn
+            <a className="link" href="mailto:xinchao@cocolist.app">
+              xinchao@cocolist.app
             </a>
           </p>
         </section>

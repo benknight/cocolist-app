@@ -33,7 +33,7 @@ exports.pendingReviewNotification = functions.firestore
     const rejectUrl = `${base}/rejectReview?id=${context.params.reviewId}`;
     try {
       await mailTransport.sendMail({
-        from: 'Cocolist <noreply@cocolist.vn>',
+        from: 'Cocolist <noreply@cocolist.app>',
         to: 'makesaigongreenagain@gmail.com',
         subject: `New review submitted for ${data.business.name}`,
         text: `${JSON.stringify(
@@ -64,7 +64,7 @@ exports.approveReview = functions.https.onRequest(async (req, res) => {
     await docRef.delete();
     const user = await admin.auth().getUser(data.user.id);
     await mailTransport.sendMail({
-      from: 'Cocolist <noreply@cocolist.vn>',
+      from: 'Cocolist <noreply@cocolist.app>',
       to: user.email,
       subject:
         data.user.lang === 'vi'
