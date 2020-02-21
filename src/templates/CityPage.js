@@ -131,16 +131,19 @@ const CityPage = ({
         <title>{title} - Cocolist</title>
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`Cocolist – ${formatMessage({ id: city })}`} />
-        <meta property="og:image" content={`https://cocolist.vn${OPGPreviewImage}`} />
+        <meta property="og:image" content={`https://cocolist.app${OPGPreviewImage}`} />
         <meta
           property="og:url"
-          content={`https://cocolist.vn${getLocalizedURL('/', langKey)}`}
+          content={`https://cocolist.app${getLocalizedURL('/', langKey)}`}
         />
         <meta
           property="og:description"
           content="Find restaurants with plastic-free delivery, discounts for customers who bring their own containers, or free drinking water."
         />
-        <meta property="twitter:card" content={`https://cocolist.vn${OPGPreviewImage}`} />
+        <meta
+          property="twitter:card"
+          content={`https://cocolist.app${OPGPreviewImage}`}
+        />
       </Helmet>
       <Header location={location} showSearch={false} />
       <div className="relative">

@@ -72,8 +72,8 @@ exports.approveReview = functions.https.onRequest(async (req, res) => {
           : `Your review for ${data.business.name} has been approved`,
       text:
         data.user.lang === 'vi'
-          ? `Cảm ơn bạn đã đánh giá về ${data.business.name}. Bạn có thể xem nó tại https://cocolist.vn${data.business.url}`
-          : `Thank for your your review of ${data.business.name}. You can see it at https://cocolist.vn${data.business.url}`,
+          ? `Cảm ơn bạn đã đánh giá về ${data.business.name}. Bạn có thể xem nó tại https://cocolist.app${data.business.url}`
+          : `Thank for your your review of ${data.business.name}. You can see it at https://cocolist.app${data.business.url}`,
     });
     res.status(200).send('Success');
   } catch (error) {

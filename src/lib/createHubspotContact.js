@@ -10,7 +10,7 @@ export default function createHubspotContact(formData) {
     context: {
       hutk: getCookieValue('hubspotutk'),
       pageName: 'Sign up',
-      pageUri: 'https://cocolist.vn',
+      pageUri: 'https://cocolist.app',
     },
     fields: [
       {

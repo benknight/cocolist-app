@@ -5,7 +5,7 @@ module.exports = {
     author: 'Benjamin Knight',
     description: 'Find eco-conscious businesses in Vietnam',
     title: 'Cocolist',
-    siteUrl: 'https://cocolist.vn',
+    siteUrl: 'https://cocolist.app',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
