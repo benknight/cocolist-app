@@ -5,9 +5,9 @@ on:
   push:
     branches:
       - master
-  # schedule:
-  #   # Cron syntax cheat sheet: https://devhints.io/cron
-  #   - cron: '0 0 * * *' # Every midnight GMT
+  schedule:
+    # Cron syntax cheat sheet: https://devhints.io/cron
+    - cron: '0 0 * * 0' # Every Sunday midnight (GMT)
 
 jobs:
   deploy:
@@ -16,6 +16,10 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
+      - name: Setup Node
+        uses: actions/setup-node@master
+        with:
+          node_version: '13.x'
       - name: Install dependencies
         run: npm install
       - name: Build
