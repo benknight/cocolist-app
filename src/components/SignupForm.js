@@ -1,4 +1,5 @@
 import { graphql, useStaticQuery } from 'gatsby';
+import _uniqueId from 'lodash/uniqueId';
 import React, { useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
 import { ButtonRow, Dropdown, Label, TextInput } from '@thumbtack/thumbprint-react';
@@ -33,18 +34,29 @@ const SignupForm = props => {
   const [isSaving, setSaving] = useState(false);
   const [isSuccess, setSuccess] = useState(false);
   const [hasError, setError] = useState(false);
+
   const [formData, setFormData] = useState({
     email: '',
     firstName: '',
     lastName: '',
     district: '',
   });
+
   const {
     districts: { edges },
   } = useStaticQuery(query);
+
+  const formIds = {
+    district: _uniqueId('district'),
+    email: _uniqueId('email'),
+    firstNam: _uniqueId('firstName'),
+    lastName: _uniqueId('lastName'),
+  };
+
   if (isSuccess) {
     return <FormattedMessage id="signup_thanks" />;
   }
+
   return (
     <form
       onSubmit={async event => {
@@ -67,11 +79,11 @@ const SignupForm = props => {
       }}>
       {!auth.user && (
         <div className="mb4">
-          <Label for="email">
+          <Label for={formIds.email}>
             <FormattedMessage id="signin_email_label" />
           </Label>
           <TextInput
-            id="email"
+            id={formIds.email}
             isRequired
             onChange={email => {
               setFormData({ ...formData, email });
@@ -82,11 +94,11 @@ const SignupForm = props => {
         </div>
       )}
       <div className="mb4">
-        <Label for="firstName">
+        <Label for={formIds.firstName}>
           <FormattedMessage id="signup_first_name_label" />
         </Label>
         <TextInput
-          id="firstName"
+          id={formIds.firstName}
           isRequired
           onChange={firstName => setFormData({ ...formData, firstName })}
           type="text"
@@ -94,22 +106,22 @@ const SignupForm = props => {
         />
       </div>
       <div className="mb4">
-        <Label for="lastName">
+        <Label for={formIds.lastName}>
           <FormattedMessage id="signup_last_name_label" />
         </Label>
         <TextInput
-          id="lastName"
+          id={formIds.lastName}
           onChange={lastName => setFormData({ ...formData, lastName })}
           type="text"
           value={formData.lastName}
         />
       </div>
       <div className="mb4">
-        <Label for="district">
+        <Label for={formIds.district}>
           <FormattedMessage id="signup_district_label" />
         </Label>
         <Dropdown
-          id="district"
+          id={formIds.district}
           isFullWidth
           onChange={district => setFormData({ ...formData, district })}
           size="large"
