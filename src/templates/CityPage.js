@@ -31,7 +31,7 @@ export const query = graphql`
             Cover_photo {
               localFiles {
                 childImageSharp {
-                  fluid(maxWidth: 800, maxHeight: 500, cropFocus: CENTER) {
+                  fluid(maxWidth: 256, maxHeight: 160, cropFocus: CENTER) {
                     ...GatsbyImageSharpFluid_noBase64
                   }
                 }
@@ -40,7 +40,7 @@ export const query = graphql`
             Profile_photo {
               localFiles {
                 childImageSharp {
-                  fluid(maxWidth: 200, maxHeight: 200, cropFocus: CENTER) {
+                  fluid(maxWidth: 100, maxHeight: 100, cropFocus: CENTER) {
                     ...GatsbyImageSharpFluid_noBase64
                   }
                 }
@@ -64,7 +64,7 @@ export const query = graphql`
             Logo {
               localFiles {
                 childImageSharp {
-                  fixed(width: 200, height: 200, cropFocus: CENTER) {
+                  fixed(width: 64, height: 64, cropFocus: CENTER) {
                     ...GatsbyImageSharpFixed_noBase64
                   }
                 }

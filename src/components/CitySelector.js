@@ -24,9 +24,6 @@ const query = graphql`
                   fluid(maxWidth: 600, maxHeight: 375) {
                     ...GatsbyImageSharpFluid_noBase64
                   }
-                  fixed(width: 160, height: 100) {
-                    ...GatsbyImageSharpFixed_noBase64
-                  }
                 }
               }
             }

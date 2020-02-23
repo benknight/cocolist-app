@@ -129,7 +129,7 @@ export const query = graphql`
     Cover_photo {
       localFiles {
         childImageSharp {
-          fluid(maxWidth: 800, maxHeight: 480, cropFocus: CENTER) {
+          fluid(maxWidth: 600, maxHeight: 360, cropFocus: CENTER) {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
@@ -138,7 +138,7 @@ export const query = graphql`
     Profile_photo {
       localFiles {
         childImageSharp {
-          fluid(maxWidth: 480, maxHeight: 480, cropFocus: CENTER) {
+          fluid(maxWidth: 135, maxHeight: 135, cropFocus: CENTER) {
             ...GatsbyImageSharpFluid_noBase64
           }
         }
