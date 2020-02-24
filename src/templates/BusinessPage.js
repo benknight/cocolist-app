@@ -18,14 +18,14 @@ import Categories from '../components/Categories';
 import Header from '../components/Header';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
-import BusinessRenderData from '../lib/common/BusinessRenderData';
+import SurveyRenderData from '../lib/common/SurveyRenderData';
 import getSurveyDetails from '../lib/getSurveyDetails';
 import useFirebase from '../lib/useFirebase';
 import useLocalStorage from '../lib/useLocalStorage';
 import styles from './BusinessPage.module.scss';
 
 export const query = graphql`
-  fragment FBSurveyDataFragment on AirtableData {
+  fragment SurveyDataFragment on AirtableData {
     From_the_business
     From_the_editor
     Coco_points
@@ -98,7 +98,6 @@ export const query = graphql`
     Category {
       data {
         Name
-        Businesses
       }
     }
     Neighborhood {
@@ -144,15 +143,11 @@ export const query = graphql`
         }
       }
     }
-    Survey {
-      data {
-        ...FBSurveyDataFragment
-      }
-    }
+    ...SurveyDataFragment
   }
 
   query($slug: String!) {
-    airtable(table: { eq: "Businesses" }, data: { URL_key: { eq: $slug } }) {
+    airtable(table: { eq: "Survey" }, data: { URL_key: { eq: $slug } }) {
       data {
         ...BusinessDataFragment
       }
@@ -170,12 +165,12 @@ const BusinessPage = props => {
 
   const firebase = useFirebase();
   const { formatMessage } = useIntl();
-  const biz = new BusinessRenderData(bizData, langKey);
+  const biz = new SurveyRenderData(bizData, langKey);
   const [citySelection] = useLocalStorage('citySelection');
   const localNeighborhoods = biz.neighborhoods
     .filter(hood => hood.City[0].data.Name === citySelection)
     .map(hood => formatMessage({ id: hood.Name }));
-  const details = biz.survey ? getSurveyDetails(biz.survey) : [];
+  const details = getSurveyDetails(biz);
   const [reviews, setReviews] = useState(null);
   const reviewsMean =
     reviews && reviews.length > 0 ? _mean(reviews.map(r => r.rating)).toFixed(1) : null;
@@ -203,11 +198,7 @@ const BusinessPage = props => {
     return () => (isMounted = false);
   }, [firebase, biz.id]);
 
-  const airtableForm = `https://airtable.com/shrw4zfDcry512acj?${_get(
-    biz.survey,
-    'Survey_prefill_query_string',
-    '',
-  )}`;
+  const airtableForm = `https://airtable.com/shrw4zfDcry512acj?${bizData.Survey_prefill_query_string}`;
 
   return (
     <div className="bg-gray-200">
@@ -311,7 +302,7 @@ const BusinessPage = props => {
                             id={badge.description}
                             values={{
                               business: biz.name,
-                              byoc_discount: biz.survey.BYOC_discount_amount || '',
+                              byoc_discount: biz.BYOC_discount_amount || '',
                             }}
                           />
                         </div>
@@ -346,26 +337,26 @@ const BusinessPage = props => {
 
             {/* From the business */}
 
-            {_get(biz, 'survey.From_the_business') && (
+            {biz.From_the_business && (
               <div className="mb5">
                 <div className="tp-title-4 mb3">
                   <FormattedMessage id="from_the_business_heading" />
                 </div>
                 <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                  {biz.survey.From_the_business}
+                  {biz.From_the_business}
                 </div>
               </div>
             )}
 
             {/* From the editor */}
 
-            {_get(biz, 'survey.From_the_editor') && (
+            {biz.From_the_editor && (
               <div className="mb5">
                 <div className="tp-title-4 mb3">
                   <FormattedMessage id="from_the_editor_heading" />
                 </div>
                 <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                  {biz.survey.From_the_editor}
+                  {biz.From_the_editor}
                 </div>
               </div>
             )}
@@ -402,30 +393,6 @@ const BusinessPage = props => {
               </div>
               <ReviewForm biz={biz} location={props.location} />
             </div>
-
-            {/* No survey */}
-
-            {!biz.survey && (
-              <div className="lh-copy bt b-gray-300 pa4 tc mt4 ph3 s_ph5 flex flex-column items-center">
-                <NotificationAlertsWarningMedium />
-                <h3 className="tp-title-4 mt3 mb2">
-                  <FormattedMessage id="business_no_data_title" />
-                </h3>
-                <p className="tp-body-2 mb3 mw7">
-                  <FormattedMessage
-                    id="business_no_data_description"
-                    values={{ business: biz.name }}
-                  />
-                </p>
-                <Button
-                  icon={<ContentActionsEditSmall />}
-                  onClick={() => window.open(airtableForm)}
-                  size="small"
-                  theme="primary">
-                  <FormattedMessage id="edit_business_action_label" />
-                </Button>
-              </div>
-            )}
 
             {/* Survey details */}
 

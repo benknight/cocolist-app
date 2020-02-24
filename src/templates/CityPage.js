@@ -14,7 +14,7 @@ import Map from '../components/Map';
 import Search from '../components/Search';
 import SignupForm from '../components/SignupForm';
 import { badges } from '../lib/common/Badges';
-import BusinessRenderData from '../lib/common/BusinessRenderData';
+import SurveyRenderData from '../lib/common/SurveyRenderData';
 import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
@@ -23,31 +23,27 @@ export const query = graphql`
   fragment CityPageSurveyFragment on AirtableEdge {
     node {
       data {
-        ...FBSurveyDataFragment
-        Business_record_match {
-          data {
-            Name
-            URL_key
-            Cover_photo {
-              localFiles {
-                childImageSharp {
-                  fluid(maxWidth: 256, maxHeight: 160, cropFocus: CENTER) {
-                    ...GatsbyImageSharpFluid_noBase64
-                  }
-                }
-              }
-            }
-            Profile_photo {
-              localFiles {
-                childImageSharp {
-                  fluid(maxWidth: 100, maxHeight: 100, cropFocus: CENTER) {
-                    ...GatsbyImageSharpFluid_noBase64
-                  }
-                }
+        Name
+        URL_key
+        Cover_photo {
+          localFiles {
+            childImageSharp {
+              fluid(maxWidth: 256, maxHeight: 160, cropFocus: CENTER) {
+                ...GatsbyImageSharpFluid_noBase64
               }
             }
           }
         }
+        Profile_photo {
+          localFiles {
+            childImageSharp {
+              fluid(maxWidth: 100, maxHeight: 100, cropFocus: CENTER) {
+                ...GatsbyImageSharpFluid_noBase64
+              }
+            }
+          }
+        }
+        ...SurveyDataFragment
       }
     }
   }
@@ -78,9 +74,8 @@ export const query = graphql`
       filter: {
         table: { eq: "Survey" }
         data: {
-          Business_record_match: {
-            elemMatch: { data: { Record_ID: { ne: null }, Cities: { in: [$city] } } }
-          }
+          Record_ID: { ne: null }
+          Cities: { in: [$city] }
           Status: { eq: "Published" }
         }
       }
@@ -216,10 +211,7 @@ const CityPage = ({
             .map(({ node: { data: survey } }) => survey)
             .filter(survey => badge.test(survey))
             .filter(survey => {
-              return !!_get(
-                survey,
-                'Business_record_match[0].data.Cover_photo.localFiles[0].childImageSharp.fluid',
-              );
+              return !!_get(survey, 'Cover_photo.localFiles[0].childImageSharp.fluid');
             }),
           badge.key + (process.env.GATSBY_BUILD_TIMESTAMP || Date.now()),
         );
@@ -272,10 +264,9 @@ const CityPage = ({
             <div
               className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
-              {surveys.slice(0, 8).map((survey, index) => {
-                return survey.Business_record_match.map(
-                  ({ data }) => new BusinessRenderData(data, langKey),
-                ).map(biz => (
+              {surveys.slice(0, 8).map(survey => {
+                const biz = new SurveyRenderData(survey, langKey);
+                return (
                   <Link
                     className="db pr2 pv4 w6 flex-shrink-0"
                     key={biz.name}
@@ -285,7 +276,7 @@ const CityPage = ({
                       <div className="b">{biz.name}</div>
                     </div>
                   </Link>
-                ));
+                );
               })}
               {surveys.length > 8 && (
                 <div className="pv4 flex-shrink-0 w6 pr1">

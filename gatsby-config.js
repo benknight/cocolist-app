@@ -66,16 +66,6 @@ module.exports = {
           // in alphabetical order:
           {
             baseId: process.env.AIRTABLE_BASE_APP,
-            tableName: 'Businesses',
-            tableView: process.env.NODE_ENV === 'development' ? 'Dev data' : undefined,
-            tableLinks: ['Survey', 'Neighborhood', 'Category', 'Locations'],
-            mapping: {
-              Cover_photo: 'fileNode',
-              Profile_photo: 'fileNode',
-            },
-          },
-          {
-            baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Categories',
           },
           {
@@ -89,7 +79,7 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Locations',
-            tableLinks: ['Business', 'City', 'Neighborhood'],
+            tableLinks: ['Survey', 'City', 'Neighborhood'],
           },
           {
             baseId: process.env.AIRTABLE_BASE_APP,
@@ -99,9 +89,11 @@ module.exports = {
           {
             baseId: process.env.AIRTABLE_BASE_APP,
             tableName: 'Survey',
-            tableLinks: ['Business_record_match'],
+            tableLinks: ['Neighborhood', 'Category', 'Locations'],
             mapping: {
               Attachments: 'fileNode',
+              Cover_photo: 'fileNode',
+              Profile_photo: 'fileNode',
             },
           },
           {

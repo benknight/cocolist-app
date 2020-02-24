@@ -2,17 +2,27 @@ const _get = require('lodash/get');
 const _groupBy = require('lodash/groupBy');
 const _keyBy = require('lodash/keyBy');
 const _uniqBy = require('lodash/uniqBy');
-const BusinessRenderData = require('./BusinessRenderData');
+const SurveyRenderData = require('./SurveyRenderData');
 
 const businessQuery = `
 {
-  businesses: allAirtable(filter: { table: { eq: "Businesses" } }) {
+  surveys: allAirtable(filter: { table: { eq: "Survey" } }) {
     edges {
       node {
         data {
+          Status
           Record_ID
           Name
           URL_key
+          Coco_points
+          BYO_container_discount
+          No_plastic_bags
+          No_plastic_straws
+          No_plastic_bottles
+          Green_delivery
+          Free_drinking_water
+          Kitchen_points
+          Food_waste_programs
           Category {
             data {
               Name
@@ -41,20 +51,6 @@ const businessQuery = `
                   }
                 }
               }
-            }
-          }
-          Survey {
-            data {
-              Coco_points
-              BYO_container_discount
-              No_plastic_bags
-              No_plastic_straws
-              No_plastic_bottles
-              Green_delivery
-              Free_drinking_water
-              Status
-              Kitchen_points
-              Food_waste_programs
             }
           }
         }
@@ -94,8 +90,8 @@ function flatten(data) {
     data.translations.edges.map(({ node: { data } }) => data),
     'Key',
   );
-  return data.businesses.edges.map(({ node: { data } }) => {
-    const biz = new BusinessRenderData(data);
+  return data.surveys.edges.map(({ node: { data } }) => {
+    const biz = new SurveyRenderData(data);
     const hoodsByCity = _groupBy(biz.neighborhoods, 'City[0].data.Name');
     const cities = _uniqBy(
       biz.neighborhoods.map(hood => hood.City[0].data),

@@ -20,13 +20,7 @@ const query = graphql`
     locations: allAirtable(
       filter: {
         table: { eq: "Locations" }
-        data: {
-          Business: {
-            elemMatch: {
-              data: { Survey: { elemMatch: { data: { Status: { eq: "Published" } } } } }
-            }
-          }
-        }
+        data: { Survey: { elemMatch: { data: { Status: { eq: "Published" } } } } }
       }
     ) {
       edges {
@@ -34,16 +28,12 @@ const query = graphql`
           data {
             Name
             LatLng
-            Business {
+            Survey {
               data {
                 Location_count
                 Name
-                Survey {
-                  data {
-                    ...FBSurveyDataFragment
-                  }
-                }
                 URL_key
+                ...SurveyDataFragment
               }
             }
           }
@@ -146,14 +136,13 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
       // Add locations to map
       locations
         .filter(data => {
-          const survey = _get(data, 'Business[0].data.Survey[0].data');
+          const survey = _get(data, 'Survey[0].data');
           return survey && getBadgesFromSurvey(survey).length > 0;
         })
         .forEach(loc => {
-          const biz = loc.Business[0].data,
+          const biz = loc.Survey[0].data,
             bizLink = getLocalizedURL('/' + biz.URL_key, lang),
-            survey = _get(biz, 'Survey[0].data'),
-            badges = getBadgesFromSurvey(survey),
+            badges = getBadgesFromSurvey(biz),
             lat = loc.LatLng.split(',')[0].trim(),
             lng = loc.LatLng.split(',')[1].trim(),
             marker = new maps.Marker({

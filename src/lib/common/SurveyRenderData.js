@@ -3,7 +3,7 @@ const _uniqBy = require('lodash/uniqBy');
 const { getLocalizedURL } = require('./i18n');
 const { getBadgesFromSurvey } = require('./Badges');
 
-class BusinessRenderData {
+class SurveyRenderData {
   constructor(data, langKey) {
     this.data = data; // Airtable data
     this.langKey = langKey;
@@ -29,17 +29,8 @@ class BusinessRenderData {
     return this.data.Name;
   }
 
-  get survey() {
-    return (this.data.Survey || [])
-      .map(({ data }) => data)
-      .find(({ Status }) => Status === 'Published');
-  }
-
   get badges() {
-    if (this.survey) {
-      return getBadgesFromSurvey(this.survey);
-    }
-    return [];
+    return getBadgesFromSurvey(this.data);
   }
 
   get cities() {
@@ -68,10 +59,10 @@ class BusinessRenderData {
   }
 
   get photos() {
-    return (_get(this.survey, 'Attachments.localFiles') || [])
+    return (_get(this.data, 'Attachments.localFiles') || [])
       .map((photo, index) => ({
         fixed: photo.childImageSharp.fixed,
-        raw: this.survey.Attachments.raw[index],
+        raw: this.data.Attachments.raw[index],
       }))
       .reverse();
   }
@@ -81,4 +72,4 @@ class BusinessRenderData {
   }
 }
 
-module.exports = BusinessRenderData;
+module.exports = SurveyRenderData;

@@ -29,7 +29,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const { data } = await graphql(`
     {
-      businesses: allAirtable(filter: { table: { eq: "Businesses" } }) {
+      businesses: allAirtable(filter: { table: { eq: "Survey" } }) {
         edges {
           node {
             data {
@@ -57,7 +57,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
   const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL_key');
 
-  console.log('Checking for URL key duplicates in business data...');
+  console.log('Checking for URL key duplicates in survey data...');
 
   let hasDuplicates = false;
 

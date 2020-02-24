@@ -7,10 +7,9 @@ import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
 import BusinessCard from '../components/BusinessCard';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
-import { badges } from '../lib/common/Badges';
-import BusinessRenderData from '../lib/common/BusinessRenderData';
+import { badges, getBadgesFromSurvey } from '../lib/common/Badges';
+import SurveyRenderData from '../lib/common/SurveyRenderData';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
-import getBusinessesFromSurveyData from '../lib/getBusinessesFromSurveyData';
 
 export const query = graphql`
   query($city: String!) {
@@ -19,9 +18,8 @@ export const query = graphql`
         table: { eq: "Survey" }
         data: {
           Status: { eq: "Published" }
-          Business_record_match: {
-            elemMatch: { data: { Record_ID: { ne: null }, Cities: { in: [$city] } } }
-          }
+          Record_ID: { ne: null }
+          Cities: { in: [$city] }
         }
       }
       sort: { fields: data___Coco_points, order: DESC }
@@ -29,12 +27,8 @@ export const query = graphql`
       edges {
         node {
           data {
-            ...FBSurveyDataFragment
-            Business_record_match {
-              data {
-                ...BusinessDataFragment
-              }
-            }
+            ...BusinessDataFragment
+            ...SurveyDataFragment
           }
         }
       }
@@ -48,10 +42,8 @@ const ListPage = ({
   location,
   pageContext: { city, citySlug, langKey, slug },
 }) => {
+  // TODO: Support non-Badge list pages
   const badge = badges.find(b => b.linkSlug === slug);
-  const businesses = getBusinessesFromSurveyData(
-    data.allAirtable.edges.filter(edge => badge.test(edge.node.data)),
-  );
 
   const navOptions = {
     byoc: 'byoc_discount_label',
@@ -118,8 +110,20 @@ const ListPage = ({
       </Wrap>
       <Wrap bleedBelow="medium">
         <div className="grid grid-wide l_mb6">
-          {businesses
-            .map(biz => new BusinessRenderData(biz, parseLangFromURL(location.pathname)))
+          {data.allAirtable.edges
+            .filter(edge => badge.test(edge.node.data))
+            .map(
+              edge =>
+                new SurveyRenderData(edge.node.data, parseLangFromURL(location.pathname)),
+            )
+            .sort((a, b) => {
+              const badgesA = getBadgesFromSurvey(a);
+              const badgesB = getBadgesFromSurvey(b);
+              if (badgesA.length === badgesB.length) {
+                return b.cocoPoints - a.cocoPoints;
+              }
+              return badgesB.length - badgesA.length;
+            })
             .filter(biz => {
               if (!biz.coverPhoto) {
                 console.error(`No thumbnail found for ${biz.name}`);
@@ -127,7 +131,7 @@ const ListPage = ({
               }
               return true;
             })
-            .map((biz, index) => (
+            .map(biz => (
               <div className="m_col-6 l_col-4" key={biz.id}>
                 <Link className="db black" to={biz.url}>
                   <div className="mb3 m_mb5 pa2 m_pa0">
