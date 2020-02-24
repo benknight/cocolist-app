@@ -2,7 +2,7 @@
   "name": "cocolist",
   "private": true,
   "scripts": {
-    "build": "GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
+    "build": "gatsby clean && GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
     "build-algolia": "BUILD_ALGOLIA=true npm run build",
     "build-dev": "DEV=true npm run build",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
