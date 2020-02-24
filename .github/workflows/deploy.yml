@@ -19,7 +19,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@master
         with:
-          node_version: '13.x'
+          node-version: '13.x'
       - name: Install dependencies
         run: npm install
       - name: Build
