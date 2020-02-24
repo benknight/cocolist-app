@@ -170,7 +170,7 @@ const BusinessPage = props => {
   const localNeighborhoods = biz.neighborhoods
     .filter(hood => hood.City[0].data.Name === citySelection)
     .map(hood => formatMessage({ id: hood.Name }));
-  const details = getSurveyDetails(biz);
+  const details = getSurveyDetails(bizData);
   const [reviews, setReviews] = useState(null);
   const reviewsMean =
     reviews && reviews.length > 0 ? _mean(reviews.map(r => r.rating)).toFixed(1) : null;
