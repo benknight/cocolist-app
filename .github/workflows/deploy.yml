@@ -35,7 +35,7 @@ jobs:
           GATSBY_HUBSPOT_BETA_FORM_GUID: ${{ secrets.GATSBY_HUBSPOT_BETA_FORM_GUID }}
           GATSBY_HUBSPOT_PORTAL_ID: ${{ secrets.GATSBY_HUBSPOT_PORTAL_ID }}
       - name: Deploy to Firebase
-        uses: w9jds/firebase-action@v1.1.0
+        uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
