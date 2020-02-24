@@ -15,3 +15,12 @@ export const wrapPageElement = ({ element, props }) => (
     <AuthProvider>{element}</AuthProvider>
   </IntlProvider>
 );
+
+export const onRenderBody = ({ setPostBodyComponents }) => {
+  setPostBodyComponents([
+    <script
+      data-goatcounter="https://cocolist.goatcounter.com/count"
+      async
+      src="//gc.zgo.at/count.js"></script>,
+  ]);
+};
