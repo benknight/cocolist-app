@@ -6,7 +6,7 @@ const SurveyRenderData = require('./SurveyRenderData');
 
 const businessQuery = `
 {
-  surveys: allAirtable(filter: { table: { eq: "Survey" } }) {
+  surveys: allAirtable(filter: { table: { eq: "Survey" }, data: { Status: { eq: "Published" } } }) {
     edges {
       node {
         data {
