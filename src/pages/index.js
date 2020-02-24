@@ -41,6 +41,15 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
             <FormattedMessage id="select_city_label" />
           </div>
           <CitySelector location={location} />
+          {langKey === 'en' && (
+            <div className="tp-body-2 tc mv4">
+              Don't see your city here?{' '}
+              <a href="mailto:partners@cocolist.app">Help us add it!</a>{' '}
+              <div className="dib">
+                We're currently looking for partners in Bali, Chiang Mai.
+              </div>
+            </div>
+          )}
         </div>
       </Wrap>
     </>
