@@ -262,7 +262,7 @@ const CityPage = ({
               </div>
             </div>
             <div
-              className="flex flex-nowrap overflow-hidden w-100 l_w-60 ph3 l_ph0"
+              className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
               {surveys.slice(0, 8).map(survey => {
                 const biz = new SurveyRenderData(survey, langKey);
