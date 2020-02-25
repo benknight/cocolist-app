@@ -1,7 +1,6 @@
 import cx from 'classnames';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
-import _get from 'lodash/get';
 import _mean from 'lodash/mean';
 import React, { useState, useEffect } from 'react';
 import Helmet from 'react-helmet';
@@ -10,10 +9,8 @@ import {
   ContentActionsEditSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
-  NotificationAlertsWarningMedium,
 } from '@thumbtack/thumbprint-icons';
 import { TextButton } from '@thumbtack/thumbprint-react';
-import Button from '../components/Button';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
 import ReviewForm from '../components/ReviewForm';
@@ -21,7 +18,7 @@ import StarRating from '../components/StarRating';
 import SurveyRenderData from '../lib/common/SurveyRenderData';
 import getSurveyDetails from '../lib/getSurveyDetails';
 import useFirebase from '../lib/useFirebase';
-import useLocalStorage from '../lib/useLocalStorage';
+import useCitySelection from '../lib/useCitySelection';
 import styles from './BusinessPage.module.scss';
 
 export const query = graphql`
@@ -166,9 +163,9 @@ const BusinessPage = props => {
   const firebase = useFirebase();
   const { formatMessage } = useIntl();
   const biz = new SurveyRenderData(bizData, langKey);
-  const [citySelection] = useLocalStorage('citySelection');
+  const [selectedCity] = useCitySelection();
   const localNeighborhoods = biz.neighborhoods
-    .filter(hood => hood.City[0].data.Name === citySelection)
+    .filter(hood => hood.City[0].data.Name === selectedCity.selection)
     .map(hood => formatMessage({ id: hood.Name }));
   const details = getSurveyDetails(bizData);
   const [reviews, setReviews] = useState(null);

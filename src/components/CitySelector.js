@@ -4,7 +4,7 @@ import Img from 'gatsby-image';
 import React from 'react';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
-import useLocalStorage from '../lib/useLocalStorage';
+import useCitySelection from '../lib/useCitySelection';
 import styles from './CitySelector.module.scss';
 
 const query = graphql`
@@ -40,7 +40,7 @@ const query = graphql`
 
 const CitySelector = injectIntl(
   ({ children, className, location, intl: { formatMessage }, variant }) => {
-    const [, setCitySelection] = useLocalStorage('citySelection');
+    const [, setCitySelection] = useCitySelection();
     const data = useStaticQuery(query);
     const langKey = parseLangFromURL(location.pathname);
 

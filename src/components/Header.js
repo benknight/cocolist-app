@@ -1,5 +1,5 @@
 import cx from 'classnames';
-import { Link, navigate, useStaticQuery, graphql } from 'gatsby';
+import { Link, navigate } from 'gatsby';
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { FormattedMessage, useIntl } from 'react-intl';
@@ -13,7 +13,7 @@ import logo from '../assets/logo.svg';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import useBreakpoint from '../lib/useBreakpoint';
-import useLocalStorage from '../lib/useLocalStorage';
+import useCitySelection from '../lib/useCitySelection';
 import AddBusinessAction from './AddBusinessAction';
 import LangSwitch from './LangSwitch';
 import Search from './Search';
@@ -23,35 +23,15 @@ import styles from './Header.module.scss';
 const Header = ({ location, showSearch, ...props }) => {
   const auth = useAuth();
   const breakpoint = useBreakpoint();
-  const [citySelection] = useLocalStorage('citySelection');
+  const [selectedCity] = useCitySelection();
   const { formatMessage } = useIntl();
   const lang = parseLangFromURL(location.pathname);
   const [isScrolled, setScrolled] = useState(false);
   const [isNavExpanded, setNavExpanded] = useState(false);
-  const { cities } = useStaticQuery(graphql`
-    {
-      cities: allAirtable(
-        filter: { table: { eq: "Cities" }, data: { Published: { eq: true } } }
-      ) {
-        edges {
-          node {
-            data {
-              Name
-              Slug
-            }
-          }
-        }
-      }
-    }
-  `);
-
-  const selectedCity =
-    citySelection &&
-    cities.edges.map(edge => edge.node.data).find(data => data.Name === citySelection);
 
   // URLs
   const indexURL = getLocalizedURL('/', lang);
-  const homeURL = citySelection
+  const homeURL = selectedCity
     ? getLocalizedURL(`/${selectedCity.Slug}`, lang)
     : indexURL;
   const feedbackMailto = `mailto:feedback@cocolist.app?subject=${formatMessage({
@@ -102,7 +82,6 @@ const Header = ({ location, showSearch, ...props }) => {
                 isNavExpanded ? <NavigationCaretUpTiny /> : <NavigationCaretDownTiny />
               }
               onClick={() => setNavExpanded(!isNavExpanded)}
-              title="Change city"
               theme="inherit"
             />
           </div>
@@ -115,7 +94,7 @@ const Header = ({ location, showSearch, ...props }) => {
             </div>
           )}
           <div className="mh2 s_mh3 nowrap">
-            {citySelection && location.pathname !== indexURL && (
+            {location.pathname !== indexURL && (
               <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
                 {({ onClick, ...tooltipProps }) => (
                   <TextButton
@@ -125,7 +104,11 @@ const Header = ({ location, showSearch, ...props }) => {
                       navigate(indexURL);
                       onClick();
                     }}>
-                    <FormattedMessage id={citySelection} />
+                    {selectedCity ? (
+                      <FormattedMessage id={selectedCity.selection} />
+                    ) : (
+                      <FormattedMessage id="change_location_label" />
+                    )}
                   </TextButton>
                 )}
               </Tooltip>
