@@ -164,9 +164,11 @@ const BusinessPage = props => {
   const { formatMessage } = useIntl();
   const biz = new SurveyRenderData(bizData, langKey);
   const [selectedCity] = useCitySelection();
-  const localNeighborhoods = biz.neighborhoods
-    .filter(hood => hood.City[0].data.Name === selectedCity.selection)
-    .map(hood => formatMessage({ id: hood.Name }));
+  const localNeighborhoods = selectedCity
+    ? biz.neighborhoods
+        .filter(hood => hood.City[0].data.Name === selectedCity.selection)
+        .map(hood => formatMessage({ id: hood.Name }))
+    : [];
   const details = getSurveyDetails(bizData);
   const [reviews, setReviews] = useState(null);
   const reviewsMean =
