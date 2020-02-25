@@ -110,6 +110,7 @@ function flatten(data) {
       category_en: data.Category.map(cat => tx[cat.data.Name].en),
       category_vi: data.Category.map(cat => tx[cat.data.Name].vi),
       category_km: data.Category.map(cat => tx[cat.data.Name].km),
+      cities: cities.map(city => city.Name),
       cities_en: cities.map(city => tx[city.Name].en),
       cities_vi: cities.map(city => tx[city.Name].vi),
       cities_km: cities.map(city => tx[city.Name].km),
