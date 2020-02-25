@@ -21,8 +21,12 @@ const query = graphql`
             Cover {
               localFiles {
                 childImageSharp {
-                  fluid(maxWidth: 600, maxHeight: 375) {
-                    ...GatsbyImageSharpFluid_noBase64
+                  fluid(
+                    maxWidth: 600
+                    maxHeight: 375
+                    srcSetBreakpoints: [480, 700, 1024]
+                  ) {
+                    ...GatsbyImageSharpFluid_withWebp_noBase64
                   }
                 }
               }

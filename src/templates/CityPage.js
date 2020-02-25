@@ -29,7 +29,7 @@ export const query = graphql`
           localFiles {
             childImageSharp {
               fluid(maxWidth: 256, maxHeight: 160, cropFocus: CENTER) {
-                ...GatsbyImageSharpFluid_noBase64
+                ...GatsbyImageSharpFluid_withWebp_noBase64
               }
             }
           }
@@ -38,7 +38,7 @@ export const query = graphql`
           localFiles {
             childImageSharp {
               fluid(maxWidth: 100, maxHeight: 100, cropFocus: CENTER) {
-                ...GatsbyImageSharpFluid_noBase64
+                ...GatsbyImageSharpFluid_withWebp_noBase64
               }
             }
           }
@@ -61,7 +61,7 @@ export const query = graphql`
               localFiles {
                 childImageSharp {
                   fixed(width: 64, height: 64, cropFocus: CENTER) {
-                    ...GatsbyImageSharpFixed_noBase64
+                    ...GatsbyImageSharpFixed_withWebp_noBase64
                   }
                 }
               }
@@ -262,7 +262,7 @@ const CityPage = ({
               </div>
             </div>
             <div
-              className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
+              className="flex flex-nowrap overflow-hidden w-100 l_w-60 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
               {surveys.slice(0, 8).map(survey => {
                 const biz = new SurveyRenderData(survey, langKey);
