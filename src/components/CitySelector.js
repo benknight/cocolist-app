@@ -62,7 +62,7 @@ const CitySelector = injectIntl(
               <div
                 className={cx(
                   styles.text,
-                  'absolute top0 bottom0 right0 left0 white flex items-center justify-center',
+                  'absolute top0 bottom0 right0 left0 white flex items-center justify-center pa4 tc',
                 )}>
                 <FormattedMessage id={city.Name} />
               </div>
