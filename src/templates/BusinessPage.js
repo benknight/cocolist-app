@@ -202,12 +202,7 @@ const BusinessPage = props => {
   return (
     <div className="bg-gray-200">
       <Helmet>
-        <title>
-          {biz.name} &ndash;{' '}
-          {formatMessage({
-            id: 'eco_friendly_biz',
-          })}
-        </title>
+        <title>{biz.name} &ndash; Cocolist</title>
         {/* TODO: Add social meta tags */}
       </Helmet>
 

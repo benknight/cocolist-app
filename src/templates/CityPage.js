@@ -53,6 +53,15 @@ export const query = graphql`
         Name
         Map_center
         Map_zoom
+        Cover {
+          raw {
+            thumbnails {
+              full {
+                url
+              }
+            }
+          }
+        }
         Partners {
           data {
             Name
@@ -97,7 +106,7 @@ const CityPage = ({
   const auth = useAuth();
   const title = formatMessage(
     {
-      id: 'find_businesses_headline',
+      id: 'city_page_title',
     },
     { city: formatMessage({ id: city }) },
   );
@@ -119,17 +128,18 @@ const CityPage = ({
 
   const pushAddBizPromoToTop = data.surveys.edges.length < 30;
   const partner = _get(data, 'city.data.Partners[0]');
+  const ogImage = _get(data, 'city.data.Cover.raw[0].thumbnails.full.url');
 
   return (
     <>
       <Helmet>
         <title>{title} - Cocolist</title>
         <meta property="fb:app_id" content="375503033345734" />
-        <meta property="og:title" content={`Cocolist – ${formatMessage({ id: city })}`} />
-        <meta property="og:image" content={`https://cocolist.app${OPGPreviewImage}`} />
+        <meta property="og:title" content={`${title} – Cocolist`} />
+        <meta property="og:image" content={ogImage} />
         <meta
           property="og:url"
-          content={`https://cocolist.app${getLocalizedURL('/', langKey)}`}
+          content={`https://cocolist.app${getLocalizedURL(`/${slug}`, langKey)}`}
         />
         <meta
           property="og:description"
@@ -158,7 +168,7 @@ const CityPage = ({
               <h1 className="tp-title-1 mb3">
                 <FormattedMessage
                   id="find_businesses_headline"
-                  values={{ city: formatMessage({ id: data.city.data.Name }) }}
+                  values={{ city: formatMessage({ id: city }) }}
                 />
               </h1>
             </div>
