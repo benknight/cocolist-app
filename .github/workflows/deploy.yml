@@ -16,7 +16,18 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
-      - name: Use Gatsby cache
+      - name: Cache node modules
+        uses: actions/cache@master
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
+      - name: Preserve Gatsby cache
         uses: actions/cache@master
         with:
           path: .cache
