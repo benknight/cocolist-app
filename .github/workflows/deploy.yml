@@ -16,6 +16,11 @@ jobs:
     steps:
       - name: Checkout repo
         uses: actions/checkout@master
+      - name: Use Gatsby cache
+        uses: actions/cache@master
+        with:
+          path: .cache
+          key: gatsby-cache
       - name: Setup Node
         uses: actions/setup-node@master
         with:
