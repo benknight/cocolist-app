@@ -54,12 +54,8 @@ export const query = graphql`
         Map_center
         Map_zoom
         Cover {
-          raw {
-            thumbnails {
-              full {
-                url
-              }
-            }
+          localFiles {
+            publicURL
           }
         }
         Partners {
@@ -128,7 +124,7 @@ const CityPage = ({
 
   const pushAddBizPromoToTop = data.surveys.edges.length < 30;
   const partner = _get(data, 'city.data.Partners[0]');
-  const ogImage = _get(data, 'city.data.Cover.raw[0].thumbnails.full.url');
+  const ogImage = _get(data, 'city.data.Cover.localFiles[0].publicURL');
 
   return (
     <>
@@ -136,7 +132,7 @@ const CityPage = ({
         <title>{title} - Cocolist</title>
         <meta property="fb:app_id" content="375503033345734" />
         <meta property="og:title" content={`${title} – Cocolist`} />
-        <meta property="og:image" content={ogImage} />
+        <meta property="og:image" content={`https://cocolist.app${ogImage}`} />
         <meta
           property="og:url"
           content={`https://cocolist.app${getLocalizedURL(`/${slug}`, langKey)}`}
