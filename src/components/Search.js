@@ -27,6 +27,7 @@ import {
 } from '@thumbtack/thumbprint-react';
 import { badges } from '../lib/common/Badges';
 import { parseLangFromURL, getLocalizedURL } from '../lib/common/i18n';
+import useCitySelection from '../lib/useCitySelection';
 import styles from './Search.module.scss';
 
 const badgesByKey = _keyBy(badges, 'key');
@@ -169,10 +170,11 @@ const BusinessHit = ({ hit }) => {
   );
 };
 
-function Search({ city, className, location, size, ...props }) {
+function Search({ className, location, size, ...props }) {
   const ref = createRef();
   const lang = parseLangFromURL(location.pathname);
   const [query, setQuery] = useState('');
+  const [selectedCity] = useCitySelection();
   const showResults = query.length > 0;
   return (
     <InstantSearch
@@ -180,7 +182,7 @@ function Search({ city, className, location, size, ...props }) {
       indexName={indexName}
       onSearchStateChange={({ query }) => setQuery(query || '')}
       root={{ Root, props: { ref } }}>
-      {size === 'large' && city && <Configure filters={`cities:"${city}"`} />}
+      {selectedCity && <Configure filters={`cities:"${selectedCity.name}"`} />}
       <div className={cx(className, { [styles.large]: size === 'large' })}>
         <div className="relative z-1">
           <SearchInput location={location} size={size} />
@@ -201,15 +203,15 @@ function Search({ city, className, location, size, ...props }) {
                 attribute={`badges_${lang}`}
                 transformItems={items => items.sort((a, b) => b.count - a.count)}
               /> */}
-              {!city && (
+              {!selectedCity && (
                 <RefinementList
                   attribute={`cities_${lang}`}
                   transformItems={items => items.sort((a, b) => b.count - a.count)}
                 />
               )}
-              {city && (
+              {selectedCity && (
                 <RefinementList
-                  attribute={`neighborhoods_${lang}.${city}`}
+                  attribute={`neighborhoods_${lang}.${selectedCity.name}`}
                   transformItems={items => items.sort((a, b) => b.count - a.count)}
                 />
               )}

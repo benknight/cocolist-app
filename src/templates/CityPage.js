@@ -162,12 +162,7 @@ const CityPage = ({
                 />
               </h1>
             </div>
-            <Search
-              city={city}
-              className="relative z-1"
-              location={location}
-              size="large"
-            />
+            <Search className="relative z-1" location={location} size="large" />
             {partner && (
               <div className="flex items-center mt6">
                 <a className="tp-link b" href={partner.data.Link}>

@@ -24,9 +24,14 @@ export default function useCitySelection() {
     citySelection &&
     cities.edges.map(edge => edge.node.data).find(data => data.Name === citySelection);
 
-  if (!data) {
-    return [null, setCitySelection];
+  let city = null;
+
+  if (data) {
+    city = {
+      name: data.Name,
+      slug: data.Slug,
+    };
   }
 
-  return [{ ...data, selection: citySelection }, setCitySelection];
+  return [city, setCitySelection];
 }

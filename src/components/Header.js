@@ -32,7 +32,7 @@ const Header = ({ location, showSearch, ...props }) => {
   // URLs
   const indexURL = getLocalizedURL('/', lang);
   const homeURL = selectedCity
-    ? getLocalizedURL(`/${selectedCity.Slug}`, lang)
+    ? getLocalizedURL(`/${selectedCity.slug}`, lang)
     : indexURL;
   const feedbackMailto = `mailto:feedback@cocolist.app?subject=${formatMessage({
     id: 'header_link_feedback',
@@ -105,7 +105,7 @@ const Header = ({ location, showSearch, ...props }) => {
                       onClick();
                     }}>
                     {selectedCity ? (
-                      <FormattedMessage id={selectedCity.selection} />
+                      <FormattedMessage id={selectedCity.name} />
                     ) : (
                       <FormattedMessage id="change_location_label" />
                     )}

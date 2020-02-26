@@ -166,7 +166,7 @@ const BusinessPage = props => {
   const [selectedCity] = useCitySelection();
   const localNeighborhoods = selectedCity
     ? biz.neighborhoods
-        .filter(hood => hood.City[0].data.Name === selectedCity.selection)
+        .filter(hood => hood.City[0].data.Name === selectedCity.name)
         .map(hood => formatMessage({ id: hood.Name }))
     : [];
   const details = getSurveyDetails(bizData);
