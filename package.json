@@ -2,9 +2,10 @@
   "name": "cocolist",
   "private": true,
   "scripts": {
-    "build": "gatsby clean && GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
+    "build": "GATSBY_BUILD_TIMESTAMP=$(date +%s) gatsby build",
     "build-algolia": "BUILD_ALGOLIA=true npm run build",
     "build-dev": "DEV=true npm run build",
+    "build-incremental": "GATSBY_EXPERIMENTAL_PAGE_BUILD_ON_DATA_CHANGES=true npm run build -- --log-pages",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "start": "gatsby develop -H 0.0.0.0 -p 8000",
     "serve": "gatsby serve",

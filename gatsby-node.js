@@ -55,7 +55,9 @@ exports.createPages = async ({ graphql, actions }) => {
     edge => !!_.get(edge, 'node.data.URL_key'),
   );
 
-  const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL_key');
+  const bizGrouped = _.groupBy(bizFiltered, biz =>
+    _.kebabCase(_.get(biz, 'node.data.URL_key', '')),
+  );
 
   console.log('Checking for URL key duplicates in survey data...');
 
@@ -80,7 +82,9 @@ exports.createPages = async ({ graphql, actions }) => {
   const ListPage = path.resolve('./src/templates/ListPage.js');
 
   bizFiltered.forEach(({ node }) => {
-    createPagesLangs(BusinessPage, node.data.URL_key, { slug: node.data.URL_key });
+    createPagesLangs(BusinessPage, _.kebabCase(node.data.URL_key), {
+      slug: node.data.URL_key,
+    });
   });
 
   const listPages = [

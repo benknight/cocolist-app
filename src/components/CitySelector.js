@@ -23,7 +23,7 @@ const query = graphql`
                 childImageSharp {
                   fluid(
                     maxWidth: 600
-                    maxHeight: 375
+                    maxHeight: 400
                     srcSetBreakpoints: [480, 700, 1024]
                   ) {
                     ...GatsbyImageSharpFluid_withWebp_noBase64

@@ -37,8 +37,11 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
       <Header location={location} showSearch={false} />
       <Wrap>
         <div className="mv4 m_mv5">
-          <div className="tp-title-2 tc">
-            <FormattedMessage id="select_city_label" />
+          <div className="tc">
+            <div className="tp-title-2 green">{pageTitle}</div>
+            <div className="tp-title-4 mv4">
+              <FormattedMessage id="select_city_label" />
+            </div>
           </div>
           <CitySelector location={location} />
           {langKey === 'en' && (

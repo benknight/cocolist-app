@@ -60,141 +60,141 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
   const data = useStaticQuery(query);
   const breakpoint = useBreakpoint();
   useEffect(() => {
-    if (loaded && typeof window !== 'undefined') {
-      const { maps } = window.google,
-        locations = data.locations.edges.map(edge => edge.node.data);
-      infoWindow =
-        infoWindow ||
-        new maps.InfoWindow({
-          disableAutoPan: breakpoint === 'large',
-        });
-      const map = new maps.Map(document.getElementById('map'));
-      const centerLatLng = new maps.LatLng(
-        center.split(',')[0].trim(),
-        center.split(',')[1].trim(),
-      );
-      map.setOptions({
-        center: centerLatLng,
-        disableDefaultUI: true,
-        fullscreenControl: true,
-        fullscreenControlOptions: {
-          position: maps.ControlPosition.RIGHT_BOTTOM,
-        },
-        gestureHandling: breakpoint === 'large' ? 'greedy' : 'auto',
-        styles: mapStyles,
-        zoom,
+    if (!loaded) {
+      return;
+    }
+    const { maps } = window.google;
+    const locations = data.locations.edges.map(edge => edge.node.data);
+
+    infoWindow =
+      infoWindow ||
+      new maps.InfoWindow({
+        disableAutoPan: breakpoint === 'large',
       });
 
-      if (process.env.NODE_ENV === 'development') {
-        map.addListener('dragend', function() {
-          console.log(
-            `New map center: ${map
-              .getCenter()
-              .lat()
-              .toFixed(5)}, ${map
-              .getCenter()
-              .lng()
-              .toFixed(5)}`,
-          );
-        });
-      }
+    const map = new maps.Map(document.getElementById('map'));
+    const centerLatLng = new maps.LatLng(
+      center.split(',')[0].trim(),
+      center.split(',')[1].trim(),
+    );
 
-      if (breakpoint === 'large') {
-        window.google.maps.event.addListenerOnce(map, 'projection_changed', () => {
-          // latlng is the apparent centre-point
-          // offsetx is the distance you want that point to move to the right, in pixels
-          // offsety is the distance you want that point to move upwards, in pixels
-          // offset can be negative
-          // offsetx and offsety are both optional
-          const offsetX = 400;
-          const offsetY = 0;
+    map.setOptions({
+      center: centerLatLng,
+      disableDefaultUI: true,
+      fullscreenControl: true,
+      fullscreenControlOptions: {
+        position: maps.ControlPosition.RIGHT_BOTTOM,
+      },
+      gestureHandling: breakpoint === 'large' ? 'greedy' : 'auto',
+      styles: mapStyles,
+      zoom,
+    });
 
-          const scale = Math.pow(2, map.getZoom());
-
-          const worldCoordinateCenter = map
-            .getProjection()
-            .fromLatLngToPoint(centerLatLng);
-
-          const pixelOffset = new window.google.maps.Point(
-            offsetX / scale || 0,
-            offsetY / scale || 0,
-          );
-
-          const worldCoordinateNewCenter = new window.google.maps.Point(
-            worldCoordinateCenter.x - pixelOffset.x,
-            worldCoordinateCenter.y + pixelOffset.y,
-          );
-
-          const newCenter = map
-            .getProjection()
-            .fromPointToLatLng(worldCoordinateNewCenter);
-
-          map.setCenter(newCenter);
-        });
-      }
-
-      // Add locations to map
-      locations
-        .filter(data => {
-          const survey = _get(data, 'Survey[0].data');
-          return survey && getBadgesFromSurvey(survey).length > 0;
-        })
-        .forEach(loc => {
-          const biz = loc.Survey[0].data,
-            bizLink = getLocalizedURL('/' + biz.URL_key, lang),
-            badges = getBadgesFromSurvey(biz),
-            lat = loc.LatLng.split(',')[0].trim(),
-            lng = loc.LatLng.split(',')[1].trim(),
-            marker = new maps.Marker({
-              // icon: badges.length > 2 ? markerGreen : markerPaleGreen,
-              icon: markerIcon,
-              map,
-              position: new maps.LatLng(lat, lng),
-            }),
-            showLocationInfo = biz.Location_count > 1,
-            infoWindowContent = `
-              <div class="${cx('tp-body-2 mw6', styles.infoWindow)}">
-                <a class="dib tp-title-6 mb2 color-inherit" href="${bizLink}" onclick="window.__navigate('${bizLink}'); return false;">
-                  ${biz.Name}
-                  ${showLocationInfo ? `&ndash; ${loc.Name}` : ''}
-                </a>
-                ${badges
-                  .map(
-                    badge => `
-                      <div class="flex items-center">
-                        <img alt="" class="w2 h2 mr2" src="${require(`../assets/badges/${badge.imageSmall}`)}" />
-                        ${formatMessage({ id: badge.title })}
-                      </div>
-                    `,
-                  )
-                  .join('')}
-              </div>
-            `;
-
-          // bounds.extend(marker.position);
-          marker.addListener('click', () => {
-            if (breakpoint === 'large') {
-              navigate(bizLink);
-            } else {
-              infoWindow.setContent(infoWindowContent);
-              infoWindow.open(map, marker);
-            }
-          });
-          marker.addListener('mouseout', () => {
-            if (breakpoint === 'large') {
-              infoWindow.close();
-            }
-          });
-          marker.addListener('mouseover', () => {
-            if (window.innerWidth > tpBreakpointLargeValue) {
-              infoWindow.setContent(infoWindowContent);
-              infoWindow.open(map, marker);
-            }
-          });
-        });
-
-      // map.fitBounds(bounds);
+    if (process.env.NODE_ENV === 'development') {
+      map.addListener('dragend', function() {
+        console.log(
+          `New map center: ${map
+            .getCenter()
+            .lat()
+            .toFixed(5)}, ${map
+            .getCenter()
+            .lng()
+            .toFixed(5)}`,
+        );
+      });
     }
+
+    if (breakpoint === 'large') {
+      window.google.maps.event.addListenerOnce(map, 'projection_changed', () => {
+        // latlng is the apparent centre-point
+        // offsetx is the distance you want that point to move to the right, in pixels
+        // offsety is the distance you want that point to move upwards, in pixels
+        // offset can be negative
+        // offsetx and offsety are both optional
+        const offsetX = 400;
+        const offsetY = 0;
+
+        const scale = Math.pow(2, map.getZoom());
+
+        const worldCoordinateCenter = map.getProjection().fromLatLngToPoint(centerLatLng);
+
+        const pixelOffset = new window.google.maps.Point(
+          offsetX / scale || 0,
+          offsetY / scale || 0,
+        );
+
+        const worldCoordinateNewCenter = new window.google.maps.Point(
+          worldCoordinateCenter.x - pixelOffset.x,
+          worldCoordinateCenter.y + pixelOffset.y,
+        );
+
+        const newCenter = map.getProjection().fromPointToLatLng(worldCoordinateNewCenter);
+
+        map.setCenter(newCenter);
+      });
+    }
+
+    // Add locations to map
+    locations
+      .filter(data => {
+        const survey = _get(data, 'Survey[0].data');
+        return survey && getBadgesFromSurvey(survey).length > 0;
+      })
+      .forEach(loc => {
+        const biz = loc.Survey[0].data,
+          bizLink = getLocalizedURL('/' + biz.URL_key, lang),
+          badges = getBadgesFromSurvey(biz),
+          lat = loc.LatLng.split(',')[0].trim(),
+          lng = loc.LatLng.split(',')[1].trim(),
+          marker = new maps.Marker({
+            // icon: badges.length > 2 ? markerGreen : markerPaleGreen,
+            icon: markerIcon,
+            map,
+            position: new maps.LatLng(lat, lng),
+          }),
+          showLocationInfo = biz.Location_count > 1,
+          infoWindowContent = `
+            <div class="${cx('tp-body-2 mw6', styles.infoWindow)}">
+              <a class="dib tp-title-6 mb2 color-inherit" href="${bizLink}" onclick="window.__navigate('${bizLink}'); return false;">
+                ${biz.Name}
+                ${showLocationInfo ? `&ndash; ${loc.Name}` : ''}
+              </a>
+              ${badges
+                .map(
+                  badge => `
+                    <div class="flex items-center">
+                      <img alt="" class="w2 h2 mr2" src="${require(`../assets/badges/${badge.imageSmall}`)}" />
+                      ${formatMessage({ id: badge.title })}
+                    </div>
+                  `,
+                )
+                .join('')}
+            </div>
+          `;
+
+        // bounds.extend(marker.position);
+        marker.addListener('click', () => {
+          if (breakpoint === 'large') {
+            navigate(bizLink);
+          } else {
+            infoWindow.setContent(infoWindowContent);
+            infoWindow.open(map, marker);
+          }
+        });
+        marker.addListener('mouseout', () => {
+          if (breakpoint === 'large') {
+            infoWindow.close();
+          }
+        });
+        marker.addListener('mouseover', () => {
+          if (window.innerWidth > tpBreakpointLargeValue) {
+            infoWindow.setContent(infoWindowContent);
+            infoWindow.open(map, marker);
+          }
+        });
+      });
+
+    // map.fitBounds(bounds);
   }, [breakpoint, center, data, formatMessage, lang, loaded, zoom]);
   return (
     <div className={className}>

@@ -17,6 +17,14 @@ class SurveyRenderData {
     return getLocalizedURL(`/${this.data.URL_key}`, this.langKey);
   }
 
+  get facebookUrl() {
+    return this.data.Facebook_link;
+  }
+
+  get websiteUrl() {
+    return this.data.Website;
+  }
+
   get coverPhoto() {
     return _get(this.data, 'Cover_photo.localFiles[0].childImageSharp.fluid');
   }

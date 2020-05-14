@@ -227,7 +227,7 @@ const CityPage = ({
           <div
             className="flex flex-column l_flex-row items-center justify-end m_items-start mv4"
             key={badge.key}>
-            <div className="l_mw7">
+            <div className="l_mw7 flex-shrink-0">
               <div className="m_flex flex-shrink-0 items-center l_justify-end w-100 m_mv5 ph4 m_pl6 l_pr4 l_pl6 tc m_tl">
                 <img
                   alt={formatMessage({ id: badge.title })}
@@ -263,7 +263,7 @@ const CityPage = ({
               </div>
             </div>
             <div
-              className="flex flex-nowrap overflow-auto w-100 l_w-60 ph3 l_ph0"
+              className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
               {surveys.slice(0, 8).map(survey => {
                 const biz = new SurveyRenderData(survey, langKey);

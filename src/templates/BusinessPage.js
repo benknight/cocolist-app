@@ -9,6 +9,8 @@ import {
   ContentActionsEditSmall,
   ContentModifierMapPinSmall,
   ContentModifierListSmall,
+  FeatureBookmarkSmall,
+  SocialFacebookSmall,
 } from '@thumbtack/thumbprint-icons';
 import { TextButton } from '@thumbtack/thumbprint-react';
 import Categories from '../components/Categories';
@@ -16,6 +18,7 @@ import Header from '../components/Header';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
 import SurveyRenderData from '../lib/common/SurveyRenderData';
+import cleanUrl from '../lib/cleanUrl';
 import getSurveyDetails from '../lib/getSurveyDetails';
 import useFirebase from '../lib/useFirebase';
 import useCitySelection from '../lib/useCitySelection';
@@ -91,6 +94,7 @@ export const query = graphql`
     Record_ID
     Name
     Facebook_link
+    Website
     URL_key
     Category {
       data {
@@ -259,6 +263,18 @@ const BusinessPage = props => {
                   </div>
                 )}
               </div>
+              {biz.facebookUrl && (
+                <div className="flex items-center mv1">
+                  <SocialFacebookSmall className="w1 mr2" />
+                  <a href={biz.facebookUrl}>{cleanUrl(biz.facebookUrl)}</a>
+                </div>
+              )}
+              {biz.websiteUrl && (
+                <div className="flex items-center mv1">
+                  <FeatureBookmarkSmall className="w1 mr2" />
+                  <a href={biz.websiteUrl}>{cleanUrl(biz.websiteUrl)}</a>
+                </div>
+              )}
             </div>
             <div className="tp-body-2 mv1">
               <TextButton
