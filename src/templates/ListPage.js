@@ -7,8 +7,8 @@ import { NavigationCaretDownSmall } from '@thumbtack/thumbprint-icons';
 import BusinessCard from '../components/BusinessCard';
 import Categories from '../components/Categories';
 import Header from '../components/Header';
-import { badges, getBadgesFromSurvey } from '../lib/common/Badges';
-import SurveyRenderData from '../lib/common/SurveyRenderData';
+import { badges } from '../lib/common/Badges';
+import getBizPresenter from '../lib/common/getBizPresenter';
 import { getLocalizedURL, parseLangFromURL } from '../lib/common/i18n';
 
 export const query = graphql`
@@ -112,17 +112,14 @@ const ListPage = ({
         <div className="grid grid-wide l_mb6">
           {data.allAirtable.edges
             .filter(edge => badge.test(edge.node.data))
-            .map(
-              edge =>
-                new SurveyRenderData(edge.node.data, parseLangFromURL(location.pathname)),
+            .map(edge =>
+              getBizPresenter(edge.node.data, parseLangFromURL(location.pathname)),
             )
             .sort((a, b) => {
-              const badgesA = getBadgesFromSurvey(a);
-              const badgesB = getBadgesFromSurvey(b);
-              if (badgesA.length === badgesB.length) {
+              if (a.badges.length === b.badges.length) {
                 return b.cocoPoints - a.cocoPoints;
               }
-              return badgesB.length - badgesA.length;
+              return b.badges.length - a.badges.length;
             })
             .filter(biz => {
               if (!biz.coverPhoto) {
@@ -132,7 +129,7 @@ const ListPage = ({
               return true;
             })
             .map(biz => (
-              <div className="m_col-6 l_col-4" key={biz.id}>
+              <div className="m_col-6 l_col-4" key={biz.urlKey}>
                 <Link className="db black" to={biz.url}>
                   <div className="mb3 m_mb5 pa2 m_pa0">
                     <div className="w-100">

@@ -14,7 +14,7 @@ import Map from '../components/Map';
 import Search from '../components/Search';
 import SignupForm from '../components/SignupForm';
 import { badges } from '../lib/common/Badges';
-import SurveyRenderData from '../lib/common/SurveyRenderData';
+import getBizPresenter from '../lib/common/getBizPresenter';
 import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
 import styles from './CityPage.module.scss';
@@ -82,6 +82,7 @@ export const query = graphql`
           Record_ID: { ne: null }
           Cities: { in: [$city] }
           Status: { eq: "Published" }
+          Closed_permanently: { ne: true }
         }
       }
       sort: { fields: [data___Coco_points], order: DESC }
@@ -214,7 +215,6 @@ const CityPage = ({
             .filter(survey => {
               return !!_get(survey, 'Cover_photo.localFiles[0].childImageSharp.fluid');
             }),
-          badge.key + (process.env.GATSBY_BUILD_TIMESTAMP || Date.now()),
         );
 
         const listPageLink = `/${slug}/${badge.linkSlug}`;
@@ -266,7 +266,7 @@ const CityPage = ({
               className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
               style={{ WebkitOverflowScrolling: 'touch' }}>
               {surveys.slice(0, 8).map(survey => {
-                const biz = new SurveyRenderData(survey, langKey);
+                const biz = getBizPresenter(survey, langKey);
                 return (
                   <Link
                     className="db pr2 pv4 w6 flex-shrink-0"

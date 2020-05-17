@@ -47,10 +47,10 @@ const ReviewForm = ({ biz, location }) => {
       await firebase
         .firestore()
         .collection('reviewsPending')
-        .doc(`user-${auth.user.uid}-biz-${biz.id}`)
+        .doc(`user-${auth.user.uid}-biz-${biz.urlKey}`)
         .set({
           business: {
-            id: biz.id,
+            id: biz.urlKey,
             name: biz.name,
             url: biz.url,
           },

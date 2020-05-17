@@ -2,11 +2,18 @@ const _get = require('lodash/get');
 const _groupBy = require('lodash/groupBy');
 const _keyBy = require('lodash/keyBy');
 const _uniqBy = require('lodash/uniqBy');
-const SurveyRenderData = require('./SurveyRenderData');
+const getBizPresenter = require('./getBizPresenter');
 
 const businessQuery = `
 {
-  surveys: allAirtable(filter: { table: { eq: "Survey" }, data: { Status: { eq: "Published" } } }) {
+  surveys: allAirtable(
+    filter: {
+      table: { eq: "Survey" },
+      data: {
+        Status: { eq: "Published" },
+        Closed_permanently: { ne: true }
+      }
+    }) {
     edges {
       node {
         data {
@@ -91,7 +98,7 @@ function flatten(data) {
     'Key',
   );
   return data.surveys.edges.map(({ node: { data } }) => {
-    const biz = new SurveyRenderData(data);
+    const biz = getBizPresenter(data);
     const hoodsByCity = _groupBy(biz.neighborhoods, 'City[0].data.Name');
     const cities = _uniqBy(
       biz.neighborhoods.map(hood => hood.City[0].data),

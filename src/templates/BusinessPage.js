@@ -17,7 +17,7 @@ import Categories from '../components/Categories';
 import Header from '../components/Header';
 import ReviewForm from '../components/ReviewForm';
 import StarRating from '../components/StarRating';
-import SurveyRenderData from '../lib/common/SurveyRenderData';
+import getBizPresenter from '../lib/common/getBizPresenter';
 import cleanUrl from '../lib/cleanUrl';
 import getSurveyDetails from '../lib/getSurveyDetails';
 import useFirebase from '../lib/useFirebase';
@@ -166,7 +166,7 @@ const BusinessPage = props => {
 
   const firebase = useFirebase();
   const { formatMessage } = useIntl();
-  const biz = new SurveyRenderData(bizData, langKey);
+  const biz = getBizPresenter(bizData, langKey);
   const [selectedCity] = useCitySelection();
   const localNeighborhoods = selectedCity
     ? biz.neighborhoods
@@ -183,7 +183,7 @@ const BusinessPage = props => {
     firebase
       .firestore()
       .collection('reviews')
-      .where('business.id', '==', biz.id)
+      .where('business.id', '==', biz.urlKey)
       .get()
       .then(snapshot => {
         if (isMounted) {
@@ -199,7 +199,7 @@ const BusinessPage = props => {
         }
       });
     return () => (isMounted = false);
-  }, [firebase, biz.id]);
+  }, [firebase, biz.urlKey]);
 
   const airtableForm = `https://airtable.com/shrw4zfDcry512acj?${bizData.Survey_prefill_query_string}`;
 
@@ -269,10 +269,10 @@ const BusinessPage = props => {
                   <a href={biz.facebookUrl}>{cleanUrl(biz.facebookUrl)}</a>
                 </div>
               )}
-              {biz.websiteUrl && (
+              {biz.website && (
                 <div className="flex items-center mv1">
                   <FeatureBookmarkSmall className="w1 mr2" />
-                  <a href={biz.websiteUrl}>{cleanUrl(biz.websiteUrl)}</a>
+                  <a href={biz.website}>{cleanUrl(biz.website)}</a>
                 </div>
               )}
             </div>
@@ -312,7 +312,7 @@ const BusinessPage = props => {
                             id={badge.description}
                             values={{
                               business: biz.name,
-                              byoc_discount: biz.BYOC_discount_amount || '',
+                              byoc_discount: biz.byocDiscountAmount || '',
                             }}
                           />
                         </div>
@@ -347,26 +347,26 @@ const BusinessPage = props => {
 
             {/* From the business */}
 
-            {biz.From_the_business && (
+            {biz.fromTheBusiness && (
               <div className="mb5">
                 <div className="tp-title-4 mb3">
                   <FormattedMessage id="from_the_business_heading" />
                 </div>
                 <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                  {biz.From_the_business}
+                  {biz.fromTheBusiness}
                 </div>
               </div>
             )}
 
             {/* From the editor */}
 
-            {biz.From_the_editor && (
+            {biz.fromTheEditor && (
               <div className="mb5">
                 <div className="tp-title-4 mb3">
                   <FormattedMessage id="from_the_editor_heading" />
                 </div>
                 <div className="measure" style={{ whiteSpace: 'pre-line' }}>
-                  {biz.From_the_editor}
+                  {biz.fromTheEditor}
                 </div>
               </div>
             )}
