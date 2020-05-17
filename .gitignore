@@ -74,5 +74,6 @@ yarn-error.log
 # Yarn Integrity file
 .yarn-integrity
 
-# Misc
+# Project
 AlgoliaQueries.json
+TODO
