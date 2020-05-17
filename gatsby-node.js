@@ -72,7 +72,7 @@ exports.createPages = async ({ graphql, actions }) => {
     process.exit(1);
   }
 
-  console.log('Building business pages...');
+  console.log('Creating business pages...');
 
   // Load templates
   const BusinessPage = path.resolve('./src/templates/BusinessPage.js');
@@ -96,12 +96,12 @@ exports.createPages = async ({ graphql, actions }) => {
     'free-drinking-water',
   ];
 
-  console.log('Building city pages...');
+  console.log('Creating city & list pages...');
 
   data.cities.edges.forEach(({ node: { data: city } }) => {
     createPagesLangs(CityPage, city.Slug, { city: city.Name, slug: city.Slug });
 
-    console.log(`Building list pages for ${city.Name}...`);
+    // console.log(`Building list pages for ${city.Name}...`);
 
     // Create list pages for city
     listPages.forEach(listSlug => {
