@@ -263,10 +263,10 @@ const BusinessPage = props => {
                   </div>
                 )}
               </div>
-              {biz.facebookUrl && (
+              {biz.facebookLink && (
                 <div className="flex items-center mv1">
                   <SocialFacebookSmall className="w1 mr2" />
-                  <a href={biz.facebookUrl}>{cleanUrl(biz.facebookUrl)}</a>
+                  <a href={biz.facebookLink}>{cleanUrl(biz.facebookLink)}</a>
                 </div>
               )}
               {biz.website && (
