@@ -53,7 +53,7 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
             ) : (
               <div>
                 Introducing <span className="green">Cocolist</span>, an app for finding{' '}
-                <nobr>eco-conscious</nobr> businesses in Southeast Asia.
+                <nobr>eco-conscious</nobr> businesses.
               </div>
             )}
           </h1>
@@ -109,9 +109,9 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               </p>
             ) : (
               <p>
-                And in fact there are already lots of businesses in Saigon doing things
-                like reducing single-use plastics or eliminating them entirely, even when
-                it might hurt their bottom line.{' '}
+                And in fact I noticed there are already a lot of businesses in Saigon
+                doing things like reducing single-use plastics or eliminating them
+                entirely, even when it might hurt their bottom line.{' '}
                 <em>These businesses deserve to be rewarded for their actions.</em>
               </p>
             )}
@@ -129,13 +129,12 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               </p>
             ) : (
               <p>
-                {' '}
-                But how can eco-conscious consumers find eco-conscious businesses? Until
-                now, the only way was through word-of-mouth, in Facebook groups
+                But how can eco-conscious customers connect with eco-conscious businesses?
+                Until now, the only way was through word-of-mouth, in Facebook groups
                 <Footnote index={1} />
                 <Footnote index={2} />, or blogs
                 <Footnote index={3} />, but these still have one key problem: there is no
-                independent, comprehensive list.
+                independent, comprehensive list built on a standardized set of criteria.
               </p>
             )}
           </Text>
@@ -153,12 +152,11 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               </p>
             ) : (
               <p>
-                That’s why I created <b>Cocolist</b>, Vietnam's first up-to-date directory
-                of eco-conscious businesses. Starting specifically with food & beverage
-                businesses in Saigon, this project's goal is to eventually expand into
-                more industries like hospitality and health & beauty, and more cities like
-                Da Nang and Hanoi in the coming months. By giving consumers the power of
-                choice, I hope Cocolist will inspire more business owners to take action.
+                That’s why I created <b>Cocolist</b>, This project's goal is to expand
+                into as many cities as possible and cover as many industries as possible
+                such as hospitality and health & beauty. By giving consumers the power of
+                choice, my dream is that Cocolist will inspire more business owners to
+                take action.
               </p>
             )}
           </Text>
@@ -182,11 +180,11 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
               </p>
             ) : (
               <p>
-                Every day in Vietnam there are millions of pieces of single-use plastic or
-                styrofoam waste generated in food & beverage industry alone. A single
-                bubble tea or coffee can use up to 4 separate pieces of plastic: a cup,
-                lid, straw and carrier. Local business owners are in a unique position to
-                be game changers in this movement.
+                Every day in Vietnam for example there are millions of pieces of
+                single-use plastic or styrofoam waste generated in food & beverage
+                industry alone. A single bubble tea or coffee can use up to 4 separate
+                pieces of plastic: a cup, lid, straw and carrier. Local business owners
+                are in a unique position to be game changers in this movement.
               </p>
             )}
           </Text>
@@ -239,16 +237,14 @@ const About = ({ data, intl: { formatMessage }, location, pageContext: { langKey
                 Cocolist partners with local organizations in order to source content,
                 ensure data accuracy, and help support those organizations. If you're
                 interested in adding data for your city, please contact us at{' '}
-                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>. We’re
-                currently looking for a partners in Chiang Mai and Bali.
+                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>.
               </p>
             ) : (
               <p>
                 Cocolist partners with local organizations in order to source content,
                 ensure data accuracy, and help support those organizations. If you're
                 interested in adding data for your city, please contact us at{' '}
-                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>. We’re
-                currently looking for a partners in Chiang Mai and Bali.
+                <a href="mailto:partners@cocolist.app">partners@cocolist.app</a>.
               </p>
             )}
           </Text>
