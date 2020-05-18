@@ -33,6 +33,11 @@ jobs:
         with:
           path: .cache
           key: gatsby-cache
+      - name: Preserve Gatsby public folder
+        uses: actions/cache@master
+        with:
+          path: public
+          key: gatsby-public
       - name: Setup Node
         uses: actions/setup-node@master
         with:
