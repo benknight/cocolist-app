@@ -21,10 +21,6 @@ function getBizPresenter(data, langKey) {
       return _get(data, 'Profile_photo.localFiles[0].childImageSharp.fluid');
     },
 
-    get name() {
-      return data.Name;
-    },
-
     get badges() {
       return getBadgesFromSurvey(data);
     },
