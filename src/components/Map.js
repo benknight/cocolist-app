@@ -141,19 +141,20 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
         return survey && getBadgesFromSurvey(survey).length > 0;
       })
       .forEach(loc => {
-        const biz = loc.Survey[0].data,
-          bizLink = getLocalizedURL('/' + biz.URL_key, lang),
-          badges = getBadgesFromSurvey(biz),
-          lat = loc.LatLng.split(',')[0].trim(),
-          lng = loc.LatLng.split(',')[1].trim(),
-          marker = new maps.Marker({
-            // icon: badges.length > 2 ? markerGreen : markerPaleGreen,
-            icon: markerIcon,
-            map,
-            position: new maps.LatLng(lat, lng),
-          }),
-          showLocationInfo = biz.Location_count > 1,
-          infoWindowContent = `
+        try {
+          const biz = loc.Survey[0].data,
+            bizLink = getLocalizedURL('/' + biz.URL_key, lang),
+            badges = getBadgesFromSurvey(biz),
+            lat = loc.LatLng.split(',')[0].trim(),
+            lng = loc.LatLng.split(',')[1].trim(),
+            marker = new maps.Marker({
+              // icon: badges.length > 2 ? markerGreen : markerPaleGreen,
+              icon: markerIcon,
+              map,
+              position: new maps.LatLng(lat, lng),
+            }),
+            showLocationInfo = biz.Location_count > 1,
+            infoWindowContent = `
             <div class="${cx('tp-body-2 mw6', styles.infoWindow)}">
               <a class="dib tp-title-6 mb2 color-inherit" href="${bizLink}" onclick="window.__navigate('${bizLink}'); return false;">
                 ${biz.Name}
@@ -172,26 +173,30 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
             </div>
           `;
 
-        // bounds.extend(marker.position);
-        marker.addListener('click', () => {
-          if (breakpoint === 'large') {
-            navigate(bizLink);
-          } else {
-            infoWindow.setContent(infoWindowContent);
-            infoWindow.open(map, marker);
-          }
-        });
-        marker.addListener('mouseout', () => {
-          if (breakpoint === 'large') {
-            infoWindow.close();
-          }
-        });
-        marker.addListener('mouseover', () => {
-          if (window.innerWidth > tpBreakpointLargeValue) {
-            infoWindow.setContent(infoWindowContent);
-            infoWindow.open(map, marker);
-          }
-        });
+          // bounds.extend(marker.position);
+          marker.addListener('click', () => {
+            if (breakpoint === 'large') {
+              navigate(bizLink);
+            } else {
+              infoWindow.setContent(infoWindowContent);
+              infoWindow.open(map, marker);
+            }
+          });
+          marker.addListener('mouseout', () => {
+            if (breakpoint === 'large') {
+              infoWindow.close();
+            }
+          });
+          marker.addListener('mouseover', () => {
+            if (window.innerWidth > tpBreakpointLargeValue) {
+              infoWindow.setContent(infoWindowContent);
+              infoWindow.open(map, marker);
+            }
+          });
+        } catch (e) {
+          console.error(e);
+          console.error('Failed to add location to map (see error above):', loc);
+        }
       });
 
     // map.fitBounds(bounds);
