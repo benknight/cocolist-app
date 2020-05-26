@@ -3,7 +3,7 @@
  *
  * See: https://www.gatsbyjs.org/docs/node-apis/
  */
-require('dotenv').config();
+// require('dotenv').config();
 const path = require('path');
 const _ = require('lodash');
 const { langs, defaultLang } = require('./src/lib/common/i18n');
