@@ -82,7 +82,6 @@ export const query = graphql`
           Record_ID: { ne: null }
           Cities: { in: [$city] }
           Status: { eq: "Published" }
-          Closed_permanently: { ne: true }
         }
       }
       sort: { fields: [data___Coco_points], order: DESC }

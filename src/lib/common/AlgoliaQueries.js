@@ -10,8 +10,7 @@ const businessQuery = `
     filter: {
       table: { eq: "Survey" },
       data: {
-        Status: { eq: "Published" },
-        Closed_permanently: { ne: true }
+        Status: { eq: "Published" }
       }
     }) {
     edges {
