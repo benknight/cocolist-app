@@ -6,6 +6,10 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import { shuffle } from 'shuffle-seed';
 import { FormattedMessage, injectIntl } from 'react-intl';
+import {
+  NavigationCaretLeftSmall,
+  NavigationCaretRightSmall,
+} from '@thumbtack/thumbprint-icons';
 import OPGPreviewImage from '../assets/og-preview.jpg';
 import AddBusinessAction from '../components/AddBusinessAction';
 import BusinessCard from '../components/BusinessCard';
@@ -17,6 +21,7 @@ import { badges } from '../lib/common/Badges';
 import getBizPresenter from '../lib/common/getBizPresenter';
 import { getLocalizedURL } from '../lib/common/i18n';
 import useAuth from '../lib/useAuth';
+import useCarousel from '../lib/useCarousel';
 import styles from './CityPage.module.scss';
 
 export const query = graphql`
@@ -261,40 +266,11 @@ const CityPage = ({
                 </div>
               </div>
             </div>
-            <div
-              className="flex flex-nowrap overflow-auto w-100 ph3 l_ph0"
-              style={{ WebkitOverflowScrolling: 'touch' }}>
-              {surveys.slice(0, 8).map(survey => {
-                const biz = getBizPresenter(survey, langKey);
-                return (
-                  <Link
-                    className="db pr2 pv4 w6 flex-shrink-0"
-                    key={biz.name}
-                    to={biz.url}>
-                    <BusinessCard biz={biz} />
-                    <div className="tp-body-2 black mt1 mr3">
-                      <div className="b">{biz.name}</div>
-                    </div>
-                  </Link>
-                );
-              })}
-              {surveys.length > 8 && (
-                <div className="pv4 flex-shrink-0 w6 pr1">
-                  <div className="aspect-ratio aspect-ratio-8x5">
-                    <Link
-                      to={listPageLink}
-                      className="br2 bg-green aspect-ratio-object flex items-center justify-center">
-                      <div className="tp-button tp-button--small tp-button--primary">
-                        <FormattedMessage
-                          id="view_more_button"
-                          defaultMessage="View more"
-                        />
-                      </div>
-                    </Link>
-                  </div>
-                </div>
-              )}
-            </div>
+            <SurveyCollection
+              langKey={langKey}
+              listPageLink={listPageLink}
+              surveys={surveys}
+            />
           </div>
         );
       })}
@@ -313,5 +289,71 @@ const CityPage = ({
     </>
   );
 };
+
+function SurveyCollection({ langKey, listPageLink, surveys }) {
+  const {
+    isTouchDevice,
+    getLeftNavProps,
+    getRightNavProps,
+    scrollAreaRef,
+    scrollPosition,
+    showNav,
+  } = useCarousel();
+  const buttonClassName =
+    'z-1 absolute items-center justify-center bg-white br-pill bn shadow-200 w3 h3';
+  return (
+    <div className="relative overflow-hidden flex items-center w-100">
+      {!isTouchDevice && showNav && (
+        <>
+          <button
+            className={cx(buttonClassName, 'left-5', {
+              dn: scrollPosition === 'start',
+              flex: scrollPosition !== 'start',
+            })}
+            {...getLeftNavProps()}>
+            <NavigationCaretLeftSmall />
+          </button>
+          <button
+            className={cx(buttonClassName, 'right-5', {
+              dn: scrollPosition === 'end',
+              flex: scrollPosition !== 'end',
+            })}
+            {...getRightNavProps()}>
+            <NavigationCaretRightSmall />
+          </button>
+        </>
+      )}
+      <div
+        className="flex flex-nowrap overflow-auto w-100 ph2 l_ph0 l_pt0 l_pb4 l_-mb4"
+        style={{ WebkitOverflowScrolling: 'touch' }}
+        ref={scrollAreaRef}>
+        {surveys.slice(0, 8).map(survey => {
+          const biz = getBizPresenter(survey, langKey);
+          return (
+            <Link className="db pr2 pv4 w6 flex-shrink-0" key={biz.name} to={biz.url}>
+              <BusinessCard biz={biz} />
+              <div className="tp-body-2 black mt1 mr3">
+                <div className="b">{biz.name}</div>
+              </div>
+            </Link>
+          );
+        })}
+        {surveys.length > 8 && (
+          <div className="pv4 flex-shrink-0 w6 pr1">
+            <div className="aspect-ratio aspect-ratio-8x5">
+              <Link
+                to={listPageLink}
+                className="br2 bg-green aspect-ratio-object flex items-center justify-center">
+                <div className="tp-button tp-button--small tp-button--primary">
+                  <FormattedMessage id="view_more_button" defaultMessage="View more" />
+                </div>
+              </Link>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
 
 export default injectIntl(CityPage);
