@@ -6,6 +6,9 @@
 import Firebase from 'firebase/app';
 import 'firebase/auth';
 import 'firebase/firestore';
+import '@fontsource/montserrat/400.css';
+import '@fontsource/montserrat/500.css';
+import '@fontsource/montserrat/700.css';
 import '@thumbtack/thumbprint-global-css';
 import '@thumbtack/thumbprint-atomic';
 import '@thumbtack/thumbprint-scss';

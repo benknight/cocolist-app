@@ -17,6 +17,7 @@
     "not IE 11"
   ],
   "dependencies": {
+    "@fontsource/montserrat": "^4.1.0",
     "@formatjs/intl-pluralrules": "^1.5.8",
     "@formatjs/intl-relativetimeformat": "^4.5.15",
     "@thumbtack/thumbprint-atomic": "^4.1.0",
@@ -38,7 +39,6 @@
     "gatsby-plugin-algolia": "^0.5.0",
     "gatsby-plugin-manifest": "^2.4.3",
     "gatsby-plugin-offline": "^3.2.2",
-    "gatsby-plugin-prefetch-google-fonts": "^1.4.3",
     "gatsby-plugin-react-helmet": "^3.3.1",
     "gatsby-plugin-robots-txt": "^1.5.0",
     "gatsby-plugin-sass": "^2.3.1",
