@@ -38,15 +38,17 @@ const query = graphql`
   }
 `;
 
-const CitySelector = injectIntl(
-  ({ children, className, location, intl: { formatMessage }, variant }) => {
-    const [, setCitySelection] = useCitySelection();
-    const data = useStaticQuery(query);
-    const langKey = parseLangFromURL(location.pathname);
+const CitySelector = injectIntl(({ className, location, include }) => {
+  const [, setCitySelection] = useCitySelection();
+  const data = useStaticQuery(query);
+  const langKey = parseLangFromURL(location.pathname);
 
-    return (
-      <div className={cx(className, styles.grid, 'grid')}>
-        {data.cities.edges.map(({ node: { data: city } }) => (
+  return (
+    <div className={cx(className, styles.grid, 'grid')}>
+      {data.cities.edges
+        .map(({ node: { data: city } }) => city)
+        .filter(city => (include ? include.includes(city.Slug) : true))
+        .map(city => (
           <div className="col-12 m_col-6 l_col-4 mt3" key={city.Name}>
             <Link
               className="relative db flex-shrink-0"
@@ -69,9 +71,8 @@ const CitySelector = injectIntl(
             </Link>
           </div>
         ))}
-      </div>
-    );
-  },
-);
+    </div>
+  );
+});
 
 export default CitySelector;
