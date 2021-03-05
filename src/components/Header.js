@@ -31,6 +31,7 @@ const Header = ({ location, showSearch, ...props }) => {
 
   // URLs
   const indexURL = getLocalizedURL('/', lang);
+  const cambodiaLandingURL = getLocalizedURL('/cambodia', lang);
   const homeURL = selectedCity
     ? getLocalizedURL(`/${selectedCity.slug}`, lang)
     : indexURL;
@@ -94,7 +95,7 @@ const Header = ({ location, showSearch, ...props }) => {
             </div>
           )}
           <div className="mh2 s_mh3 nowrap">
-            {location.pathname !== indexURL && (
+            {location.pathname !== indexURL && location.pathname !== cambodiaLandingURL && (
               <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
                 {({ onClick, ...tooltipProps }) => (
                   <TextButton
