@@ -95,7 +95,7 @@ const Header = ({ location, showSearch, ...props }) => {
             </div>
           )}
           <div className="mh2 s_mh3 nowrap">
-            {![indexUrl, cambodiaLandingUrl].includes(location.pathname) && (
+            {![indexURL, cambodiaLandingURL].includes(location.pathname) && (
               <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
                 {({ onClick, ...tooltipProps }) => (
                   <TextButton
