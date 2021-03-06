@@ -47,12 +47,6 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
             include={['phnompenh', 'siemreap', 'kampot', 'sihanoukville', 'battambang']}
             location={location}
           />
-          {langKey === 'en' && (
-            <div className="tp-body-2 tc mv4">
-              Don't see your city here?{' '}
-              <a href="mailto:partners@cocolist.app">Help us add it!</a>{' '}
-            </div>
-          )}
         </div>
       </Wrap>
     </>
