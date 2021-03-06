@@ -20,7 +20,7 @@ import Search from './Search';
 import SignupAction from './SignupAction';
 import styles from './Header.module.scss';
 
-const Header = ({ location, showSearch, ...props }) => {
+const Header = ({ location, showSearch, showLocationToggle = true, ...props }) => {
   const auth = useAuth();
   const breakpoint = useBreakpoint();
   const [selectedCity] = useCitySelection();
@@ -31,7 +31,6 @@ const Header = ({ location, showSearch, ...props }) => {
 
   // URLs
   const indexURL = getLocalizedURL('/', lang);
-  const cambodiaLandingURL = getLocalizedURL('/cambodia', lang);
   const homeURL = selectedCity
     ? getLocalizedURL(`/${selectedCity.slug}`, lang)
     : indexURL;
@@ -95,7 +94,7 @@ const Header = ({ location, showSearch, ...props }) => {
             </div>
           )}
           <div className="mh2 s_mh3 nowrap">
-            {![indexURL, cambodiaLandingURL].includes(location.pathname) && (
+            {showLocationToggle && (
               <Tooltip text={formatMessage({ id: 'change_location_label' })} zIndex={2}>
                 {({ onClick, ...tooltipProps }) => (
                   <TextButton

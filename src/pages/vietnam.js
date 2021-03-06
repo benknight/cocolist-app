@@ -34,7 +34,7 @@ const Index = ({ intl: { formatMessage }, location, pageContext: { langKey } }) 
           content={`https://cocolist.app${OPGPreviewImage}`}
         />
       </Helmet>
-      <Header location={location} showSearch={false} />
+      <Header location={location} showLocationToggle={false} showSearch={false} />
       <Wrap>
         <div className="mv4 m_mv5">
           <div className="tc">
