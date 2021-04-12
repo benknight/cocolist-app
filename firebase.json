@@ -56,6 +56,13 @@
       "**/.*",
       "**/node_modules/**"
     ],
+    "redirects": [
+      {
+        "source": "/Cambodia",
+        "destination": "/cambodia",
+        "type": 301
+      }
+    ],
     "rewrites": [
       {
         "source": "/survey/**",
