@@ -95,7 +95,7 @@ export const query = graphql`
     Name
     Facebook_link
     Website
-    URL_key
+    URL
     Category {
       data {
         Name
@@ -148,7 +148,7 @@ export const query = graphql`
   }
 
   query($slug: String!) {
-    airtable(table: { eq: "Survey" }, data: { URL_key: { eq: $slug } }) {
+    airtable(table: { eq: "Survey" }, data: { URL: { eq: $slug } }) {
       data {
         ...BusinessDataFragment
       }

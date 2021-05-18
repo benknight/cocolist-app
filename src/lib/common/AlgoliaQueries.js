@@ -19,7 +19,7 @@ const businessQuery = `
           Status
           Record_ID
           Name
-          URL_key
+          URL
           Coco_points
           BYO_container_discount
           No_plastic_bags
@@ -105,7 +105,7 @@ function flatten(data) {
     );
     return {
       objectID: data.Record_ID,
-      slug: data.URL_key,
+      slug: data.URL,
       name: data.Name,
       coco_points: _get(biz.survey, 'Coco_points') || 0,
       badges: biz.badges.map(badge => badge.key),

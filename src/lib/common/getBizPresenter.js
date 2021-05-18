@@ -10,7 +10,7 @@ function getBizPresenter(data, langKey) {
     ..._mapKeys(data, (value, key) => _camelCase(key)),
 
     get url() {
-      return getLocalizedURL(`/${data.URL_key}`, langKey);
+      return getLocalizedURL(`/${data.URL}`, langKey);
     },
 
     get coverPhoto() {

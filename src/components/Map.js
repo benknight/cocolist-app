@@ -32,7 +32,7 @@ const query = graphql`
               data {
                 Location_count
                 Name
-                URL_key
+                URL
                 ...SurveyDataFragment
               }
             }
@@ -143,7 +143,7 @@ const Map = ({ className, center, intl: { formatMessage }, location, zoom }) => 
       .forEach(loc => {
         try {
           const biz = loc.Survey[0].data,
-            bizLink = getLocalizedURL('/' + biz.URL_key, lang),
+            bizLink = getLocalizedURL('/' + biz.URL, lang),
             badges = getBadgesFromSurvey(biz),
             lat = loc.LatLng.split(',')[0].trim(),
             lng = loc.LatLng.split(',')[1].trim(),

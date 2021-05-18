@@ -12,7 +12,7 @@ export default function useCitySelection() {
           node {
             data {
               Name
-              Slug
+              URL
             }
           }
         }
@@ -29,7 +29,7 @@ export default function useCitySelection() {
   if (data) {
     city = {
       name: data.Name,
-      slug: data.Slug,
+      slug: data.URL,
     };
   }
 

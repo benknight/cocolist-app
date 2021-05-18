@@ -17,7 +17,7 @@ const query = graphql`
         node {
           data {
             Name
-            Slug
+            URL
             Cover {
               localFiles {
                 childImageSharp {
@@ -47,13 +47,13 @@ const CitySelector = injectIntl(({ className, location, include }) => {
     <div className={cx(className, styles.grid, 'grid')}>
       {data.cities.edges
         .map(({ node: { data: city } }) => city)
-        .filter(city => (include ? include.includes(city.Slug) : true))
+        .filter(city => (include ? include.includes(city.URL) : true))
         .map(city => (
           <div className="col-12 m_col-6 l_col-4 mt3" key={city.Name}>
             <Link
               className="relative db flex-shrink-0"
               onClick={() => setCitySelection(city.Name)}
-              to={getLocalizedURL(`/${city.Slug}`, langKey)}>
+              to={getLocalizedURL(`/${city.URL}`, langKey)}>
               <Img
                 alt="logo"
                 className="br2"

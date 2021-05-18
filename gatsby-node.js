@@ -33,7 +33,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             data {
-              URL_key
+              URL
             }
           }
         }
@@ -43,7 +43,7 @@ exports.createPages = async ({ graphql, actions }) => {
           node {
             data {
               Name
-              Slug
+              URL
             }
           }
         }
@@ -52,10 +52,10 @@ exports.createPages = async ({ graphql, actions }) => {
   `);
 
   const bizFiltered = data.businesses.edges.filter(
-    edge => !!_.get(edge, 'node.data.URL_key'),
+    edge => !!_.get(edge, 'node.data.URL'),
   );
 
-  const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL_key');
+  const bizGrouped = _.groupBy(bizFiltered, 'node.data.URL');
 
   console.log('Checking for URL key duplicates in survey data...');
 
@@ -64,7 +64,7 @@ exports.createPages = async ({ graphql, actions }) => {
   Object.keys(bizGrouped).forEach(key => {
     if (bizGrouped[key].length > 1) {
       hasDuplicates = true;
-      console.error(`Duplicate URL_key fields found for string "${key}"`);
+      console.error(`Duplicate URL fields found for string "${key}"`);
     }
   });
 
@@ -80,8 +80,8 @@ exports.createPages = async ({ graphql, actions }) => {
   const ListPage = path.resolve('./src/templates/ListPage.js');
 
   bizFiltered.forEach(({ node }) => {
-    createPagesLangs(BusinessPage, node.data.URL_key, {
-      slug: node.data.URL_key,
+    createPagesLangs(BusinessPage, node.data.URL, {
+      slug: node.data.URL,
     });
   });
 
@@ -99,7 +99,7 @@ exports.createPages = async ({ graphql, actions }) => {
   console.log('Creating city & list pages...');
 
   data.cities.edges.forEach(({ node: { data: city } }) => {
-    createPagesLangs(CityPage, city.Slug, { city: city.Name, slug: city.Slug });
+    createPagesLangs(CityPage, city.URL, { city: city.Name, slug: city.URL });
 
     // console.log(`Building list pages for ${city.Name}...`);
 
@@ -107,10 +107,10 @@ exports.createPages = async ({ graphql, actions }) => {
     listPages.forEach(listSlug => {
       const context = {
         city: city.Name,
-        citySlug: city.Slug,
+        citySlug: city.URL,
         slug: listSlug,
       };
-      createPagesLangs(ListPage, `${city.Slug}/${listSlug}`, context);
+      createPagesLangs(ListPage, `${city.URL}/${listSlug}`, context);
     });
   });
 };

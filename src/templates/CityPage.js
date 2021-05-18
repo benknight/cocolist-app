@@ -29,7 +29,7 @@ export const query = graphql`
     node {
       data {
         Name
-        URL_key
+        URL
         Cover_photo {
           localFiles {
             childImageSharp {
