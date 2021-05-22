@@ -129,7 +129,7 @@ const ListPage = ({
               return true;
             })
             .map(biz => (
-              <div className="m_col-6 l_col-4" key={biz.urlKey}>
+              <div className="m_col-6 l_col-4" key={biz.url}>
                 <Link className="db black" to={biz.url}>
                   <div className="mb3 m_mb5 pa2 m_pa0">
                     <div className="w-100">

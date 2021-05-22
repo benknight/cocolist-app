@@ -183,7 +183,7 @@ const BusinessPage = props => {
     firebase
       .firestore()
       .collection('reviews')
-      .where('business.id', '==', biz.urlKey)
+      .where('business.id', '==', biz.url)
       .get()
       .then(snapshot => {
         if (isMounted) {
@@ -199,7 +199,7 @@ const BusinessPage = props => {
         }
       });
     return () => (isMounted = false);
-  }, [firebase, biz.urlKey]);
+  }, [firebase, biz.url]);
 
   const airtableForm = `https://airtable.com/shrw4zfDcry512acj?${bizData.Survey_prefill_query_string}`;
 
